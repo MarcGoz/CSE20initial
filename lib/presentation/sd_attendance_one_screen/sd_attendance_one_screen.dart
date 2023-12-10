@@ -22,6 +22,7 @@ class SdAttendanceOneScreen extends StatelessWidget {
           width: double.maxFinite,
           padding: EdgeInsets.symmetric(horizontal: 20.h, vertical: 20.v),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               _buildAttendance(context),
               SizedBox(height: 20.v),
@@ -39,32 +40,27 @@ class SdAttendanceOneScreen extends StatelessWidget {
       title: Padding(
         padding: EdgeInsets.only(left: 20.h),
         child: RichText(
-          text: TextSpan(
-            children: [
-              TextSpan(
-                text: "Fac".toUpperCase(),
-                style: CustomTextStyles.headlineLargeBlack90001,
-              ),
-              TextSpan(
-                text: "E".toUpperCase(),
-                style: CustomTextStyles.headlineLargeBlack90001,
-              ),
-              TextSpan(
-                text: "TAP".toUpperCase(),
-                style: CustomTextStyles.headlineLargePrimary,
-              ),
-            ],
-          ),
+          text: TextSpan(children: [
+            TextSpan(
+              text: "Fac".toUpperCase(),
+              style: CustomTextStyles.headlineLargeBlack90001,
+            ),
+            TextSpan(
+              text: "E".toUpperCase(),
+              style: CustomTextStyles.headlineLargeBlack90001,
+            ),
+            TextSpan(
+              text: "TAP".toUpperCase(),
+              style: CustomTextStyles.headlineLargePrimary,
+            ),
+          ]),
           textAlign: TextAlign.left,
         ),
       ),
       actions: [
         AppbarTrailingCircleimage(
           imagePath: ImageConstant.imgEllipse8,
-          margin: EdgeInsets.symmetric(
-            horizontal: 20.h,
-            vertical: 5.v,
-          ),
+          margin: EdgeInsets.symmetric(horizontal: 20.h, vertical: 5.v),
         ),
       ],
     );
@@ -72,25 +68,41 @@ class SdAttendanceOneScreen extends StatelessWidget {
 
   Widget _buildAttendance(BuildContext context) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.end,
       children: [
         Text("Attendance", style: CustomTextStyles.titleLargeBold),
-        Spacer(),
-        Container(
-          width: 120.h,
-          margin: EdgeInsets.only(top: 3.v, bottom: 2.v),
-          padding: EdgeInsets.symmetric(horizontal: 10.h, vertical: 6.v),
-          decoration: AppDecoration.outlineBlack900011.copyWith(
-            borderRadius: BorderRadius.circular(20.0),
+        SizedBox(width: 20.h), // Adjusted spacing between "Attendance" and text field
+        Expanded(
+          child: Container(
+            height: 25.h,
+            margin: EdgeInsets.only(top: 3.v, bottom: 2.v),
+            padding: EdgeInsets.symmetric(horizontal: 10.h, vertical: 6.v),
+            decoration: AppDecoration.outlineBlack900011.copyWith(
+              borderRadius: BorderRadius.circular(20.0),
+            ),
+            child: Row(
+              children: [
+                Expanded(
+                  child: TextField(
+                    decoration: InputDecoration(
+                      border: InputBorder.none,
+                      hintText: "Enter class code",
+                      hintStyle: CustomTextStyles.bodySmallGray400,
+                    ),
+                    style: CustomTextStyles.bodySmallGray400,
+                    onChanged: (value) {
+                      // Handle the text field value change if needed
+                    },
+                  ),
+                ),
+                CustomImageView(
+                  imagePath: ImageConstant.imgVectorPrimary15x18,
+                  height: 15.v,
+                  width: 18.h,
+                  margin: EdgeInsets.only(left: 6.h, top: 7.v, bottom: 6.v),
+                ),
+              ],
+            ),
           ),
-          child: Text("Class Code", style: CustomTextStyles.bodySmallGray400),
-        ),
-        CustomImageView(
-          imagePath: ImageConstant.imgVectorPrimary15x18,
-          height: 15.v,
-          width: 18.h,
-          margin: EdgeInsets.only(left: 6.h, top: 7.v, bottom: 6.v),
         ),
       ],
     );
@@ -249,7 +261,8 @@ class SdAttendanceOneScreen extends StatelessWidget {
             Navigator.of(context).pushNamed(AppRoutes.sdSettingsScreen);
             break;
           case BottomBarEnum.Home:
-            Navigator.of(context).pushNamed(AppRoutes.studentDashboardHomeScreen);
+            Navigator.of(context)
+                .pushNamed(AppRoutes.studentDashboardHomeScreen);
             break;
         }
       },
