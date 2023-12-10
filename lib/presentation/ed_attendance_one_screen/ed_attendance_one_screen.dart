@@ -4,9 +4,7 @@ import 'package:facetap/core/app_export.dart';
 import 'package:facetap/widgets/app_bar/appbar_trailing_circleimage.dart';
 import 'package:facetap/widgets/app_bar/custom_app_bar.dart';
 import 'package:facetap/widgets/custom_bottom_bar.dart';
-import 'package:facetap/widgets/custom_elevated_button.dart';
 
-// ignore_for_file: must_be_immutable
 class EdAttendanceOneScreen extends StatelessWidget {
   EdAttendanceOneScreen({Key? key}) : super(key: key);
 
@@ -16,107 +14,264 @@ class EdAttendanceOneScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     mediaQueryData = MediaQuery.of(context);
     return SafeArea(
-        child: Scaffold(
-            appBar: _buildAppBar(context),
-            body: Container(
-                width: double.maxFinite,
-                padding: EdgeInsets.symmetric(horizontal: 17.h, vertical: 20.v),
-                child: Column(children: [
-                  _buildAddClass(context),
-                  SizedBox(height: 20.v),
-                  _buildEDAttendanceOne(context)
-                ])),
-            bottomNavigationBar: _buildBottomBar(context)));
+      child: Scaffold(
+        appBar: _buildAppBar(context),
+        body: Container(
+          width: double.maxFinite,
+          padding: EdgeInsets.symmetric(horizontal: 20.h, vertical: 20.v),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _buildAttendance(context),
+              SizedBox(height: 20.v),
+              _buildSDAttendanceOne(context),
+            ],
+          ),
+        ),
+        bottomNavigationBar: _buildBottomBar(context),
+      ),
+    );
   }
 
-  /// Section Widget
   PreferredSizeWidget _buildAppBar(BuildContext context) {
     return CustomAppBar(
-        title: Padding(
-            padding: EdgeInsets.only(left: 20.h),
-            child: RichText(
-                text: TextSpan(children: [
-                  TextSpan(
-                      text: "Fac".toUpperCase(),
-                      style: theme.textTheme.headlineLarge),
-                  TextSpan(
-                      text: "E".toUpperCase(),
-                      style: theme.textTheme.headlineLarge),
-                  TextSpan(
-                      text: "TAP".toUpperCase(),
-                      style: CustomTextStyles.headlineLargePrimary)
-                ]),
-                textAlign: TextAlign.left)),
-        actions: [
-          AppbarTrailingCircleimage(
-              imagePath: ImageConstant.imgEllipse8,
-              margin: EdgeInsets.symmetric(horizontal: 20.h, vertical: 5.v))
-        ]);
+      title: Padding(
+        padding: EdgeInsets.only(left: 20.h),
+        child: RichText(
+          text: TextSpan(
+            children: [
+              TextSpan(
+                text: "Fac".toUpperCase(),
+                style: CustomTextStyles.headlineLargeBlack90001,
+              ),
+              TextSpan(
+                text: "E".toUpperCase(),
+                style: CustomTextStyles.headlineLargeBlack90001,
+              ),
+              TextSpan(
+                text: "TAP".toUpperCase(),
+                style: CustomTextStyles.headlineLargePrimary,
+              ),
+            ],
+          ),
+          textAlign: TextAlign.left,
+        ),
+      ),
+      actions: [
+        AppbarTrailingCircleimage(
+          imagePath: ImageConstant.imgEllipse8,
+          margin: EdgeInsets.symmetric(horizontal: 20.h, vertical: 5.v),
+        ),
+      ],
+    );
   }
 
-  /// Section Widget
-  Widget _buildAddClass(BuildContext context) {
-    return Padding(
-        padding: EdgeInsets.only(right: 2.h),
-        child:
-            Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-          Text("Attendance", style: CustomTextStyles.titleLargeBold),
-          CustomElevatedButton(
-              height: 25.v,
-              width: 101.h,
-              text: "Add Class",
-              margin: EdgeInsets.symmetric(vertical: 2.v),
-              rightIcon: Container(
-                  margin: EdgeInsets.only(),
-                  child: CustomImageView(
-                      imagePath: ImageConstant.imgRoundedRectangle1Copy9,
-                      height: 25.v,
-                      width: 101.h)),
-              leftIcon: Container(
-                  margin: EdgeInsets.only(right: 7.h),
-                  child: CustomImageView(
-                      imagePath: ImageConstant.imgVectorOnprimarycontainer,
-                      height: 13.adaptSize,
-                      width: 13.adaptSize)),
-              buttonStyle: CustomButtonStyles.outlinePrimary3,
-              buttonTextStyle: CustomTextStyles.labelMediumMedium,
-              onPressed: () {
-                onTapAddClass(context);
-              })
-        ]));
+  Widget _buildAttendance(BuildContext context) {
+    return Row(
+      children: [
+        Text("Attendance", style: CustomTextStyles.titleLargeBold),
+        SizedBox(width: 20.h),
+        Expanded(
+          child: Container(
+            height: 25.h,
+            margin: EdgeInsets.only(top: 3.v, bottom: 2.v),
+            padding: EdgeInsets.symmetric(horizontal: 10.h, vertical: 6.v),
+            decoration: AppDecoration.outlineBlack900011.copyWith(
+              borderRadius: BorderRadius.circular(20.0),
+            ),
+            child: Row(
+              children: [
+                Expanded(
+                  child: TextField(
+                    decoration: InputDecoration(
+                      border: InputBorder.none,
+                      hintText: "Enter class code",
+                      hintStyle: CustomTextStyles.bodySmallGray400,
+                    ),
+                    style: CustomTextStyles.bodySmallGray400,
+                    onChanged: (value) {},
+                  ),
+                ),
+                CustomImageView(
+                  imagePath: ImageConstant.imgVectorPrimary15x18,
+                  height: 15.v,
+                  width: 18.h,
+                  margin: EdgeInsets.only(left: 6.h, top: 7.v, bottom: 6.v),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ],
+    );
   }
 
-  /// Section Widget
-  Widget _buildEDAttendanceOne(BuildContext context) {
+  Widget _buildSDAttendanceOne(BuildContext context) {
     return Expanded(
-        child: SizedBox(
-            height: 113.v,
-            child: ListView.separated(
-                padding: EdgeInsets.only(right: 2.h),
-                scrollDirection: Axis.horizontal,
-                separatorBuilder: (context, index) {
-                  return SizedBox(width: 22.h);
-                },
-                itemCount: 2,
-                itemBuilder: (context, index) {
-                  return EdattendanceoneItemWidget(onTapSubject: () {
-                    onTapSubject(context);
-                  });
-                })));
+      child: GridView.count(
+        crossAxisCount: 2,
+        crossAxisSpacing: 20.0,
+        mainAxisSpacing: 20.0,
+        padding: EdgeInsets.symmetric(horizontal: 10.0),
+        children: [
+          _buildDashboardItem(
+            context,
+            "CSE20",
+            "CSE101",
+            Colors.red,
+            Colors.red.withOpacity(0.7),
+            _buildPlaceholderContainer("CSE20"),
+            "80%",
+          ),
+          _buildDashboardItem(
+            context,
+            "History",
+            "HST202",
+            Color(0xFFF9B572),
+            Color(0xFFF9B572).withOpacity(0.7),
+            _buildPlaceholderContainer("History"),
+            "90%",
+          ),
+        ],
+      ),
+    );
   }
 
-  /// Section Widget
+  Widget _buildPlaceholderContainer(String subjectName) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Container(
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(24.0),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.2),
+                  blurRadius: 24.0,
+                  spreadRadius: 6.0,
+                  offset: Offset(0, 12),
+                ),
+              ],
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(24.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    subjectName,
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 32.0,
+                    ),
+                  ),
+                  SizedBox(height: 16.0),
+                  Text(
+                    "Class Code: ${subjectName.toUpperCase()}123",
+                    style: TextStyle(
+                      color: Colors.grey,
+                      fontSize: 18.0,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildDashboardItem(
+      BuildContext context,
+      String subjectName,
+      String classCode,
+      Color backgroundColor,
+      Color overlayColor,
+      Widget logo,
+      String gradePercentage,
+      ) {
+    return GestureDetector(
+      onTap: () {
+        onTapSubject(context, subjectName);
+      },
+      child: Container(
+        decoration: BoxDecoration(
+          color: backgroundColor,
+          borderRadius: BorderRadius.circular(24.0),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.2),
+              blurRadius: 24.0,
+              spreadRadius: 6.0,
+              offset: Offset(0, 12),
+            ),
+          ],
+        ),
+        child: Stack(
+          children: [
+            Positioned.fill(
+              child: _buildBackgroundOverlay(overlayColor),
+            ),
+            logo,
+            Positioned(
+              top: 16.0,
+              right: 16.0,
+              child: Text(
+                gradePercentage,
+                style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 24.0,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildBackgroundOverlay(Color overlayColor) {
+    return Container(
+      decoration: BoxDecoration(
+        color: overlayColor,
+        borderRadius: BorderRadius.circular(24.0),
+      ),
+    );
+  }
   Widget _buildBottomBar(BuildContext context) {
-    return CustomBottomBar(onChanged: (BottomBarEnum type) {});
-  }
-
-  /// Navigates to the edAttendanceScreen when the action is triggered.
-  onTapSubject(BuildContext context) {
-    Navigator.pushNamed(context, AppRoutes.edAttendanceScreen);
-  }
-
-  /// Navigates to the edAddDeleteScreen when the action is triggered.
-  onTapAddClass(BuildContext context) {
-    Navigator.pushNamed(context, AppRoutes.edAddDeleteScreen);
+    return CustomBottomBar(
+      onChanged: (BottomBarEnum type) {
+        switch (type) {
+          case BottomBarEnum.Attendance:
+            Navigator.of(context).pushNamed(AppRoutes.edAttendanceOneScreen);
+            break;
+          case BottomBarEnum.Notification:
+            Navigator.of(context).pushNamed(AppRoutes.sdNotificationOneScreen);
+            break;
+          case BottomBarEnum.Settings:
+            Navigator.of(context).pushNamed(AppRoutes.edSettingsScreen);
+            break;
+          case BottomBarEnum.Home:
+            Navigator.of(context).pushNamed(AppRoutes.teacherDashboardHomeScreen);
+            break;
+        }
+      },
+    );
   }
 }
+
+  onTapSubject(BuildContext context, String subjectName) {
+    print("Tapped on $subjectName");
+    // Navigate to the corresponding screen for the selected subject
+    if (subjectName == "CSE20") {
+      Navigator.of(context).pushNamed(AppRoutes.edAttendanceScreen);
+    }
+  }
+
+

@@ -303,11 +303,28 @@ class TeacherDashboardHomeScreen extends StatelessWidget {
   }
 
   /// Section Widget
+
   Widget _buildBottomBar(BuildContext context) {
     return CustomBottomBar(
-      onChanged: (BottomBarEnum type) {},
+      onChanged: (BottomBarEnum type) {
+        switch (type) {
+          case BottomBarEnum.Attendance:
+            Navigator.of(context).pushNamed(AppRoutes.edAttendanceOneScreen);
+            break;
+          case BottomBarEnum.Notification:
+            Navigator.of(context).pushNamed(AppRoutes.sdNotificationOneScreen);
+            break;
+          case BottomBarEnum.Settings:
+            Navigator.of(context).pushNamed(AppRoutes.edSettingsScreen);
+            break;
+          case BottomBarEnum.Home:
+            Navigator.of(context).pushNamed(AppRoutes.teacherDashboardHomeScreen);
+            break;
+        }
+      },
     );
   }
+}
 
   /// Common widget
   Widget _buildB(
@@ -361,4 +378,7 @@ class TeacherDashboardHomeScreen extends StatelessWidget {
       ],
     );
   }
-}
+
+
+
+
