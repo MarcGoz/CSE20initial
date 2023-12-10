@@ -160,7 +160,7 @@ class SdAttendanceScreen extends StatelessWidget {
       onChanged: (BottomBarEnum type) {
         switch (type) {
           case BottomBarEnum.Attendance:
-            Navigator.of(context).pushNamed(AppRoutes.sdAttendanceScreen);
+            Navigator.of(context).pushNamed(AppRoutes.sdAttendanceOneScreen);
             break;
           case BottomBarEnum.Notification:
             Navigator.of(context).pushNamed(AppRoutes.sdNotificationScreen);

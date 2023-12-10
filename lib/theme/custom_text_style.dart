@@ -26,6 +26,11 @@ class CustomTextStyles {
   static get bodyMedium15 => theme.textTheme.bodyMedium!.copyWith(
         fontSize: 15.fSize,
       );
+  static get titleSmallBlack90001 => theme.textTheme.titleSmall!.copyWith(
+    color: appTheme.black90001,
+    fontWeight: FontWeight.w700,
+    fontSize: 15.fSize,
+  );
   static get bodyMediumBlack900 => theme.textTheme.bodyMedium!.copyWith(
         color: appTheme.black900,
         fontWeight: FontWeight.w100,
