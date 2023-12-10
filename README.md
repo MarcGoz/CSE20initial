@@ -24,4 +24,37 @@ Flutter SDK Version 3.3.0 or greater.
     └── theme                       - It contains app theme and decoration classes
     └── widgets                     - It contains all custom widget classes
 ```
+### Key Features:
+Facial Recognition: Capture attendance by scanning individuals' faces for quick and efficient tracking.
 
+Real-time Attendance Tracking: Experience the convenience of real-time updates for accurate attendance data.
+
+User Management: Add, edit, and manage user roles, whether they are admins or students.
+
+Notifications: Receive automatic alerts for important occurrences, keeping users informed.
+
+### Technology Stack:
+Frontend: Developed using Flutter for a seamless cross-platform experience on iOS and Android smartphones.
+
+Backend: Built with Flask/Python to handle the server-side logic and facilitate communication with the frontend.
+
+Database: Utilizes SQLite for efficient data storage and retrieval.
+
+Facial Recognition: Leverages Python Free Library for implementing facial recognition capabilities.
+
+Cloud Hosting: Hosted on PythonAnywhere.com for reliable and scalable cloud hosting.
+
+### Security and Privacy:
+FaceTap prioritizes data security and privacy with industry-standard measures:
+
+Secure Authentication and Authorization: Ensures that only authorized users have access to sensitive information.
+
+Strict Data Access Controls: Implements controls to manage and restrict access to data based on user roles.
+
+Compliance: Adheres to GDPR and other relevant data privacy regulations to protect user information.
+
+### How to Get Started:
+Download FaceTap on your iOS or Android smartphone.
+Grant necessary permissions for camera and location.
+Choose your role as a student or teacher.
+Enjoy the convenience of efficient attendance tracking through facial recognition.
