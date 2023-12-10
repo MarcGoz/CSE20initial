@@ -54,7 +54,7 @@ Strict Data Access Controls: Implements controls to manage and restrict access t
 Compliance: Adheres to GDPR and other relevant data privacy regulations to protect user information.
 
 ### How to Get Started:
-Download FaceTap on your iOS or Android smartphone.
-Grant necessary permissions for camera and location.
-Choose your role as a student or teacher.
-Enjoy the convenience of efficient attendance tracking through facial recognition.
+1. Download FaceTap on your iOS or Android smartphone.
+2. Grant necessary permissions for camera and location.
+3. Choose your role as a student or teacher.
+4. Enjoy the convenience of efficient attendance tracking through facial recognition.
