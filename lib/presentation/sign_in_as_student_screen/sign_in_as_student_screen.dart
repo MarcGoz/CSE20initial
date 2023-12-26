@@ -4,6 +4,8 @@ import 'package:facetap/widgets/app_bar/appbar_subtitle_one.dart';
 import 'package:facetap/widgets/app_bar/custom_app_bar.dart';
 import 'package:facetap/widgets/custom_checkbox_button.dart';
 import 'package:facetap/widgets/custom_elevated_button.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:firebase_database/firebase_database.dart';
 
 class SignInAsStudentScreen extends StatefulWidget {
   SignInAsStudentScreen({Key? key}) : super(key: key);
@@ -12,11 +14,24 @@ class SignInAsStudentScreen extends StatefulWidget {
   _SignInAsStudentScreenState createState() => _SignInAsStudentScreenState();
 }
 
-class _SignInAsStudentScreenState extends State<SignInAsStudentScreen> {
+class _SignInAsStudentScreenState extends State<SignInAsStudentScreen>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _animationController;
+
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   bool rememberMe = false;
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+  @override
+  void initState() {
+    super.initState();
+    _animationController = AnimationController(
+      vsync: this,
+      duration: Duration(milliseconds: 400),
+    );
+    _animationController.forward();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,15 +47,22 @@ class _SignInAsStudentScreenState extends State<SignInAsStudentScreen> {
               children: [
                 _buildAppBar(context),
                 SizedBox(height: 52),
-                CustomImageView(
-                  imagePath: ImageConstant.imgVector,
-                  height: 54,
-                  width: 77,
+                Hero(
+                  tag: 'logo',
+                  child: AnimatedContainer(
+                    duration: Duration(milliseconds: 500),
+                    height: _animationController.isCompleted ? 120 : 0, // Increased logo size
+                    child: CustomImageView(
+                      imagePath: ImageConstant.imgVector,
+                      height:72, // Increased logo size
+                      width: 102, // Increased logo size
+                    ),
+                  ),
                 ),
                 SizedBox(height: 7),
                 Text(
                   "Students",
-                  style: theme.textTheme.titleSmall,
+                  style: theme.textTheme.titleLarge,
                 ),
                 SizedBox(height: 57),
                 _buildEmailFormField(),
@@ -61,16 +83,12 @@ class _SignInAsStudentScreenState extends State<SignInAsStudentScreen> {
 
   Widget _buildAppBar(BuildContext context) {
     return CustomAppBar(
-      leadingWidth: 60,
+      leadingWidth: 40,
       leading: IconButton(
         icon: Icon(Icons.arrow_back),
         onPressed: () {
           onTapArrowLeft(context);
         },
-      ),
-      title: AppbarSubtitleOne(
-        text: "Back",
-        margin: EdgeInsets.only(left: 10),
       ),
     );
   }
@@ -83,12 +101,12 @@ class _SignInAsStudentScreenState extends State<SignInAsStudentScreen> {
       decoration: InputDecoration(
         hintText: "Enter your email",
         hintStyle: TextStyle(color: Colors.grey),
-        prefix: Container(
+        prefixIcon: Container(
           margin: EdgeInsets.fromLTRB(12, 2, 10, 2),
-          child: CustomImageView(
-            imagePath: ImageConstant.img1e,
-            height: 14,
-            width: 20,
+          child: FaIcon(
+            FontAwesomeIcons.solidEnvelope,
+            size: 15,
+            color: Colors.black,
           ),
         ),
         prefixIconConstraints: BoxConstraints(maxHeight: 41),
@@ -114,10 +132,10 @@ class _SignInAsStudentScreenState extends State<SignInAsStudentScreen> {
         hintStyle: TextStyle(color: Colors.grey),
         prefixIcon: Container(
           margin: EdgeInsets.fromLTRB(12, 2, 10, 2),
-          child: CustomImageView(
-            imagePath: ImageConstant.imgPasswordField,
-            height: 14,
-            width: 20,
+          child: FaIcon(
+            FontAwesomeIcons.lock,
+            size: 15,
+            color: Colors.black,
           ),
         ),
         prefixIconConstraints: BoxConstraints(maxHeight: 41),
@@ -150,18 +168,22 @@ class _SignInAsStudentScreenState extends State<SignInAsStudentScreen> {
   }
 
   Widget _buildSignInButton() {
-    return CustomElevatedButton(
-      height: 49,
-      text: "Log In".toUpperCase(),
-      onPressed: () {
-        onTapSignIn(context);
-      },
+    return Hero(
+      tag: 'button',
+      child: CustomElevatedButton(
+        height: 49,
+        text: "Log In".toUpperCase(),
+        onPressed: () {
+          onTapSignIn(context);
+        },
+      ),
     );
   }
 
-
   void onTapArrowLeft(BuildContext context) {
-    Navigator.pop(context);
+    _animationController.reverse().then((value) {
+      Navigator.pop(context);
+    });
   }
 
   void onTapSignIn(BuildContext context) {
@@ -169,5 +191,11 @@ class _SignInAsStudentScreenState extends State<SignInAsStudentScreen> {
       // Handle sign-in logic and navigation
       Navigator.pushNamed(context, AppRoutes.studentDashboardHomeScreen);
     }
+  }
+
+  @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
   }
 }

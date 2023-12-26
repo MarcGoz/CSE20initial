@@ -23,8 +23,8 @@ class SplashScreen extends StatelessWidget {
                 children: [
                   CustomImageView(
                     imagePath: ImageConstant.imgFaceTrackerPrimary,
-                    height: 0.4 * screenHeight,
-                    width: 0.3 * screenWidth,
+                    height: 0.5 * screenHeight,
+                    width: 0.5 * screenWidth,
                     margin: EdgeInsets.only(bottom: 0.01 * screenHeight),
                   ),
                   RichText(

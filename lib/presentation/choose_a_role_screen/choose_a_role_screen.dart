@@ -47,42 +47,46 @@ class ChooseARoleScreen extends StatelessWidget {
     required String roleText,
     required VoidCallback onTap,
   }) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        margin: EdgeInsets.symmetric(horizontal: 40, vertical: 10),
-        padding: EdgeInsets.all(25),
-        width: double.infinity, // Full width
-        decoration: BoxDecoration(
-          color: Colors.white.withOpacity(0.9), // Adjust opacity as needed
-          borderRadius: BorderRadius.circular(20),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey.withOpacity(0.5),
-              spreadRadius: 2,
-              blurRadius: 5,
-              offset: Offset(0, 3),
-            ),
-          ],
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            CustomImageView(
-              imagePath: imagePath,
-              height: 80,
-              width: 80,
-            ),
-            SizedBox(height: 15),
-            Text(
-              roleText,
-              style: TextStyle(
-                color: Colors.grey[800], // Adjust color as needed
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        onTap: onTap,
+        splashColor: Colors.grey.withOpacity(0.5),
+        child: Container(
+          margin: EdgeInsets.symmetric(horizontal: 40, vertical: 10),
+          padding: EdgeInsets.all(25),
+          width: double.infinity, // Full width
+          decoration: BoxDecoration(
+            color: Colors.white.withOpacity(0.9), // Adjust opacity as needed
+            borderRadius: BorderRadius.circular(20),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.5),
+                spreadRadius: 2,
+                blurRadius: 5,
+                offset: Offset(0, 3),
               ),
-            ),
-          ],
+            ],
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              CustomImageView(
+                imagePath: imagePath,
+                height: 80,
+                width: 80,
+              ),
+              SizedBox(height: 15),
+              Text(
+                roleText,
+                style: TextStyle(
+                  color: Colors.grey[800], // Adjust color as needed
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

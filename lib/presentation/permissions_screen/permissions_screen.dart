@@ -20,21 +20,22 @@ class _PermissionsScreenState extends State<PermissionsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double paddingValue = screenWidth > 600 ? 48 : 24;
+
     return SafeArea(
       child: Scaffold(
         appBar: _buildAppBar(context),
-        body: SingleChildScrollView(
-          padding: EdgeInsets.symmetric(horizontal: 24, vertical: 15),
+        body: Padding(
+          padding: EdgeInsets.symmetric(horizontal: paddingValue, vertical: 15),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text("Face Tap for Students", style: theme.textTheme.headlineSmall),
+              Text("Face Tap for Students", style: Theme.of(context).textTheme.headlineSmall),
               SizedBox(height: 14),
               _buildDescription(),
               SizedBox(height: 5),
-              _buildPermissions(),
-              SizedBox(height: 62),
-              _buildCombinedShape(),
+              Expanded(child: _buildPermissions()),
               SizedBox(height: 24),
               _buildAllowButton(),
               SizedBox(height: 5),
@@ -47,16 +48,12 @@ class _PermissionsScreenState extends State<PermissionsScreen> {
 
   PreferredSizeWidget _buildAppBar(BuildContext context) {
     return CustomAppBar(
-      leadingWidth: 60,
+      leadingWidth: 80,
       leading: IconButton(
         icon: Icon(Icons.arrow_back),
         onPressed: () {
           onTapArrowLeft(context);
         },
-      ),
-      title: AppbarSubtitleOne(
-        text: "Back",
-        margin: EdgeInsets.only(left: 10),
       ),
     );
   }
@@ -75,67 +72,52 @@ class _PermissionsScreenState extends State<PermissionsScreen> {
   }
 
   Widget _buildPermissions() {
-    return Align(
-      alignment: Alignment.center,
-      child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 7),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            CustomCheckboxButton(
-              text: "Allow access to Camera",
-              value: cameraPermissionChecked,
-              onChange: (value) {
-                setState(() {
-                  cameraPermissionChecked = value;
-                });
-              },
-            ),
-            SizedBox(height: 10),
-            CustomCheckboxButton(
-              text: "Allow access to Location",
-              value: locationPermissionChecked,
-              onChange: (value) {
-                setState(() {
-                  locationPermissionChecked = value;
-                });
-              },
-            ),
-            SizedBox(height: 10),
-            CustomCheckboxButton(
-              text: "I read the Privacy policy",
-              isExpandedText: false,
-              value: readPolicyChecked,
-              onChange: (value) {
-                setState(() {
-                  readPolicyChecked = value;
-                });
-              },
-            ),
-            SizedBox(height: 10),
-            CustomCheckboxButton(
-              text: "I accept the terms and conditions",
-              isExpandedText: false,
-              value: termsAndConditionsChecked,
-              onChange: (value) {
-                setState(() {
-                  termsAndConditionsChecked = value;
-                });
-              },
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildCombinedShape() {
     return Padding(
-      padding: EdgeInsets.only(left: 1, right: 19),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      padding: EdgeInsets.fromLTRB(7, 20, 7, 0), // Add top margin
+      child: ListView(
+        shrinkWrap: true,
         children: [
-          // Remove the existing checkboxes
+          CustomCheckboxButton(
+            text: "Allow access to Camera",
+            value: cameraPermissionChecked,
+            onChange: (value) {
+              setState(() {
+                cameraPermissionChecked = value;
+              });
+            },
+          ),
+          SizedBox(height: 30),
+          CustomCheckboxButton(
+            text: "Allow access to Location",
+            value: locationPermissionChecked,
+            onChange: (value) {
+              setState(() {
+                locationPermissionChecked = value;
+              });
+            },
+          ),
+          SizedBox(height: 30),
+          CustomCheckboxButton(
+            text: "I read the Privacy policy",
+            isExpandedText: false,
+            value: readPolicyChecked,
+            onChange: (value) {
+              setState(() {
+                readPolicyChecked = value;
+              });
+            },
+          ),
+          SizedBox(height: 30),
+          CustomCheckboxButton(
+            text: "I accept the terms and conditions",
+            isExpandedText: false,
+            value: termsAndConditionsChecked,
+            onChange: (value) {
+              setState(() {
+                termsAndConditionsChecked = value;
+              });
+            },
+          ),
         ],
       ),
     );
@@ -146,9 +128,7 @@ class _PermissionsScreenState extends State<PermissionsScreen> {
       height: 43,
       text: "Allow".toUpperCase(),
       margin: EdgeInsets.symmetric(horizontal: 8),
-      onPressed: (cameraPermissionChecked && locationPermissionChecked && readPolicyChecked && termsAndConditionsChecked)
-          ? () => onTapAllow(context)
-          : null,
+      onPressed: () => onTapAllow(context),
       alignment: Alignment.center,
     );
   }
@@ -158,6 +138,18 @@ class _PermissionsScreenState extends State<PermissionsScreen> {
   }
 
   void onTapAllow(BuildContext context) {
-    Navigator.pushNamed(context, AppRoutes.chooseARoleScreen);
+    if (cameraPermissionChecked && locationPermissionChecked && readPolicyChecked && termsAndConditionsChecked) {
+      Navigator.pushNamed(context, AppRoutes.chooseARoleScreen);
+    } else {
+      showSnackbar(context, "Please check all permissions before proceeding.");
+    }
+  }
+
+  void showSnackbar(BuildContext context, String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+      ),
+    );
   }
 }

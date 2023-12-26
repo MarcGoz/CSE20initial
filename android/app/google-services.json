@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "63176848493",
+    "project_id": "facetap-486f1",
+    "storage_bucket": "facetap-486f1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:63176848493:android:a9047f2f4a11cd939dfb64",
+        "android_client_info": {
+          "package_name": "com.facetapapplication.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDQi-9FpLM6KJJEHjE2s4a9BpoWlbzqVaY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
