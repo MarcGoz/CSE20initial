@@ -62,7 +62,7 @@ class _RegisterScreenState extends State<StudentRegisterScreen>
                 ),
                 SizedBox(height: 7),
                 Text(
-                  "Register as Educator",
+                  "Register as Student",
                   style: theme.textTheme.titleLarge,
                 ),
                 SizedBox(height: 57),

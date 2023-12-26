@@ -463,7 +463,27 @@ class EdAddDeleteScreen extends StatelessWidget {
   /// Section Widget
   Widget _buildBottomBar(BuildContext context) {
     return CustomBottomBar(
-      onChanged: (BottomBarEnum type) {},
+      onChanged: (BottomBarEnum type) {
+        switch (type) {
+          case BottomBarEnum.Attendance:
+            Navigator.of(context).pushNamed(AppRoutes.sdAttendanceOneScreen);
+            break;
+          case BottomBarEnum.Notification:
+            Navigator.of(context).pushNamed(AppRoutes.sdNotificationScreen);
+            break;
+          case BottomBarEnum.Settings:
+            Navigator.of(context).pushNamed(AppRoutes.sdSettingsScreen);
+            break;
+          case BottomBarEnum.Home:
+            Navigator.of(context)
+                .pushNamed(AppRoutes.studentDashboardHomeScreen);
+            break;
+        }
+      },
+      getCurrentPage: () {
+        // Replace with your logic to determine the current page
+        return BottomBarEnum.Home;
+      },
     );
   }
 

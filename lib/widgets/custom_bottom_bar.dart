@@ -1,12 +1,12 @@
 // ignore_for_file: must_be_immutable
-
 import 'package:flutter/material.dart';
 import 'package:facetap/core/app_export.dart';
 
 class CustomBottomBar extends StatefulWidget {
-  CustomBottomBar({this.onChanged});
+  CustomBottomBar({required this.onChanged, required this.getCurrentPage});
 
   Function(BottomBarEnum)? onChanged;
+  BottomBarEnum Function() getCurrentPage;
 
   @override
   CustomBottomBarState createState() => CustomBottomBarState();
@@ -14,6 +14,24 @@ class CustomBottomBar extends StatefulWidget {
 
 class CustomBottomBarState extends State<CustomBottomBar> {
   int selectedIndex = 0;
+
+  // Method to get the current page's BottomBarEnum
+  BottomBarEnum getCurrentPage(BuildContext context) {
+    // Replace the logic to determine the current page based on the context
+    // For example, you might use Navigator or some other state management approach
+    // In this example, I'm assuming a DefaultWidget is the default page
+    if (ModalRoute.of(context)!.settings.name == '/home') {
+      return BottomBarEnum.Home;
+    } else if (ModalRoute.of(context)!.settings.name == '/attendance') {
+      return BottomBarEnum.Attendance;
+    } else if (ModalRoute.of(context)!.settings.name == '/notification') {
+      return BottomBarEnum.Notification;
+    } else if (ModalRoute.of(context)!.settings.name == '/settings') {
+      return BottomBarEnum.Settings;
+    } else {
+      return BottomBarEnum.Home; // Default case
+    }
+  }
 
   List<BottomMenuModel> bottomMenuList = [
     BottomMenuModel(
@@ -42,17 +60,36 @@ class CustomBottomBarState extends State<CustomBottomBar> {
     )
   ];
 
+  // Method to update the selected index based on the current page
+  void updateSelectedIndex() {
+    BottomBarEnum currentPage = widget.getCurrentPage();
+
+    for (int i = 0; i < bottomMenuList.length; i++) {
+      if (bottomMenuList[i].type == currentPage) {
+        selectedIndex = i;
+        break;
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    updateSelectedIndex();
     return Container(
       height: 59.v,
       decoration: BoxDecoration(
-        border: Border(
-          top: BorderSide(
+        color: Colors.white,
+        boxShadow: [
+          BoxShadow(
             color: appTheme.black90001.withOpacity(0.5),
-            width: 1.h,
+            blurRadius: 5.0,
+            spreadRadius: 0.0,
+            offset: Offset(
+              0.0,
+              3.0,
+            ),
           ),
-        ),
+        ],
       ),
       child: BottomNavigationBar(
         backgroundColor: Colors.transparent,
@@ -160,3 +197,4 @@ class DefaultWidget extends StatelessWidget {
     );
   }
 }
+

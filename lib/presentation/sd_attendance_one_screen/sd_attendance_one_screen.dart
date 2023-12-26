@@ -266,6 +266,10 @@ class SdAttendanceOneScreen extends StatelessWidget {
             break;
         }
       },
+      getCurrentPage: () {
+        // Replace with your logic to determine the current page
+        return BottomBarEnum.Attendance;
+      },
     );
   }
 
@@ -276,4 +280,5 @@ class SdAttendanceOneScreen extends StatelessWidget {
       Navigator.of(context).pushNamed(AppRoutes.sdAttendanceScreen);
     }
   }
+
 }

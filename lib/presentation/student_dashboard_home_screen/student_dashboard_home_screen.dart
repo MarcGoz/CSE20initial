@@ -1,10 +1,11 @@
 // ignore_for_file: must_be_immutable
-
 import 'package:flutter/material.dart';
 import 'package:facetap/core/app_export.dart';
 import 'package:facetap/widgets/app_bar/appbar_trailing_circleimage.dart';
 import 'package:facetap/widgets/app_bar/custom_app_bar.dart';
 import 'package:facetap/widgets/custom_bottom_bar.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:intl/intl.dart';
 
 class StudentDashboardHomeScreen extends StatelessWidget {
   StudentDashboardHomeScreen({Key? key}) : super(key: key);
@@ -34,11 +35,11 @@ class StudentDashboardHomeScreen extends StatelessWidget {
                     text: TextSpan(
                       children: [
                         TextSpan(
-                          text: "09: 45 ".toUpperCase(),
+                          text: DateFormat('h:mm').format(DateTime.now()) + " ",
                           style: CustomTextStyles.montserratBlack90001Light,
                         ),
                         TextSpan(
-                          text: "am ".toUpperCase(),
+                          text: DateFormat('a').format(DateTime.now()).toLowerCase(),
                           style: CustomTextStyles.headlineLargeBlack90001,
                         ),
                       ],
@@ -46,70 +47,64 @@ class StudentDashboardHomeScreen extends StatelessWidget {
                     textAlign: TextAlign.center,
                   ),
                 ),
-                SizedBox(height: 8.v), // Adjusted spacing
+                SizedBox(height: 8.v),
                 Center(
                   child: Text(
-                    "Monday, November 12, 2023",
+                    DateFormat("EEEE, MMMM d, y").format(DateTime.now()),
                     style: theme.textTheme.bodyMedium,
                   ),
                 ),
                 SizedBox(height: 20.v),
-                Container(
-                  margin: EdgeInsets.symmetric(horizontal: 39.h),
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 50.h,
-                    vertical: 34.v,
-                  ),
-                  decoration: AppDecoration.gradientPrimaryToGreen.copyWith(
-                    borderRadius: BorderRadiusStyle.roundedBorder41,
-                  ),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      CustomImageView(
-                        imagePath: ImageConstant.imgGroup19,
-                        height: 108.adaptSize,
-                        width: 108.adaptSize,
-                      ),
-                      SizedBox(height: 4.v),
-                      Text(
-                        "Clock In",
-                        style: CustomTextStyles.titleMediumMontserrat,
-                      ),
-                    ],
-                  ),
-                ),
-                SizedBox(height: 15.v),
                 Center(
-                  child: RichText(
-                    text: TextSpan(
-                      children: [
-                        TextSpan(
-                          text: "Your next class is ",
-                          style: theme.textTheme.bodyMedium,
-                        ),
-                        TextSpan(
-                          text: "CSE20",
-                          style: CustomTextStyles.titleSmallGreen40002,
-                        ),
-                      ],
+                  child: ElevatedButton(
+                    onPressed: () {
+                      // Add your onPressed logic here
+                    },
+                    style: ElevatedButton.styleFrom(
+                      primary: Colors.transparent, // Set the background color to transparent
+                      elevation: 0, // Remove the elevation
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadiusStyle.roundedBorder41,
+                      ),
                     ),
-                    textAlign: TextAlign.center,
+                    child: Container(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 50.h,
+                        vertical: 34.v,
+                      ),
+                      decoration: AppDecoration.gradientPrimaryToGreen.copyWith(
+                        borderRadius: BorderRadiusStyle.roundedBorder41,
+                      ),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          CustomImageView(
+                            imagePath: ImageConstant.imgGroup19,
+                            height: 108.adaptSize,
+                            width: 108.adaptSize,
+                          ),
+                          SizedBox(height: 4.v),
+                          Text(
+                            "Clock In",
+                            style: CustomTextStyles.titleMediumMontserrat,
+                          ),
+                        ],
+                      ),
+                    ),
                   ),
                 ),
                 SizedBox(height: 29.v),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly, // Center the columns
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     Expanded(
                       child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center, // Center the content vertically
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          CustomImageView(
-                            imagePath: ImageConstant.imgClock,
-                            height: 33.adaptSize,
-                            width: 33.adaptSize,
+                          FaIcon(
+                            FontAwesomeIcons.clock,
+                            size: 33.adaptSize,
                           ),
                           SizedBox(height: 2.v),
                           Text(
@@ -137,10 +132,9 @@ class StudentDashboardHomeScreen extends StatelessWidget {
                           Column(
                             mainAxisSize: MainAxisSize.min,
                             children: [
-                              CustomImageView(
-                                imagePath: ImageConstant.imgClockGreen40001,
-                                height: 33.adaptSize,
-                                width: 33.adaptSize,
+                              FaIcon(
+                                FontAwesomeIcons.clock,
+                                size: 33.adaptSize,
                               ),
                               SizedBox(height: 2.v),
                               Text(
@@ -158,12 +152,11 @@ class StudentDashboardHomeScreen extends StatelessWidget {
                     ),
                     Expanded(
                       child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center, // Center the content vertically
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          CustomImageView(
-                            imagePath: ImageConstant.imgFrameGreen40001,
-                            height: 33.adaptSize,
-                            width: 33.adaptSize,
+                          FaIcon(
+                            FontAwesomeIcons.clock,
+                            size: 33.adaptSize,
                           ),
                           SizedBox(height: 2.v),
                           Text(
@@ -238,10 +231,17 @@ class StudentDashboardHomeScreen extends StatelessWidget {
             Navigator.of(context).pushNamed(AppRoutes.sdSettingsScreen);
             break;
           case BottomBarEnum.Home:
-            Navigator.of(context).pushNamed(AppRoutes.studentDashboardHomeScreen);
+            Navigator.of(context)
+                .pushNamed(AppRoutes.studentDashboardHomeScreen);
             break;
         }
       },
+      getCurrentPage: () {
+        // Replace with your logic to determine the current page
+        return BottomBarEnum.Home;
+      },
     );
   }
+
+
 }

@@ -106,10 +106,16 @@ class SdNotificationScreen extends StatelessWidget {
             Navigator.of(context).pushNamed(AppRoutes.sdSettingsScreen);
             break;
           case BottomBarEnum.Home:
-            Navigator.of(context).pushNamed(AppRoutes.studentDashboardHomeScreen);
+            Navigator.of(context)
+                .pushNamed(AppRoutes.studentDashboardHomeScreen);
             break;
         }
       },
+      getCurrentPage: () {
+        // Replace with your logic to determine the current page
+        return BottomBarEnum.Notification;
+      },
     );
   }
+
 }
