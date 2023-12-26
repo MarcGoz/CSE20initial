@@ -73,6 +73,8 @@ class _SignInAsStudentScreenState extends State<SignInAsStudentScreen>
                 SizedBox(height: 25),
                 _buildSignInButton(),
                 SizedBox(height: 3),
+                _buildRegisterButton(),
+                SizedBox(height: 3),
               ],
             ),
           ),
@@ -178,6 +180,23 @@ class _SignInAsStudentScreenState extends State<SignInAsStudentScreen>
         },
       ),
     );
+  }
+
+  Widget _buildRegisterButton() {
+    return TextButton(
+      onPressed: () {
+        onTapRegister(context);
+      },
+      child: Text(
+        "Don't have an account? Register here",
+        style: TextStyle(color: theme.primaryColor),
+      ),
+    );
+  }
+
+  void onTapRegister(BuildContext context) {
+    // Handle sign-in logic and navigation
+    Navigator.pushReplacementNamed(context, AppRoutes.registerStudentScreen);
   }
 
   void onTapArrowLeft(BuildContext context) {

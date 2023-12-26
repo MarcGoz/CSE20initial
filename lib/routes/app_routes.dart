@@ -18,6 +18,8 @@ import 'package:facetap/presentation/ed_attendance_one_screen/ed_attendance_one_
 import 'package:facetap/presentation/ed_add_delete_screen/ed_add_delete_screen.dart';
 import 'package:facetap/presentation/ed_attendance_screen/ed_attendance_screen.dart';
 import 'package:facetap/presentation/app_navigation_screen/app_navigation_screen.dart';
+import 'package:facetap/presentation/educator_register_screen/educator_register_screen.dart';
+import 'package:facetap/presentation/student_register_screen/student_register_screen.dart';
 
 class AppRoutes {
   static const String sdAttendanceScreen = '/sd_attendance_screen';
@@ -62,12 +64,19 @@ class AppRoutes {
 
   static const String appNavigationScreen = '/app_navigation_screen';
 
+  static const String registerEducatorScreen = '/educator_register_screen';
+
+  static const String registerStudentScreen = '/student_register_screen';
+
   static Map<String, WidgetBuilder> routes = {
     sdAttendanceScreen: (context) => SdAttendanceScreen(),
     studentDashboardClockInScreen: (context) => StudentDashboardClockInScreen(),
     permissionsScreen: (context) => PermissionsScreen(),
     chooseARoleScreen: (context) => ChooseARoleScreen(),
+
     signInAsStudentScreen: (context) => SignInAsStudentScreen(),
+    registerStudentScreen: (context) => StudentRegisterScreen(),
+
     sdHomeFacialRecognitionScreen: (context) => SdHomeFacialRecognitionScreen(),
     splashScreen: (context) => SplashScreen(),
     studentDashboardHomeScreen: (context) => StudentDashboardHomeScreen(),
@@ -75,7 +84,10 @@ class AppRoutes {
     sdNotificationScreen: (context) => SdNotificationScreen(),
     sdSettingsScreen: (context) => SdSettingsScreen(),
     sdNotificationOneScreen: (context) => SdNotificationOneScreen(),
+
     signInAsEducatorScreen: (context) => SignInAsEducatorScreen(),
+    registerEducatorScreen: (context) => EducatorRegisterScreen(),
+
     teacherDashboardHomeScreen: (context) => TeacherDashboardHomeScreen(),
     edSettingsScreen: (context) => EdSettingsScreen(),
     edAttendanceOneScreen: (context) => EdAttendanceOneScreen(),
