@@ -29,75 +29,75 @@ class AppNavigationScreen extends StatelessWidget {
                       children: [
                         _buildScreenTitle(
                           context,
-                          screenTitle: "SD - Attendance",
+                          screenTitle: "FaceTap:Student - Attendance",
                           onTapScreenTitle: () => onTapScreenTitle(
                               context, AppRoutes.sdAttendanceScreen),
                         ),
                         _buildScreenTitle(
                           context,
-                          screenTitle: "Student Dashboard - Clock In",
+                          screenTitle: "FaceTap:Student - Clock In",
                           onTapScreenTitle: () => onTapScreenTitle(
                               context, AppRoutes.studentDashboardClockInScreen),
                         ),
                         _buildScreenTitle(
                           context,
-                          screenTitle: "Permissions",
+                          screenTitle: "FaceTap - Permissions",
                           onTapScreenTitle: () => onTapScreenTitle(
                               context, AppRoutes.permissionsScreen),
                         ),
                         _buildScreenTitle(
                           context,
-                          screenTitle: "Choose a Role",
+                          screenTitle: "FaceTap - Choose a Role",
                           onTapScreenTitle: () => onTapScreenTitle(
                               context, AppRoutes.chooseARoleScreen),
                         ),
                         _buildScreenTitle(
                           context,
-                          screenTitle: "Sign in as Student",
+                          screenTitle: "FaceTap - Sign in as Student",
                           onTapScreenTitle: () => onTapScreenTitle(
                               context, AppRoutes.signInAsStudentScreen),
                         ),
                         _buildScreenTitle(
                           context,
-                          screenTitle: "SD - Home (Facial Recognition)",
+                          screenTitle: "FaceTap:Student - First Time User",
                           onTapScreenTitle: () => onTapScreenTitle(
                               context, AppRoutes.sdHomeFacialRecognitionScreen),
                         ),
                         _buildScreenTitle(
                           context,
-                          screenTitle: "Splash",
+                          screenTitle: "FaceTap - Get Started",
                           onTapScreenTitle: () =>
                               onTapScreenTitle(context, AppRoutes.splashScreen),
                         ),
                         _buildScreenTitle(
                           context,
-                          screenTitle: "Student Dashboard - Home",
+                          screenTitle: "FaceTap:Student - Home",
                           onTapScreenTitle: () => onTapScreenTitle(
                               context, AppRoutes.studentDashboardHomeScreen),
                         ),
                         _buildScreenTitle(
                           context,
-                          screenTitle: "SD - Attendance One",
+                          screenTitle: "FaceTap:Student - Attendance One",
                           onTapScreenTitle: () => onTapScreenTitle(
                               context, AppRoutes.sdAttendanceOneScreen),
                         ),
                         _buildScreenTitle(
                           context,
-                          screenTitle: "SD - Notification",
+                          screenTitle: "FaceTap:Student - Notification",
                           onTapScreenTitle: () => onTapScreenTitle(
                               context, AppRoutes.sdNotificationScreen),
                         ),
                         _buildScreenTitle(
                           context,
-                          screenTitle: "SD - Settings",
+                          screenTitle: "FaceTap:Student - Settings",
                           onTapScreenTitle: () => onTapScreenTitle(
                               context, AppRoutes.sdSettingsScreen),
                         ),
                         _buildScreenTitle(
                           context,
-                          screenTitle: "SD - Notification One",
+                          screenTitle: "FaceTap:Student - Notification One",
                           onTapScreenTitle: () => onTapScreenTitle(
-                              context, AppRoutes.sdNotificationOneScreen),
+                              context, AppRoutes.edNotificationScreen),
                         ),
                         _buildScreenTitle(
                           context,
@@ -107,31 +107,31 @@ class AppNavigationScreen extends StatelessWidget {
                         ),
                         _buildScreenTitle(
                           context,
-                          screenTitle: "Teacher Dashboard - Home",
+                          screenTitle: "FaceTap:Educator - Home",
                           onTapScreenTitle: () => onTapScreenTitle(
                               context, AppRoutes.teacherDashboardHomeScreen),
                         ),
                         _buildScreenTitle(
                           context,
-                          screenTitle: "ED - Settings",
+                          screenTitle: "FaceTap:Educator - Settings",
                           onTapScreenTitle: () => onTapScreenTitle(
                               context, AppRoutes.edSettingsScreen),
                         ),
                         _buildScreenTitle(
                           context,
-                          screenTitle: "ED - Attendance One",
+                          screenTitle: "FaceTap:Educator - Attendance One",
                           onTapScreenTitle: () => onTapScreenTitle(
                               context, AppRoutes.edAttendanceOneScreen),
                         ),
                         _buildScreenTitle(
                           context,
-                          screenTitle: "ED - Add/Delete",
+                          screenTitle: "FaceTap:Educator - Add/Delete",
                           onTapScreenTitle: () => onTapScreenTitle(
                               context, AppRoutes.edAddDeleteScreen),
                         ),
                         _buildScreenTitle(
                           context,
-                          screenTitle: "ED - Attendance",
+                          screenTitle: "FaceTap:Educator - Attendance",
                           onTapScreenTitle: () => onTapScreenTitle(
                               context, AppRoutes.edAttendanceScreen),
                         ),

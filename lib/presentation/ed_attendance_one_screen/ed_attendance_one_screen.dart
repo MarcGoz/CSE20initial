@@ -1,9 +1,10 @@
-import '../ed_attendance_one_screen/widgets/edattendanceone_item_widget.dart';
+import '../sd_attendance_one_screen/widgets/sdattendanceone_item_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:facetap/core/app_export.dart';
 import 'package:facetap/widgets/app_bar/appbar_trailing_circleimage.dart';
 import 'package:facetap/widgets/app_bar/custom_app_bar.dart';
 import 'package:facetap/widgets/custom_bottom_bar.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class EdAttendanceOneScreen extends StatelessWidget {
   EdAttendanceOneScreen({Key? key}) : super(key: key);
@@ -42,11 +43,11 @@ class EdAttendanceOneScreen extends StatelessWidget {
             children: [
               TextSpan(
                 text: "Fac".toUpperCase(),
-                style: CustomTextStyles.headlineLargeBlack90001,
+                style: theme.textTheme.headlineLarge,
               ),
               TextSpan(
                 text: "E".toUpperCase(),
-                style: CustomTextStyles.headlineLargeBlack90001,
+                style: theme.textTheme.headlineLarge,
               ),
               TextSpan(
                 text: "TAP".toUpperCase(),
@@ -60,7 +61,10 @@ class EdAttendanceOneScreen extends StatelessWidget {
       actions: [
         AppbarTrailingCircleimage(
           imagePath: ImageConstant.imgEllipse8,
-          margin: EdgeInsets.symmetric(horizontal: 20.h, vertical: 5.v),
+          margin: EdgeInsets.symmetric(
+            horizontal: 20.h,
+            vertical: 5.v,
+          ),
         ),
       ],
     );
@@ -70,69 +74,67 @@ class EdAttendanceOneScreen extends StatelessWidget {
     return Row(
       children: [
         Text("Attendance", style: CustomTextStyles.titleLargeBold),
-        SizedBox(width: 20.h),
-        Expanded(
-          child: Container(
-            height: 25.h,
-            margin: EdgeInsets.only(top: 3.v, bottom: 2.v),
-            padding: EdgeInsets.symmetric(horizontal: 10.h, vertical: 6.v),
-            decoration: AppDecoration.outlineBlack900011.copyWith(
-              borderRadius: BorderRadius.circular(20.0),
-            ),
-            child: Row(
-              children: [
-                Expanded(
-                  child: TextField(
-                    decoration: InputDecoration(
-                      border: InputBorder.none,
-                      hintText: "Enter class code",
-                      hintStyle: CustomTextStyles.bodySmallGray400,
-                    ),
-                    style: CustomTextStyles.bodySmallGray400,
-                    onChanged: (value) {},
-                  ),
-                ),
-                CustomImageView(
-                  imagePath: ImageConstant.imgVectorPrimary15x18,
-                  height: 15.v,
-                  width: 18.h,
-                  margin: EdgeInsets.only(left: 6.h, top: 7.v, bottom: 6.v),
-                ),
-              ],
+        Expanded(child: Container()), // Use Expanded widget
+        _buildAddClassButton(), // Adjusted spacing between "Attendance" and text field
+      ],
+    );
+  }
+
+  Widget _buildAddClassButton() {
+    return Padding(
+      padding: EdgeInsets.all(16.0), // Adjust the padding as needed
+      child: SizedBox(
+        height: 40, // Set the desired width
+        width: 140, // Set the desired width
+        child: ElevatedButton.icon(
+          onPressed: () {
+            // Add your logic for the button click here
+          },
+          style: CustomButtonStyles.outlinePrimaryBL4, // Use the outlined style here
+          icon: Icon(
+            FontAwesomeIcons.plus,
+            color: Colors.white,
+          ),
+          label: Text(
+            "Add Class",
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 12,
+              fontWeight: FontWeight.bold,
             ),
           ),
         ),
-      ],
+      ),
     );
   }
 
   Widget _buildSDAttendanceOne(BuildContext context) {
     return Expanded(
-      child: GridView.count(
-        crossAxisCount: 2,
-        crossAxisSpacing: 20.0,
-        mainAxisSpacing: 20.0,
-        padding: EdgeInsets.symmetric(horizontal: 10.0),
-        children: [
-          _buildDashboardItem(
-            context,
-            "CSE20",
-            "CSE101",
-            Colors.red,
-            Colors.red.withOpacity(0.7),
-            _buildPlaceholderContainer("CSE20"),
-            "80%",
-          ),
-          _buildDashboardItem(
-            context,
-            "History",
-            "HST202",
-            Color(0xFFF9B572),
-            Color(0xFFF9B572).withOpacity(0.7),
-            _buildPlaceholderContainer("History"),
-            "90%",
-          ),
-        ],
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          return GridView.builder(
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: constraints.maxWidth < 600 ? 2 : 3,
+              crossAxisSpacing: 20.0,
+              mainAxisSpacing: 20.0,
+              childAspectRatio: MediaQuery.of(context).size.width /
+                  (MediaQuery.of(context).size.height / 1.5),
+            ),
+            padding: EdgeInsets.symmetric(horizontal: 10.0),
+            itemCount: 1, // Adjust the itemCount based on your data
+            itemBuilder: (context, index) {
+              return _buildDashboardItem(
+                context,
+                "CSE20",
+                "XYZ789",
+                Color(0xFFF9B572),
+                Color(0xFFF9B572).withOpacity(0.7),
+                _buildPlaceholderContainer("CSE20"),
+                "80%",
+              );
+            },
+          );
+        },
       ),
     );
   }
@@ -166,7 +168,7 @@ class EdAttendanceOneScreen extends StatelessWidget {
                     style: TextStyle(
                       color: Colors.black,
                       fontWeight: FontWeight.bold,
-                      fontSize: 32.0,
+                      fontSize: 20.0,
                     ),
                   ),
                   SizedBox(height: 16.0),
@@ -174,7 +176,7 @@ class EdAttendanceOneScreen extends StatelessWidget {
                     "Class Code: ${subjectName.toUpperCase()}123",
                     style: TextStyle(
                       color: Colors.grey,
-                      fontSize: 18.0,
+                      fontSize: 12.0,
                     ),
                   ),
                 ],
@@ -244,22 +246,23 @@ class EdAttendanceOneScreen extends StatelessWidget {
       ),
     );
   }
+
   Widget _buildBottomBar(BuildContext context) {
     return CustomBottomBar(
       onChanged: (BottomBarEnum type) {
         switch (type) {
           case BottomBarEnum.Attendance:
-            Navigator.of(context).pushNamed(AppRoutes.sdAttendanceOneScreen);
+            Navigator.of(context).pushNamed(AppRoutes.edAttendanceOneScreen);
             break;
           case BottomBarEnum.Notification:
-            Navigator.of(context).pushNamed(AppRoutes.sdNotificationScreen);
+            Navigator.of(context).pushNamed(AppRoutes.edNotificationScreen);
             break;
           case BottomBarEnum.Settings:
-            Navigator.of(context).pushNamed(AppRoutes.sdSettingsScreen);
+            Navigator.of(context).pushNamed(AppRoutes.edSettingsScreen);
             break;
           case BottomBarEnum.Home:
             Navigator.of(context)
-                .pushNamed(AppRoutes.studentDashboardHomeScreen);
+                .pushNamed(AppRoutes.teacherDashboardHomeScreen);
             break;
         }
       },
@@ -270,14 +273,12 @@ class EdAttendanceOneScreen extends StatelessWidget {
     );
   }
 
-}
-
   onTapSubject(BuildContext context, String subjectName) {
     print("Tapped on $subjectName");
     // Navigate to the corresponding screen for the selected subject
     if (subjectName == "CSE20") {
-      Navigator.of(context).pushNamed(AppRoutes.edAttendanceScreen);
+      Navigator.of(context).pushNamed(AppRoutes.sdAttendanceScreen);
     }
   }
 
-
+}

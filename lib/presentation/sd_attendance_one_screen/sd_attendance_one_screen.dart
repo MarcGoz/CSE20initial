@@ -40,31 +40,37 @@ class SdAttendanceOneScreen extends StatelessWidget {
       title: Padding(
         padding: EdgeInsets.only(left: 20.h),
         child: RichText(
-          text: TextSpan(children: [
-            TextSpan(
-              text: "Fac".toUpperCase(),
-              style: CustomTextStyles.headlineLargeBlack90001,
-            ),
-            TextSpan(
-              text: "E".toUpperCase(),
-              style: CustomTextStyles.headlineLargeBlack90001,
-            ),
-            TextSpan(
-              text: "TAP".toUpperCase(),
-              style: CustomTextStyles.headlineLargePrimary,
-            ),
-          ]),
+          text: TextSpan(
+            children: [
+              TextSpan(
+                text: "Fac".toUpperCase(),
+                style: theme.textTheme.headlineLarge,
+              ),
+              TextSpan(
+                text: "E".toUpperCase(),
+                style: theme.textTheme.headlineLarge,
+              ),
+              TextSpan(
+                text: "TAP".toUpperCase(),
+                style: CustomTextStyles.headlineLargePrimary,
+              ),
+            ],
+          ),
           textAlign: TextAlign.left,
         ),
       ),
       actions: [
         AppbarTrailingCircleimage(
           imagePath: ImageConstant.imgEllipse8,
-          margin: EdgeInsets.symmetric(horizontal: 20.h, vertical: 5.v),
+          margin: EdgeInsets.symmetric(
+            horizontal: 20.h,
+            vertical: 5.v,
+          ),
         ),
       ],
     );
   }
+
 
   Widget _buildAttendance(BuildContext context) {
     return Row(
@@ -73,11 +79,19 @@ class SdAttendanceOneScreen extends StatelessWidget {
         SizedBox(width: 20.h), // Adjusted spacing between "Attendance" and text field
         Expanded(
           child: Container(
-            height: 25.h,
             margin: EdgeInsets.only(top: 3.v, bottom: 2.v),
             padding: EdgeInsets.symmetric(horizontal: 10.h, vertical: 6.v),
-            decoration: AppDecoration.outlineBlack900011.copyWith(
+            decoration: BoxDecoration(
+              color: Colors.white,
               borderRadius: BorderRadius.circular(20.0),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.2),
+                  blurRadius: 6.0,
+                  spreadRadius: 0.0,
+                  offset: Offset(0, 2),
+                ),
+              ],
             ),
             child: Row(
               children: [
@@ -94,11 +108,30 @@ class SdAttendanceOneScreen extends StatelessWidget {
                     },
                   ),
                 ),
-                CustomImageView(
-                  imagePath: ImageConstant.imgVectorPrimary15x18,
-                  height: 15.v,
-                  width: 18.h,
-                  margin: EdgeInsets.only(left: 6.h, top: 7.v, bottom: 6.v),
+                GestureDetector(
+                  onTap: () {
+                    // Add your search logic here
+                  },
+                  child: Container(
+                    padding: EdgeInsets.all(8.0),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(20.0),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.2),
+                          blurRadius: 6.0,
+                          spreadRadius: 0.0,
+                          offset: Offset(0, 2),
+                        ),
+                      ],
+                    ),
+                    child: CustomImageView(
+                      imagePath: ImageConstant.imgVectorPrimary15x18,
+                      height: 15.v,
+                      width: 18.h,
+                    ),
+                  ),
                 ),
               ],
             ),
@@ -110,31 +143,31 @@ class SdAttendanceOneScreen extends StatelessWidget {
 
   Widget _buildSDAttendanceOne(BuildContext context) {
     return Expanded(
-      child: GridView.count(
-        crossAxisCount: 2,
-        crossAxisSpacing: 20.0,
-        mainAxisSpacing: 20.0,
-        padding: EdgeInsets.symmetric(horizontal: 10.0),
-        children: [
-          _buildDashboardItem(
-            context,
-            "PTF",
-            "ABC123",
-            Colors.red,
-            Colors.red.withOpacity(0.7),
-            _buildPlaceholderContainer("PTF"),
-            "20%",
-          ),
-          _buildDashboardItem(
-            context,
-            "CSE20",
-            "XYZ789",
-            Color(0xFFF9B572),
-            Color(0xFFF9B572).withOpacity(0.7),
-            _buildPlaceholderContainer("CSE20"),
-            "80%",
-          ),
-        ],
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          return GridView.builder(
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: constraints.maxWidth < 600 ? 2 : 3,
+              crossAxisSpacing: 20.0,
+              mainAxisSpacing: 20.0,
+              childAspectRatio: MediaQuery.of(context).size.width /
+                  (MediaQuery.of(context).size.height / 1.5),
+            ),
+            padding: EdgeInsets.symmetric(horizontal: 10.0),
+            itemCount: 1, // Adjust the itemCount based on your data
+            itemBuilder: (context, index) {
+              return _buildDashboardItem(
+                context,
+                "CSE20",
+                "XYZ789",
+                Color(0xFFF9B572),
+                Color(0xFFF9B572).withOpacity(0.7),
+                _buildPlaceholderContainer("CSE20"),
+                "80%",
+              );
+            },
+          );
+        },
       ),
     );
   }
@@ -168,7 +201,7 @@ class SdAttendanceOneScreen extends StatelessWidget {
                     style: TextStyle(
                       color: Colors.black,
                       fontWeight: FontWeight.bold,
-                      fontSize: 32.0,
+                      fontSize: 20.0,
                     ),
                   ),
                   SizedBox(height: 16.0),
@@ -176,7 +209,7 @@ class SdAttendanceOneScreen extends StatelessWidget {
                     "Class Code: ${subjectName.toUpperCase()}123",
                     style: TextStyle(
                       color: Colors.grey,
-                      fontSize: 18.0,
+                      fontSize: 12.0,
                     ),
                   ),
                 ],

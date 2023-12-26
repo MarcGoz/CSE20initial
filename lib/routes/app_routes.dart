@@ -10,7 +10,7 @@ import 'package:facetap/presentation/student_dashboard_home_screen/student_dashb
 import 'package:facetap/presentation/sd_attendance_one_screen/sd_attendance_one_screen.dart';
 import 'package:facetap/presentation/sd_notification_screen/sd_notification_screen.dart';
 import 'package:facetap/presentation/sd_settings_screen/sd_settings_screen.dart';
-import 'package:facetap/presentation/sd_notification_one_screen/sd_notification_one_screen.dart';
+import 'package:facetap/presentation/ed_notification_screen/ed_notification_screen.dart';
 import 'package:facetap/presentation/sign_in_as_educator_screen/sign_in_as_educator_screen.dart';
 import 'package:facetap/presentation/teacher_dashboard_home_screen/teacher_dashboard_home_screen.dart';
 import 'package:facetap/presentation/ed_settings_screen/ed_settings_screen.dart';
@@ -47,7 +47,7 @@ class AppRoutes {
 
   static const String sdSettingsScreen = '/sd_settings_screen';
 
-  static const String sdNotificationOneScreen = '/sd_notification_one_screen';
+  static const String edNotificationScreen = '/ed_notification_screen';
 
   static const String signInAsEducatorScreen = '/sign_in_as_educator_screen';
 
@@ -83,7 +83,7 @@ class AppRoutes {
     sdAttendanceOneScreen: (context) => SdAttendanceOneScreen(),
     sdNotificationScreen: (context) => SdNotificationScreen(),
     sdSettingsScreen: (context) => SdSettingsScreen(),
-    sdNotificationOneScreen: (context) => SdNotificationOneScreen(),
+    edNotificationScreen: (context) => EdNotificationScreen(),
 
     signInAsEducatorScreen: (context) => SignInAsEducatorScreen(),
     registerEducatorScreen: (context) => EducatorRegisterScreen(),

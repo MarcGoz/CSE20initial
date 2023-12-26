@@ -33,31 +33,28 @@ class SdAttendanceScreen extends StatelessWidget {
           child: Column(
             children: [
               SizedBox(height: 6.v),
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Padding(
-                  padding: EdgeInsets.only(
-                    left: 13.h,
-                    right: 52.h,
+              Row(
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      // Navigate to .sdAttendanceOneScreen
+                      Navigator.of(context).pushNamed(AppRoutes.sdAttendanceOneScreen);
+                    },
+                    child: CustomImageView(
+                      imagePath: ImageConstant.imgFrameBlack90001,
+                      height: 28.v,
+                      width: 18.h,
+                      margin: EdgeInsets.only(left: 10.h),
+                    ),
                   ),
-                  child: Row(
-                    children: [
-                      CustomImageView(
-                        imagePath: ImageConstant.imgFrameBlack90001,
-                        height: 28.v,
-                        width: 18.h,
-                        margin: EdgeInsets.only(top: 1.v),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(left: 29.h),
-                        child: Text(
-                          "CSE20 Attendance",
-                          style: theme.textTheme.titleLarge,
-                        ),
-                      ),
-                    ],
+                  Padding(
+                    padding: EdgeInsets.only(left: 29.h),
+                    child: Text(
+                      "CSE20 Attendance",
+                      style: theme.textTheme.titleLarge,
+                    ),
                   ),
-                ),
+                ],
               ),
               SizedBox(height: 18.v),
               _buildTwentyFive(context),

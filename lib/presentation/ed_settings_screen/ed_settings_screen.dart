@@ -9,71 +9,80 @@ import 'package:facetap/widgets/custom_bottom_bar.dart';
 import 'package:facetap/widgets/custom_outlined_button.dart';
 
 class EdSettingsScreen extends StatelessWidget {
-  EdSettingsScreen({Key? key})
-      : super(
-          key: key,
-        );
+  EdSettingsScreen({Key? key}) : super(key: key);
 
   GlobalKey<NavigatorState> navigatorKey = GlobalKey();
 
   @override
   Widget build(BuildContext context) {
-    mediaQueryData = MediaQuery.of(context);
-
     return SafeArea(
       child: Scaffold(
         appBar: _buildAppBar(context),
         body: Container(
-          width: double.maxFinite,
           padding: EdgeInsets.symmetric(
-            horizontal: 26.h,
-            vertical: 19.v,
+            horizontal: MediaQuery.of(context).size.width * 0.05,
+            vertical: MediaQuery.of(context).size.height * 0.03,
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(height: 15.v),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.015),
               Padding(
-                padding: EdgeInsets.only(left: 1.h),
+                padding: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.005),
                 child: Text(
                   "Account Settings",
                   style: CustomTextStyles.bodyMediumSecondaryContainer,
                 ),
               ),
-              SizedBox(height: 23.v),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.023),
               Padding(
                 padding: EdgeInsets.only(
-                  left: 1.h,
-                  right: 26.h,
+                  left: MediaQuery.of(context).size.width * 0.005,
+                  right: MediaQuery.of(context).size.width * 0.05,
                 ),
                 child: _buildThirty(
                   context,
                   changePassword: "Edit profile",
+                  onTap: () {
+                    // Navigate to sd_notification_screen.dart
+                    Navigator.of(context).pushNamed(AppRoutes.studentDashboardHomeScreen);
+                  },
                 ),
               ),
-              SizedBox(height: 19.v),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.019),
               Padding(
                 padding: EdgeInsets.only(
-                  left: 1.h,
-                  right: 25.h,
+                  left: MediaQuery.of(context).size.width * 0.005,
+                  right: MediaQuery.of(context).size.width * 0.048,
                 ),
                 child: _buildThirty(
                   context,
                   changePassword: "Change password",
+                  onTap: () {
+                    // Navigate to sd_notification_screen.dart
+                    Navigator.of(context).pushNamed(AppRoutes.sdNotificationScreen);
+                  },
                 ),
               ),
-              SizedBox(height: 19.v),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.019),
               Padding(
-                padding: EdgeInsets.only(right: 26.h),
+                padding: EdgeInsets.only(right: MediaQuery.of(context).size.width * 0.05),
                 child: _buildThirty(
                   context,
                   changePassword: "Delete account?",
+                  onTap: () {
+                    // Navigate to sd_settings_screen.dart
+                    Navigator.of(context).pushNamed(AppRoutes.sdSettingsScreen);
+                  },
                 ),
               ),
               Spacer(),
               CustomOutlinedButton(
                 text: "Logout",
-                margin: EdgeInsets.symmetric(horizontal: 7.h),
+                margin: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width * 0.007),
+                onPressed: () {
+                  Navigator.of(context).pushNamed(AppRoutes.chooseARoleScreen);
+                },
               ),
             ],
           ),
@@ -108,17 +117,17 @@ class EdSettingsScreen extends StatelessWidget {
       onChanged: (BottomBarEnum type) {
         switch (type) {
           case BottomBarEnum.Attendance:
-            Navigator.of(context).pushNamed(AppRoutes.sdAttendanceOneScreen);
+            Navigator.of(context).pushNamed(AppRoutes.edAttendanceOneScreen);
             break;
           case BottomBarEnum.Notification:
-            Navigator.of(context).pushNamed(AppRoutes.sdNotificationScreen);
+            Navigator.of(context).pushNamed(AppRoutes.edNotificationScreen);
             break;
           case BottomBarEnum.Settings:
-            Navigator.of(context).pushNamed(AppRoutes.sdSettingsScreen);
+            Navigator.of(context).pushNamed(AppRoutes.edSettingsScreen);
             break;
           case BottomBarEnum.Home:
             Navigator.of(context)
-                .pushNamed(AppRoutes.studentDashboardHomeScreen);
+                .pushNamed(AppRoutes.teacherDashboardHomeScreen);
             break;
         }
       },
@@ -129,31 +138,32 @@ class EdSettingsScreen extends StatelessWidget {
     );
   }
 
-
-
-  /// Common widget
   Widget _buildThirty(
-    BuildContext context, {
-    required String changePassword,
-  }) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Padding(
-          padding: EdgeInsets.only(top: 1.v),
-          child: Text(
-            changePassword,
-            style: CustomTextStyles.bodyMediumRegular15.copyWith(
-              color: appTheme.black90001,
+      BuildContext context, {
+        required String changePassword,
+        required VoidCallback onTap,
+      }) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Padding(
+            padding: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.001),
+            child: Text(
+              changePassword,
+              style: CustomTextStyles.bodyMediumRegular15.copyWith(
+                color: appTheme.black90001,
+              ),
             ),
           ),
-        ),
-        CustomImageView(
-          imagePath: ImageConstant.imgArrowRight,
-          height: 20.adaptSize,
-          width: 20.adaptSize,
-        ),
-      ],
+          CustomImageView(
+            imagePath: ImageConstant.imgArrowRight,
+            height: MediaQuery.of(context).size.width * 0.03,
+            width: MediaQuery.of(context).size.width * 0.03,
+          ),
+        ],
+      ),
     );
   }
 }

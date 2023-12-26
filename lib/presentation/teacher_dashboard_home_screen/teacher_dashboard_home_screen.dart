@@ -303,23 +303,22 @@ class TeacherDashboardHomeScreen extends StatelessWidget {
   }
 
   /// Section Widget
-
   Widget _buildBottomBar(BuildContext context) {
     return CustomBottomBar(
       onChanged: (BottomBarEnum type) {
         switch (type) {
           case BottomBarEnum.Attendance:
-            Navigator.of(context).pushNamed(AppRoutes.sdAttendanceOneScreen);
+            Navigator.of(context).pushNamed(AppRoutes.edAttendanceOneScreen);
             break;
           case BottomBarEnum.Notification:
-            Navigator.of(context).pushNamed(AppRoutes.sdNotificationScreen);
+            Navigator.of(context).pushNamed(AppRoutes.edNotificationScreen);
             break;
           case BottomBarEnum.Settings:
-            Navigator.of(context).pushNamed(AppRoutes.sdSettingsScreen);
+            Navigator.of(context).pushNamed(AppRoutes.edSettingsScreen);
             break;
           case BottomBarEnum.Home:
             Navigator.of(context)
-                .pushNamed(AppRoutes.studentDashboardHomeScreen);
+                .pushNamed(AppRoutes.teacherDashboardHomeScreen);
             break;
         }
       },

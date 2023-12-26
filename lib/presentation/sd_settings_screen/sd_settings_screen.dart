@@ -9,42 +9,36 @@ import 'package:facetap/widgets/custom_bottom_bar.dart';
 import 'package:facetap/widgets/custom_outlined_button.dart';
 
 class SdSettingsScreen extends StatelessWidget {
-  SdSettingsScreen({Key? key})
-      : super(
-    key: key,
-  );
+  SdSettingsScreen({Key? key}) : super(key: key);
 
   GlobalKey<NavigatorState> navigatorKey = GlobalKey();
 
   @override
   Widget build(BuildContext context) {
-    mediaQueryData = MediaQuery.of(context);
-
     return SafeArea(
       child: Scaffold(
         appBar: _buildAppBar(context),
         body: Container(
-          width: double.maxFinite,
           padding: EdgeInsets.symmetric(
-            horizontal: 26.h,
-            vertical: 19.v,
+            horizontal: MediaQuery.of(context).size.width * 0.05,
+            vertical: MediaQuery.of(context).size.height * 0.03,
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(height: 15.v),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.015),
               Padding(
-                padding: EdgeInsets.only(left: 1.h),
+                padding: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.005),
                 child: Text(
                   "Account Settings",
                   style: CustomTextStyles.bodyMediumSecondaryContainer,
                 ),
               ),
-              SizedBox(height: 23.v),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.023),
               Padding(
                 padding: EdgeInsets.only(
-                  left: 1.h,
-                  right: 26.h,
+                  left: MediaQuery.of(context).size.width * 0.005,
+                  right: MediaQuery.of(context).size.width * 0.05,
                 ),
                 child: _buildThirty(
                   context,
@@ -55,11 +49,11 @@ class SdSettingsScreen extends StatelessWidget {
                   },
                 ),
               ),
-              SizedBox(height: 19.v),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.019),
               Padding(
                 padding: EdgeInsets.only(
-                  left: 1.h,
-                  right: 25.h,
+                  left: MediaQuery.of(context).size.width * 0.005,
+                  right: MediaQuery.of(context).size.width * 0.048,
                 ),
                 child: _buildThirty(
                   context,
@@ -70,9 +64,9 @@ class SdSettingsScreen extends StatelessWidget {
                   },
                 ),
               ),
-              SizedBox(height: 19.v),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.019),
               Padding(
-                padding: EdgeInsets.only(right: 26.h),
+                padding: EdgeInsets.only(right: MediaQuery.of(context).size.width * 0.05),
                 child: _buildThirty(
                   context,
                   changePassword: "Delete account?",
@@ -85,7 +79,10 @@ class SdSettingsScreen extends StatelessWidget {
               Spacer(),
               CustomOutlinedButton(
                 text: "Logout",
-                margin: EdgeInsets.symmetric(horizontal: 7.h),
+                margin: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width * 0.007),
+                onPressed: () {
+                  Navigator.of(context).pushNamed(AppRoutes.chooseARoleScreen);
+                },
               ),
             ],
           ),
@@ -142,7 +139,6 @@ class SdSettingsScreen extends StatelessWidget {
   }
 
 
-  /// Common widget
   Widget _buildThirty(
       BuildContext context, {
         required String changePassword,
@@ -154,7 +150,7 @@ class SdSettingsScreen extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Padding(
-            padding: EdgeInsets.only(top: 1.v),
+            padding: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.001),
             child: Text(
               changePassword,
               style: CustomTextStyles.bodyMediumRegular15.copyWith(
@@ -164,8 +160,8 @@ class SdSettingsScreen extends StatelessWidget {
           ),
           CustomImageView(
             imagePath: ImageConstant.imgArrowRight,
-            height: 20.adaptSize,
-            width: 20.adaptSize,
+            height: MediaQuery.of(context).size.width * 0.03,
+            width: MediaQuery.of(context).size.width * 0.03,
           ),
         ],
       ),

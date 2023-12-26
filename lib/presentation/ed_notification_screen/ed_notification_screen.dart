@@ -3,16 +3,15 @@ import 'package:facetap/core/app_export.dart';
 import 'package:facetap/widgets/app_bar/appbar_trailing_circleimage.dart';
 import 'package:facetap/widgets/app_bar/custom_app_bar.dart';
 import 'package:facetap/widgets/custom_bottom_bar.dart';
-import '../sd_notification_screen/widgets/sdnotification_item_widget.dart';
 
-class SdNotificationScreen extends StatefulWidget {
-  SdNotificationScreen({Key? key}) : super(key: key);
+class EdNotificationScreen extends StatefulWidget {
+  EdNotificationScreen({Key? key}) : super(key: key);
 
   @override
   _SdNotificationScreenState createState() => _SdNotificationScreenState();
 }
 
-class _SdNotificationScreenState extends State<SdNotificationScreen> {
+class _SdNotificationScreenState extends State<EdNotificationScreen> {
   GlobalKey<NavigatorState> navigatorKey = GlobalKey();
   List<String> notifications = ["Notification 1", "Notification 2", "Notification 3"];
 
@@ -93,7 +92,7 @@ class _SdNotificationScreenState extends State<SdNotificationScreen> {
       shrinkWrap: true,
       itemCount: notifications.length,
       itemBuilder: (context, index) {
-        return SdnotificationItemWidgetWithCross(
+        return EdnotificationItemWidgetWithCross(
           text: notifications[index],
           onRemove: () {
             setState(() {
@@ -110,32 +109,33 @@ class _SdNotificationScreenState extends State<SdNotificationScreen> {
       onChanged: (BottomBarEnum type) {
         switch (type) {
           case BottomBarEnum.Attendance:
-            Navigator.of(context).pushNamed(AppRoutes.sdAttendanceOneScreen);
+            Navigator.of(context).pushNamed(AppRoutes.edAttendanceOneScreen);
             break;
           case BottomBarEnum.Notification:
-            Navigator.of(context).pushNamed(AppRoutes.sdNotificationScreen);
+            Navigator.of(context).pushNamed(AppRoutes.edNotificationScreen);
             break;
           case BottomBarEnum.Settings:
-            Navigator.of(context).pushNamed(AppRoutes.sdSettingsScreen);
+            Navigator.of(context).pushNamed(AppRoutes.edSettingsScreen);
             break;
           case BottomBarEnum.Home:
             Navigator.of(context)
-                .pushNamed(AppRoutes.studentDashboardHomeScreen);
+                .pushNamed(AppRoutes.teacherDashboardHomeScreen);
             break;
         }
       },
       getCurrentPage: () {
+        // Replace with your logic to determine the current page
         return BottomBarEnum.Notification;
       },
     );
   }
 }
 
-class SdnotificationItemWidgetWithCross extends StatelessWidget {
+class EdnotificationItemWidgetWithCross extends StatelessWidget {
   final String text;
   final VoidCallback onRemove;
 
-  const SdnotificationItemWidgetWithCross({
+  const EdnotificationItemWidgetWithCross({
     required this.text,
     required this.onRemove,
   });
