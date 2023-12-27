@@ -3,10 +3,9 @@ import 'package:facetap/core/app_export.dart';
 import 'package:facetap/widgets/app_bar/appbar_trailing_circleimage.dart';
 import 'package:facetap/widgets/app_bar/custom_app_bar.dart';
 import 'package:facetap/widgets/custom_bottom_bar.dart';
-import '../sd_notification_screen/widgets/sdnotification_item_widget.dart';
 
 class SdNotificationScreen extends StatefulWidget {
-  SdNotificationScreen({Key? key}) : super(key: key);
+  const SdNotificationScreen({Key? key}) : super(key: key);
 
   @override
   _SdNotificationScreenState createState() => _SdNotificationScreenState();
@@ -92,14 +91,14 @@ class _SdNotificationScreenState extends State<SdNotificationScreen> {
 
   Widget _buildSDNotification(BuildContext context) {
     return notifications.isEmpty
-        ? Center(
+        ? const Center(
       child: Text(
         "No notifications available",
         style: TextStyle(fontSize: 16),
       ),
     )
         : ListView.builder(
-      physics: BouncingScrollPhysics(),
+      physics: const BouncingScrollPhysics(),
       shrinkWrap: true,
       itemCount: notifications.length,
       itemBuilder: (context, index) {
@@ -163,11 +162,11 @@ class SdnotificationItemWidgetWithCross extends StatelessWidget {
             Expanded(
               child: Text(
                 text,
-                style: TextStyle(fontSize: 16),
+                style: const TextStyle(fontSize: 16),
               ),
             ),
             IconButton(
-              icon: Icon(Icons.clear),
+              icon: const Icon(Icons.clear),
               onPressed: onRemove,
             ),
           ],

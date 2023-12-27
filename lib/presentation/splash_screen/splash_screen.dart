@@ -55,7 +55,7 @@ class SplashScreen extends StatelessWidget {
                     ),
                   ),
                   SizedBox(height: 0.03 * screenHeight),
-                  Container(
+                  SizedBox(
                     width: 0.7 * screenWidth, // Adjust the width as needed
                     child: CustomElevatedButton(
                       height: 0.044 * screenHeight,

@@ -24,7 +24,7 @@ class EdAddDeleteScreen extends StatelessWidget {
 
   GlobalKey<NavigatorState> navigatorKey = GlobalKey();
 
-  GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -118,7 +118,7 @@ class EdAddDeleteScreen extends StatelessWidget {
                         "Monday",
                         style: CustomTextStyles.bodySmallGray600,
                       ),
-                      Spacer(),
+                      const Spacer(),
                       Container(
                         height: 12.v,
                         width: 14.h,
@@ -153,7 +153,7 @@ class EdAddDeleteScreen extends StatelessWidget {
                         "Tuesday",
                         style: CustomTextStyles.bodySmallGray600,
                       ),
-                      Spacer(),
+                      const Spacer(),
                       Container(
                         height: 12.v,
                         width: 14.h,
@@ -188,7 +188,7 @@ class EdAddDeleteScreen extends StatelessWidget {
                         "Wednesday",
                         style: CustomTextStyles.bodySmallGray600,
                       ),
-                      Spacer(),
+                      const Spacer(),
                       Container(
                         height: 12.v,
                         width: 14.h,
@@ -223,7 +223,7 @@ class EdAddDeleteScreen extends StatelessWidget {
                         "Thursday",
                         style: CustomTextStyles.bodySmallGray600,
                       ),
-                      Spacer(),
+                      const Spacer(),
                       Container(
                         height: 12.v,
                         width: 14.h,
@@ -258,7 +258,7 @@ class EdAddDeleteScreen extends StatelessWidget {
                         "Friday",
                         style: CustomTextStyles.bodySmallGray600,
                       ),
-                      Spacer(),
+                      const Spacer(),
                       Container(
                         height: 12.v,
                         width: 14.h,
@@ -456,7 +456,7 @@ class EdAddDeleteScreen extends StatelessWidget {
       width: 127.h,
       text: "SAVE".toUpperCase(),
       rightIcon: Container(
-        margin: EdgeInsets.only(),
+        margin: const EdgeInsets.only(),
         child: CustomImageView(
           imagePath: ImageConstant.imgRoundedRectangle1Copy9,
           height: 26.v,

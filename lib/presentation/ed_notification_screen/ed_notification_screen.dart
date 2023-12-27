@@ -5,7 +5,7 @@ import 'package:facetap/widgets/app_bar/custom_app_bar.dart';
 import 'package:facetap/widgets/custom_bottom_bar.dart';
 
 class EdNotificationScreen extends StatefulWidget {
-  EdNotificationScreen({Key? key}) : super(key: key);
+  const EdNotificationScreen({Key? key}) : super(key: key);
 
   @override
   _SdNotificationScreenState createState() => _SdNotificationScreenState();
@@ -91,14 +91,14 @@ class _SdNotificationScreenState extends State<EdNotificationScreen> {
 
   Widget _buildSDNotification(BuildContext context) {
     return notifications.isEmpty
-        ? Center(
+        ? const Center(
       child: Text(
         "No notifications available",
         style: TextStyle(fontSize: 16),
       ),
     )
         : ListView.builder(
-      physics: BouncingScrollPhysics(),
+      physics: const BouncingScrollPhysics(),
       shrinkWrap: true,
       itemCount: notifications.length,
       itemBuilder: (context, index) {
@@ -163,11 +163,11 @@ class EdnotificationItemWidgetWithCross extends StatelessWidget {
             Expanded(
               child: Text(
                 text,
-                style: TextStyle(fontSize: 16),
+                style: const TextStyle(fontSize: 16),
               ),
             ),
             IconButton(
-              icon: Icon(Icons.clear),
+              icon: const Icon(Icons.clear),
               onPressed: onRemove,
             ),
           ],

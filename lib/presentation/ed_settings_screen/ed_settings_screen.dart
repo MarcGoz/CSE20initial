@@ -12,14 +12,14 @@ import 'package:facetap/widgets/custom_elevated_button.dart';
 import 'package:image_picker/image_picker.dart';
 
 class EdSettingsScreen extends StatefulWidget {
-  EdSettingsScreen({Key? key}) : super(key: key);
+  const EdSettingsScreen({Key? key}) : super(key: key);
 
   @override
   _EdSettingsScreenState createState() => _EdSettingsScreenState();
 }
 
 class _EdSettingsScreenState extends State<EdSettingsScreen> {
-  List<bool> _isExpandedList = [false, false, false];
+  final List<bool> _isExpandedList = [false, false, false];
 
   PreferredSizeWidget _buildAppBar(BuildContext context) {
     return CustomAppBar(
@@ -96,7 +96,7 @@ class _EdSettingsScreenState extends State<EdSettingsScreen> {
             children: formFields.map((field) => Column(
               children: [
                 field,
-                SizedBox(height: 15.0), // Adjust the height as needed
+                const SizedBox(height: 15.0), // Adjust the height as needed
               ],
             )).toList(),
           ),
@@ -133,7 +133,7 @@ class _EdSettingsScreenState extends State<EdSettingsScreen> {
                 title: "Edit profile",
                 formFields: [
                   TextFormField(
-                    decoration: InputDecoration(labelText: "Name"),
+                    decoration: const InputDecoration(labelText: "Name"),
                   ),
                   InkWell(
                     onTap: () async {
@@ -144,12 +144,12 @@ class _EdSettingsScreenState extends State<EdSettingsScreen> {
                       }
                     },
                     child: Container(
-                      padding: EdgeInsets.all(8.0),
+                      padding: const EdgeInsets.all(8.0),
                       decoration: BoxDecoration(
                         border: Border.all(color: Colors.grey),
                         borderRadius: BorderRadius.circular(4.0),
                       ),
-                      child: Row(
+                      child: const Row(
                         children: [
                           Icon(Icons.image),
                           SizedBox(width: 8.0),
@@ -174,11 +174,11 @@ class _EdSettingsScreenState extends State<EdSettingsScreen> {
                 formFields: [
                   TextFormField(
                     obscureText: true,
-                    decoration: InputDecoration(labelText: "Old Password"),
+                    decoration: const InputDecoration(labelText: "Old Password"),
                   ),
                   TextFormField(
                     obscureText: true,
-                    decoration: InputDecoration(labelText: "New Password"),
+                    decoration: const InputDecoration(labelText: "New Password"),
                   ),
                   CustomElevatedButton(
                     onPressed: () {
@@ -204,7 +204,7 @@ class _EdSettingsScreenState extends State<EdSettingsScreen> {
                 ],
                 index: 2,
               ),
-              Spacer(),
+              const Spacer(),
               CustomOutlinedButton(
                 text: "Logout",
                 margin: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width * 0.007),
@@ -226,14 +226,14 @@ void _showDeleteConfirmationDialog(BuildContext context) {
     context: context,
     builder: (BuildContext context) {
       return AlertDialog(
-        title: Text("Confirm Delete"),
-        content: Text("Are you sure you want to delete your account? This action cannot be undone."),
+        title: const Text("Confirm Delete"),
+        content: const Text("Are you sure you want to delete your account? This action cannot be undone."),
         actions: [
           TextButton(
             onPressed: () {
               Navigator.of(context).pop(); // Close the dialog
             },
-            child: Text("Cancel"),
+            child: const Text("Cancel"),
           ),
           TextButton(
             onPressed: () {
@@ -242,7 +242,7 @@ void _showDeleteConfirmationDialog(BuildContext context) {
               Navigator.of(context).pushNamed(AppRoutes.signInAsEducatorScreen);
               // Implement the logic to delete the account
             },
-            child: Text("Delete"),
+            child: const Text("Delete"),
           ),
         ],
       );
@@ -255,14 +255,14 @@ void _showLogoutConfirmationDialog(BuildContext context) {
     context: context,
     builder: (BuildContext context) {
       return AlertDialog(
-        title: Text("Confirm Logout"),
-        content: Text("Are you sure you want to log out?"),
+        title: const Text("Confirm Logout"),
+        content: const Text("Are you sure you want to log out?"),
         actions: [
           TextButton(
             onPressed: () {
               Navigator.of(context).pop(); // Close the dialog
             },
-            child: Text("Cancel"),
+            child: const Text("Cancel"),
           ),
           TextButton(
             onPressed: () {
@@ -270,7 +270,7 @@ void _showLogoutConfirmationDialog(BuildContext context) {
               Navigator.of(context).pop(); // Close the dialog
               Navigator.of(context).pushNamed(AppRoutes.signInAsEducatorScreen);
             },
-            child: Text("Logout"),
+            child: const Text("Logout"),
           ),
         ],
       );

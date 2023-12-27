@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:facetap/core/app_export.dart';
-import 'package:facetap/widgets/app_bar/appbar_subtitle_one.dart';
 import 'package:facetap/widgets/app_bar/custom_app_bar.dart';
 import 'package:facetap/widgets/custom_checkbox_button.dart';
 import 'package:facetap/widgets/custom_elevated_button.dart';
 
 class PermissionsScreen extends StatefulWidget {
-  PermissionsScreen({Key? key}) : super(key: key);
+  const PermissionsScreen({Key? key}) : super(key: key);
 
   @override
   _PermissionsScreenState createState() => _PermissionsScreenState();
@@ -32,13 +31,13 @@ class _PermissionsScreenState extends State<PermissionsScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text("Face Tap for Students", style: Theme.of(context).textTheme.headlineSmall),
-              SizedBox(height: 14),
+              const SizedBox(height: 14),
               _buildDescription(),
-              SizedBox(height: 5),
+              const SizedBox(height: 5),
               Expanded(child: _buildPermissions()),
-              SizedBox(height: 24),
+              const SizedBox(height: 24),
               _buildAllowButton(),
-              SizedBox(height: 5),
+              const SizedBox(height: 5),
             ],
           ),
         ),
@@ -50,7 +49,7 @@ class _PermissionsScreenState extends State<PermissionsScreen> {
     return CustomAppBar(
       leadingWidth: 80,
       leading: IconButton(
-        icon: Icon(Icons.arrow_back),
+        icon: const Icon(Icons.arrow_back),
         onPressed: () {
           onTapArrowLeft(context);
         },
@@ -61,8 +60,8 @@ class _PermissionsScreenState extends State<PermissionsScreen> {
   Widget _buildDescription() {
     return Container(
       width: double.infinity,
-      margin: EdgeInsets.only(right: 8),
-      child: Text(
+      margin: const EdgeInsets.only(right: 8),
+      child: const Text(
         "Please give us permission to access the following for fast and wide facial detection.",
         maxLines: 3,
         overflow: TextOverflow.ellipsis,
@@ -73,7 +72,7 @@ class _PermissionsScreenState extends State<PermissionsScreen> {
 
   Widget _buildPermissions() {
     return Padding(
-      padding: EdgeInsets.fromLTRB(7, 20, 7, 0), // Add top margin
+      padding: const EdgeInsets.fromLTRB(7, 20, 7, 0), // Add top margin
       child: ListView(
         shrinkWrap: true,
         children: [
@@ -86,7 +85,7 @@ class _PermissionsScreenState extends State<PermissionsScreen> {
               });
             },
           ),
-          SizedBox(height: 30),
+          const SizedBox(height: 30),
           CustomCheckboxButton(
             text: "Allow access to Location",
             value: locationPermissionChecked,
@@ -96,7 +95,7 @@ class _PermissionsScreenState extends State<PermissionsScreen> {
               });
             },
           ),
-          SizedBox(height: 30),
+          const SizedBox(height: 30),
           CustomCheckboxButton(
             text: "I read the Privacy policy",
             isExpandedText: false,
@@ -107,7 +106,7 @@ class _PermissionsScreenState extends State<PermissionsScreen> {
               });
             },
           ),
-          SizedBox(height: 30),
+          const SizedBox(height: 30),
           CustomCheckboxButton(
             text: "I accept the terms and conditions",
             isExpandedText: false,
@@ -127,7 +126,7 @@ class _PermissionsScreenState extends State<PermissionsScreen> {
     return CustomElevatedButton(
       height: 43,
       text: "Allow".toUpperCase(),
-      margin: EdgeInsets.symmetric(horizontal: 8),
+      margin: const EdgeInsets.symmetric(horizontal: 8),
       onPressed: () => onTapAllow(context),
       alignment: Alignment.center,
     );

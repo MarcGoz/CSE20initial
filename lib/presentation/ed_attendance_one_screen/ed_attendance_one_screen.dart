@@ -89,7 +89,7 @@ class EdAttendanceOneScreen extends StatelessWidget {
 
   Widget _buildAddClassButton() {
     return Padding(
-      padding: EdgeInsets.all(16.0), // Adjust the padding as needed
+      padding: const EdgeInsets.all(16.0), // Adjust the padding as needed
       child: SizedBox(
         height: 40, // Set the desired width
         width: 140, // Set the desired width
@@ -98,11 +98,11 @@ class EdAttendanceOneScreen extends StatelessWidget {
             // Add your logic for the button click here
           },
           style: CustomButtonStyles.outlinePrimaryBL4, // Use the outlined style here
-          icon: Icon(
+          icon: const Icon(
             FontAwesomeIcons.plus,
             color: Colors.white,
           ),
-          label: Text(
+          label: const Text(
             "Add Class",
             style: TextStyle(
               color: Colors.white,
@@ -127,15 +127,15 @@ class EdAttendanceOneScreen extends StatelessWidget {
               childAspectRatio: MediaQuery.of(context).size.width /
                   (MediaQuery.of(context).size.height / 1.5),
             ),
-            padding: EdgeInsets.symmetric(horizontal: 10.0),
+            padding: const EdgeInsets.symmetric(horizontal: 10.0),
             itemCount: 1, // Adjust the itemCount based on your data
             itemBuilder: (context, index) {
               return _buildDashboardItem(
                 context,
                 "CSE20",
                 "XYZ789",
-                Color(0xFFF9B572),
-                Color(0xFFF9B572).withOpacity(0.7),
+                const Color(0xFFF9B572),
+                const Color(0xFFF9B572).withOpacity(0.7),
                 _buildPlaceholderContainer("CSE20"),
                 "80%",
               );
@@ -161,7 +161,7 @@ class EdAttendanceOneScreen extends StatelessWidget {
                   color: Colors.black.withOpacity(0.2),
                   blurRadius: 24.0,
                   spreadRadius: 6.0,
-                  offset: Offset(0, 12),
+                  offset: const Offset(0, 12),
                 ),
               ],
             ),
@@ -172,16 +172,16 @@ class EdAttendanceOneScreen extends StatelessWidget {
                 children: [
                   Text(
                     subjectName,
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: Colors.black,
                       fontWeight: FontWeight.bold,
                       fontSize: 20.0,
                     ),
                   ),
-                  SizedBox(height: 16.0),
+                  const SizedBox(height: 16.0),
                   Text(
                     "Class Code: ${subjectName.toUpperCase()}123",
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: Colors.grey,
                       fontSize: 12.0,
                     ),
@@ -217,7 +217,7 @@ class EdAttendanceOneScreen extends StatelessWidget {
               color: Colors.black.withOpacity(0.2),
               blurRadius: 24.0,
               spreadRadius: 6.0,
-              offset: Offset(0, 12),
+              offset: const Offset(0, 12),
             ),
           ],
         ),
@@ -232,7 +232,7 @@ class EdAttendanceOneScreen extends StatelessWidget {
               right: 16.0,
               child: Text(
                 gradePercentage,
-                style: TextStyle(
+                style: const TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.bold,
                   fontSize: 24.0,

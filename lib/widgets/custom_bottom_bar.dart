@@ -4,7 +4,7 @@ import 'package:facetap/core/app_export.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class CustomBottomBar extends StatefulWidget {
-  CustomBottomBar({required this.onChanged, required this.getCurrentPage});
+  CustomBottomBar({super.key, required this.onChanged, required this.getCurrentPage});
 
   Function(BottomBarEnum)? onChanged;
   BottomBarEnum Function() getCurrentPage;
@@ -86,7 +86,7 @@ class CustomBottomBarState extends State<CustomBottomBar> {
             color: appTheme.black90001.withOpacity(0.5),
             blurRadius: 5.0,
             spreadRadius: 0.0,
-            offset: Offset(
+            offset: const Offset(
               0.0,
               3.0,
             ),
@@ -172,12 +172,14 @@ class BottomMenuModel {
 }
 
 class DefaultWidget extends StatelessWidget {
+  const DefaultWidget({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Container(
       color: Colors.white,
-      padding: EdgeInsets.all(10),
-      child: Center(
+      padding: const EdgeInsets.all(10),
+      child: const Center(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.center,

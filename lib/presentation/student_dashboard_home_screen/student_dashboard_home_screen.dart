@@ -35,7 +35,7 @@ class StudentDashboardHomeScreen extends StatelessWidget {
                     text: TextSpan(
                       children: [
                         TextSpan(
-                          text: DateFormat('h:mm').format(DateTime.now()) + " ",
+                          text: "${DateFormat('h:mm').format(DateTime.now())} ",
                           style: CustomTextStyles.montserratBlack90001Light,
                         ),
                         TextSpan(
@@ -61,7 +61,7 @@ class StudentDashboardHomeScreen extends StatelessWidget {
                       // Add your onPressed logic here
                     },
                     style: ElevatedButton.styleFrom(
-                      primary: Colors.transparent, // Set the background color to transparent
+                      backgroundColor: Colors.transparent, // Set the background color to transparent
                       elevation: 0, // Remove the elevation
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadiusStyle.roundedBorder41,

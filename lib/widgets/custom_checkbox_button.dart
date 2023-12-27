@@ -70,8 +70,8 @@ class CustomCheckboxButton extends StatelessWidget {
   Widget get leftSideCheckbox => Row(
         children: [
           Padding(
+            padding: const EdgeInsets.only(right: 8),
             child: checkboxWidget,
-            padding: EdgeInsets.only(right: 8),
           ),
           isExpandedText ? Expanded(child: textWidget) : textWidget,
         ],
@@ -81,7 +81,7 @@ class CustomCheckboxButton extends StatelessWidget {
         children: [
           isExpandedText ? Expanded(child: textWidget) : textWidget,
           Padding(
-            padding: EdgeInsets.only(left: 8),
+            padding: const EdgeInsets.only(left: 8),
             child: checkboxWidget,
           ),
         ],
@@ -95,7 +95,7 @@ class CustomCheckboxButton extends StatelessWidget {
         height: iconSize ?? 18.h,
         width: iconSize ?? 18.h,
         child: Checkbox(
-          visualDensity: VisualDensity(
+          visualDensity: const VisualDensity(
             vertical: -4,
             horizontal: -4,
           ),

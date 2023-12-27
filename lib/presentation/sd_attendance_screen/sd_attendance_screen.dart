@@ -122,7 +122,7 @@ class SdAttendanceScreen extends StatelessWidget {
         },
         itemCount: 2,
         itemBuilder: (context, index) {
-          return TwentyfiveItemWidget();
+          return const TwentyfiveItemWidget();
         },
       ),
     );
@@ -133,7 +133,7 @@ class SdAttendanceScreen extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.only(left: 2.h),
       child: ListView.separated(
-        physics: NeverScrollableScrollPhysics(),
+        physics: const NeverScrollableScrollPhysics(),
         shrinkWrap: true,
         separatorBuilder: (
             context,
@@ -145,7 +145,7 @@ class SdAttendanceScreen extends StatelessWidget {
         },
         itemCount: 4,
         itemBuilder: (context, index) {
-          return MonthItemWidget();
+          return const MonthItemWidget();
         },
       ),
     );

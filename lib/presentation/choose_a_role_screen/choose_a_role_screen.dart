@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg_provider/flutter_svg_provider.dart' as fs;
 import 'package:facetap/core/app_export.dart';
 
 class ChooseARoleScreen extends StatelessWidget {
@@ -17,7 +16,7 @@ class ChooseARoleScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text("Choose Your Role", style: theme.textTheme.headlineSmall),
-                SizedBox(height: 30),
+                const SizedBox(height: 30),
                 _buildRoleButton(
                   imagePath: ImageConstant.imgVector,
                   roleText: "Students",
@@ -25,7 +24,7 @@ class ChooseARoleScreen extends StatelessWidget {
                     onTapStudent(context);
                   },
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 _buildRoleButton(
                   imagePath: ImageConstant.imgVectorPrimary,
                   roleText: "Educators",
@@ -33,7 +32,7 @@ class ChooseARoleScreen extends StatelessWidget {
                     onTapEducator(context);
                   },
                 ),
-                SizedBox(height: 30),
+                const SizedBox(height: 30),
               ],
             ),
           ),
@@ -53,8 +52,8 @@ class ChooseARoleScreen extends StatelessWidget {
         onTap: onTap,
         splashColor: Colors.grey.withOpacity(0.5),
         child: Container(
-          margin: EdgeInsets.symmetric(horizontal: 40, vertical: 10),
-          padding: EdgeInsets.all(25),
+          margin: const EdgeInsets.symmetric(horizontal: 40, vertical: 10),
+          padding: const EdgeInsets.all(25),
           width: double.infinity, // Full width
           decoration: BoxDecoration(
             color: Colors.white.withOpacity(0.9), // Adjust opacity as needed
@@ -64,7 +63,7 @@ class ChooseARoleScreen extends StatelessWidget {
                 color: Colors.grey.withOpacity(0.5),
                 spreadRadius: 2,
                 blurRadius: 5,
-                offset: Offset(0, 3),
+                offset: const Offset(0, 3),
               ),
             ],
           ),
@@ -76,7 +75,7 @@ class ChooseARoleScreen extends StatelessWidget {
                 height: 80,
                 width: 80,
               ),
-              SizedBox(height: 15),
+              const SizedBox(height: 15),
               Text(
                 roleText,
                 style: TextStyle(

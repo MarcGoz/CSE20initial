@@ -129,7 +129,7 @@ class EdAttendanceScreen extends StatelessWidget {
         },
         itemCount: 2,
         itemBuilder: (context, index) {
-          return Twentyfive1ItemWidget();
+          return const Twentyfive1ItemWidget();
         },
       ),
     );
@@ -138,7 +138,7 @@ class EdAttendanceScreen extends StatelessWidget {
   /// Section Widget
   Widget _buildMarcPogi(BuildContext context) {
     return ListView.separated(
-      physics: NeverScrollableScrollPhysics(),
+      physics: const NeverScrollableScrollPhysics(),
       shrinkWrap: true,
       separatorBuilder: (
         context,
@@ -150,7 +150,7 @@ class EdAttendanceScreen extends StatelessWidget {
       },
       itemCount: 5,
       itemBuilder: (context, index) {
-        return MarcpogiItemWidget();
+        return const MarcpogiItemWidget();
       },
     );
   }

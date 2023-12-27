@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:facetap/core/app_export.dart';
 
 class BaseButton extends StatelessWidget {
-  BaseButton({
+  const BaseButton({
     Key? key,
     required this.text,
     this.onPressed,

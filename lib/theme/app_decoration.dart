@@ -28,8 +28,8 @@ class AppDecoration {
   // Gradient decorations
   static BoxDecoration get gradientPrimaryToGreen => BoxDecoration(
         gradient: LinearGradient(
-          begin: Alignment(0.5, 0),
-          end: Alignment(0.5, 1),
+          begin: const Alignment(0.5, 0),
+          end: const Alignment(0.5, 1),
           colors: [
             theme.colorScheme.primary,
             appTheme.green400,
@@ -53,7 +53,7 @@ class AppDecoration {
             color: appTheme.black90001.withOpacity(0.2),
             spreadRadius: 2.h,
             blurRadius: 2.h,
-            offset: Offset(
+            offset: const Offset(
               0,
               5.44,
             ),
@@ -73,7 +73,7 @@ class AppDecoration {
             color: appTheme.black90001.withOpacity(0.25),
             spreadRadius: 2.h,
             blurRadius: 2.h,
-            offset: Offset(
+            offset: const Offset(
               0,
               4,
             ),
@@ -87,7 +87,7 @@ class AppDecoration {
             color: appTheme.black90001.withOpacity(0.25),
             spreadRadius: 2.h,
             blurRadius: 2.h,
-            offset: Offset(
+            offset: const Offset(
               0,
               4,
             ),

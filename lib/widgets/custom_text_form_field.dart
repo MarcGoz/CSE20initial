@@ -135,7 +135,7 @@ extension TextFormFieldStyleHelper on CustomTextFormField {
           color: appTheme.black900.withOpacity(0.39),
         ),
       );
-  static OutlineInputBorder get custom => OutlineInputBorder(
+  static OutlineInputBorder get custom => const OutlineInputBorder(
         borderSide: BorderSide.none,
       );
 }

@@ -1,6 +1,5 @@
 // SdAttendanceOneScreen.dart
 
-import '../sd_attendance_one_screen/widgets/sdattendanceone_item_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:facetap/core/app_export.dart';
 import 'package:facetap/widgets/app_bar/appbar_trailing_circleimage.dart';
@@ -96,7 +95,7 @@ class SdAttendanceOneScreen extends StatelessWidget {
                   color: Colors.black.withOpacity(0.2),
                   blurRadius: 6.0,
                   spreadRadius: 0.0,
-                  offset: Offset(0, 2),
+                  offset: const Offset(0, 2),
                 ),
               ],
             ),
@@ -120,7 +119,7 @@ class SdAttendanceOneScreen extends StatelessWidget {
                     // Add your search logic here
                   },
                   child: Container(
-                    padding: EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.all(8.0),
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(20.0),
@@ -129,7 +128,7 @@ class SdAttendanceOneScreen extends StatelessWidget {
                           color: Colors.black.withOpacity(0.2),
                           blurRadius: 6.0,
                           spreadRadius: 0.0,
-                          offset: Offset(0, 2),
+                          offset: const Offset(0, 2),
                         ),
                       ],
                     ),
@@ -160,15 +159,15 @@ class SdAttendanceOneScreen extends StatelessWidget {
               childAspectRatio: MediaQuery.of(context).size.width /
                   (MediaQuery.of(context).size.height / 1.5),
             ),
-            padding: EdgeInsets.symmetric(horizontal: 10.0),
+            padding: const EdgeInsets.symmetric(horizontal: 10.0),
             itemCount: 1, // Adjust the itemCount based on your data
             itemBuilder: (context, index) {
               return _buildDashboardItem(
                 context,
                 "CSE20",
                 "XYZ789",
-                Color(0xFFF9B572),
-                Color(0xFFF9B572).withOpacity(0.7),
+                const Color(0xFFF9B572),
+                const Color(0xFFF9B572).withOpacity(0.7),
                 _buildPlaceholderContainer("CSE20"),
                 "80%",
               );
@@ -194,7 +193,7 @@ class SdAttendanceOneScreen extends StatelessWidget {
                   color: Colors.black.withOpacity(0.2),
                   blurRadius: 24.0,
                   spreadRadius: 6.0,
-                  offset: Offset(0, 12),
+                  offset: const Offset(0, 12),
                 ),
               ],
             ),
@@ -205,16 +204,16 @@ class SdAttendanceOneScreen extends StatelessWidget {
                 children: [
                   Text(
                     subjectName,
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: Colors.black,
                       fontWeight: FontWeight.bold,
                       fontSize: 20.0,
                     ),
                   ),
-                  SizedBox(height: 16.0),
+                  const SizedBox(height: 16.0),
                   Text(
                     "Class Code: ${subjectName.toUpperCase()}123",
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: Colors.grey,
                       fontSize: 12.0,
                     ),
@@ -250,7 +249,7 @@ class SdAttendanceOneScreen extends StatelessWidget {
               color: Colors.black.withOpacity(0.2),
               blurRadius: 24.0,
               spreadRadius: 6.0,
-              offset: Offset(0, 12),
+              offset: const Offset(0, 12),
             ),
           ],
         ),
@@ -265,7 +264,7 @@ class SdAttendanceOneScreen extends StatelessWidget {
               right: 16.0,
               child: Text(
                 gradePercentage,
-                style: TextStyle(
+                style: const TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.bold,
                   fontSize: 24.0,

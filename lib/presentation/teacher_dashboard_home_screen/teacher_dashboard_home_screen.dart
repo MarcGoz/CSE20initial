@@ -268,7 +268,7 @@ class TeacherDashboardHomeScreen extends StatelessWidget {
                     style: CustomTextStyles.bodyLarge16,
                   ),
                 ),
-                Spacer(),
+                const Spacer(),
                 Padding(
                   padding: EdgeInsets.only(
                     top: 9.v,
@@ -376,7 +376,7 @@ class TeacherDashboardHomeScreen extends StatelessWidget {
             ),
           ),
         ),
-        Spacer(),
+        const Spacer(),
         Padding(
           padding: EdgeInsets.only(top: 13.v),
           child: Text(

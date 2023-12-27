@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:facetap/core/app_export.dart';
-import 'package:facetap/widgets/app_bar/appbar_subtitle_one.dart';
 import 'package:facetap/widgets/app_bar/custom_app_bar.dart';
 import 'package:facetap/widgets/custom_checkbox_button.dart';
 import 'package:facetap/widgets/custom_elevated_button.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:firebase_database/firebase_database.dart';
 
 class SignInAsStudentScreen extends StatefulWidget {
-  SignInAsStudentScreen({Key? key}) : super(key: key);
+  const SignInAsStudentScreen({Key? key}) : super(key: key);
 
   @override
   _SignInAsStudentScreenState createState() => _SignInAsStudentScreenState();
+
 }
 
 class _SignInAsStudentScreenState extends State<SignInAsStudentScreen>
@@ -21,16 +20,16 @@ class _SignInAsStudentScreenState extends State<SignInAsStudentScreen>
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   bool rememberMe = false;
-  GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
     super.initState();
     _animationController = AnimationController(
       vsync: this,
-      duration: Duration(milliseconds: 400),
+      duration: const Duration(milliseconds: 400),
     );
-    _animationController.forward();
+    _animationController.forward(); // Start the animation immediately
   }
 
   @override
@@ -41,16 +40,16 @@ class _SignInAsStudentScreenState extends State<SignInAsStudentScreen>
         body: Form(
           key: _formKey,
           child: SingleChildScrollView(
-            padding: EdgeInsets.symmetric(horizontal: 24, vertical: 15),
+            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 15),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 _buildAppBar(context),
-                SizedBox(height: 52),
+                const SizedBox(height: 52),
                 Hero(
                   tag: 'logo',
                   child: AnimatedContainer(
-                    duration: Duration(milliseconds: 500),
+                    duration: const Duration(milliseconds: 100),
                     height: _animationController.isCompleted ? 120 : 0, // Increased logo size
                     child: CustomImageView(
                       imagePath: ImageConstant.imgVector,
@@ -59,22 +58,22 @@ class _SignInAsStudentScreenState extends State<SignInAsStudentScreen>
                     ),
                   ),
                 ),
-                SizedBox(height: 7),
+                const SizedBox(height: 7),
                 Text(
                   "Students",
                   style: theme.textTheme.titleLarge,
                 ),
-                SizedBox(height: 57),
+                const SizedBox(height: 57),
                 _buildEmailFormField(),
-                SizedBox(height: 22),
+                const SizedBox(height: 22),
                 _buildPasswordFormField(),
-                SizedBox(height: 22),
+                const SizedBox(height: 22),
                 _buildRememberMe(context),
-                SizedBox(height: 25),
+                const SizedBox(height: 25),
                 _buildSignInButton(),
-                SizedBox(height: 3),
+                const SizedBox(height: 3),
                 _buildRegisterButton(),
-                SizedBox(height: 3),
+                const SizedBox(height: 3),
               ],
             ),
           ),
@@ -87,7 +86,7 @@ class _SignInAsStudentScreenState extends State<SignInAsStudentScreen>
     return CustomAppBar(
       leadingWidth: 40,
       leading: IconButton(
-        icon: Icon(Icons.arrow_back),
+        icon: const Icon(Icons.arrow_back),
         onPressed: () {
           onTapArrowLeft(context);
         },
@@ -99,21 +98,21 @@ class _SignInAsStudentScreenState extends State<SignInAsStudentScreen>
     return TextFormField(
       controller: emailController,
       keyboardType: TextInputType.emailAddress,
-      style: TextStyle(color: Colors.black),
+      style: const TextStyle(color: Colors.black),
       decoration: InputDecoration(
         hintText: "Enter your email",
-        hintStyle: TextStyle(color: Colors.grey),
+        hintStyle: const TextStyle(color: Colors.grey),
         prefixIcon: Container(
-          margin: EdgeInsets.fromLTRB(12, 2, 10, 2),
-          child: FaIcon(
+          margin: const EdgeInsets.fromLTRB(12, 2, 10, 2),
+          child: const FaIcon(
             FontAwesomeIcons.solidEnvelope,
             size: 15,
             color: Colors.black,
           ),
         ),
-        prefixIconConstraints: BoxConstraints(maxHeight: 41),
-        contentPadding: EdgeInsets.only(right: 30),
-        border: UnderlineInputBorder(borderSide: BorderSide(color: Colors.black)),
+        prefixIconConstraints: const BoxConstraints(maxHeight: 41),
+        contentPadding: const EdgeInsets.only(right: 30),
+        border: const UnderlineInputBorder(borderSide: BorderSide(color: Colors.black)),
       ),
       validator: (value) {
         if (value == null || value.isEmpty) {
@@ -128,21 +127,21 @@ class _SignInAsStudentScreenState extends State<SignInAsStudentScreen>
     return TextFormField(
       controller: passwordController,
       obscureText: true,
-      style: TextStyle(color: Colors.black),
+      style: const TextStyle(color: Colors.black),
       decoration: InputDecoration(
         hintText: "Enter your password",
-        hintStyle: TextStyle(color: Colors.grey),
+        hintStyle: const TextStyle(color: Colors.grey),
         prefixIcon: Container(
-          margin: EdgeInsets.fromLTRB(12, 2, 10, 2),
-          child: FaIcon(
+          margin: const EdgeInsets.fromLTRB(12, 2, 10, 2),
+          child: const FaIcon(
             FontAwesomeIcons.lock,
             size: 15,
             color: Colors.black,
           ),
         ),
-        prefixIconConstraints: BoxConstraints(maxHeight: 41),
-        contentPadding: EdgeInsets.only(right: 30),
-        border: UnderlineInputBorder(borderSide: BorderSide(color: Colors.black)),
+        prefixIconConstraints: const BoxConstraints(maxHeight: 41),
+        contentPadding: const EdgeInsets.only(right: 30),
+        border: const UnderlineInputBorder(borderSide: BorderSide(color: Colors.black)),
       ),
       validator: (value) {
         if (value == null || value.isEmpty) {
