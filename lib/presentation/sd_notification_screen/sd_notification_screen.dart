@@ -47,6 +47,7 @@ class _SdNotificationScreenState extends State<SdNotificationScreen> {
     );
   }
 
+  /// Section Widget
   PreferredSizeWidget _buildAppBar(BuildContext context) {
     return CustomAppBar(
       title: Padding(
@@ -72,9 +73,18 @@ class _SdNotificationScreenState extends State<SdNotificationScreen> {
         ),
       ),
       actions: [
-        AppbarTrailingCircleimage(
-          imagePath: ImageConstant.imgEllipse8,
-          margin: EdgeInsets.symmetric(horizontal: 20.h, vertical: 5.v),
+        GestureDetector(
+          child: AppbarTrailingCircleimage(
+            onTap: () {
+              // Navigate to sdSettingsScreen
+              Navigator.of(context).pushNamed(AppRoutes.sdSettingsScreen);
+            },
+            imagePath: ImageConstant.imgEllipse8,
+            margin: EdgeInsets.symmetric(
+              horizontal: 20.h,
+              vertical: 5.v,
+            ),
+          ),
         ),
       ],
     );

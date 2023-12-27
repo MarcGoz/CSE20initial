@@ -66,12 +66,14 @@ class CustomTextStyles {
         fontSize: 15.fSize,
         fontWeight: FontWeight.w400,
       );
+
   static get bodyMediumSecondaryContainer =>
       theme.textTheme.bodyMedium!.copyWith(
         color: theme.colorScheme.secondaryContainer,
         fontSize: 15.fSize,
         fontWeight: FontWeight.w400,
       );
+
   static get bodyMediumThin => theme.textTheme.bodyMedium!.copyWith(
         fontSize: 13.fSize,
         fontWeight: FontWeight.w100,

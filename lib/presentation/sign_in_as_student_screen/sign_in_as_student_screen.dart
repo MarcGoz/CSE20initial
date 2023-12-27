@@ -201,7 +201,7 @@ class _SignInAsStudentScreenState extends State<SignInAsStudentScreen>
 
   void onTapArrowLeft(BuildContext context) {
     _animationController.reverse().then((value) {
-      Navigator.pop(context);
+      Navigator.pushNamed(context, AppRoutes.chooseARoleScreen);
     });
   }
 

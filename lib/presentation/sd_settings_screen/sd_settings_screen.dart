@@ -1,5 +1,4 @@
 // ignore_for_file: must_be_immutable
-
 import 'package:flutter/material.dart';
 import 'package:facetap/core/app_export.dart';
 import 'package:facetap/widgets/app_bar/appbar_leading_circleimage.dart';
@@ -7,11 +6,101 @@ import 'package:facetap/widgets/app_bar/appbar_subtitle.dart';
 import 'package:facetap/widgets/app_bar/custom_app_bar.dart';
 import 'package:facetap/widgets/custom_bottom_bar.dart';
 import 'package:facetap/widgets/custom_outlined_button.dart';
+import 'package:facetap/widgets/custom_elevated_button.dart';
+import 'package:image_picker/image_picker.dart';
 
-class SdSettingsScreen extends StatelessWidget {
+class SdSettingsScreen extends StatefulWidget {
   SdSettingsScreen({Key? key}) : super(key: key);
 
-  GlobalKey<NavigatorState> navigatorKey = GlobalKey();
+  @override
+  _SdSettingsScreenState createState() => _SdSettingsScreenState();
+}
+
+class _SdSettingsScreenState extends State<SdSettingsScreen> {
+  List<bool> _isExpandedList = [false, false, false];
+
+  PreferredSizeWidget _buildAppBar(BuildContext context) {
+    return CustomAppBar(
+      leadingWidth: 64.h,
+      leading: AppbarLeadingCircleimage(
+        imagePath: ImageConstant.imgEllipse8,
+        margin: EdgeInsets.only(
+          left: 18.h,
+          top: 5.v,
+          bottom: 5.v,
+        ),
+      ),
+      title: AppbarSubtitle(
+        text: "Yennefer Doe",
+        margin: EdgeInsets.only(left: 10.h),
+      ),
+    );
+  }
+
+  Widget _buildBottomBar(BuildContext context) {
+    return CustomBottomBar(
+      onChanged: (BottomBarEnum type) {
+        switch (type) {
+          case BottomBarEnum.Attendance:
+            Navigator.of(context).pushNamed(AppRoutes.sdAttendanceOneScreen);
+            break;
+          case BottomBarEnum.Notification:
+            Navigator.of(context).pushNamed(AppRoutes.sdNotificationScreen);
+            break;
+          case BottomBarEnum.Settings:
+            Navigator.of(context).pushNamed(AppRoutes.sdSettingsScreen);
+            break;
+          case BottomBarEnum.Home:
+            Navigator.of(context).pushNamed(AppRoutes.studentDashboardHomeScreen);
+            break;
+        }
+      },
+      getCurrentPage: () {
+        return BottomBarEnum.Settings;
+      },
+    );
+  }
+
+  Widget _buildAccordionTile(BuildContext context, {required String title, required List<Widget> formFields, required int index}) {
+    return ExpansionTile(
+      onExpansionChanged: (bool expanded) {
+        setState(() {
+          _isExpandedList[index] = expanded;
+          for (int i = 0; i < _isExpandedList.length; i++) {
+            if (i != index) {
+              _isExpandedList[i] = false;
+            }
+          }
+        });
+      },
+      title: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            title,
+            style: CustomTextStyles.bodyMediumRegular15.copyWith(
+              color: appTheme.black90001,
+            ),
+          ),
+        ],
+      ),
+      children: _isExpandedList[index]
+          ? [
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            children: formFields.map((field) => Column(
+              children: [
+                field,
+                SizedBox(height: 15.0), // Adjust the height as needed
+              ],
+            )).toList(),
+          ),
+        ),
+      ]
+          : [],
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,53 +124,88 @@ class SdSettingsScreen extends StatelessWidget {
                 ),
               ),
               SizedBox(height: MediaQuery.of(context).size.height * 0.023),
-              Padding(
-                padding: EdgeInsets.only(
-                  left: MediaQuery.of(context).size.width * 0.005,
-                  right: MediaQuery.of(context).size.width * 0.05,
-                ),
-                child: _buildThirty(
-                  context,
-                  changePassword: "Edit profile",
-                  onTap: () {
-                    // Navigate to sd_notification_screen.dart
-                    Navigator.of(context).pushNamed(AppRoutes.studentDashboardHomeScreen);
-                  },
-                ),
+              _buildAccordionTile(
+                context,
+                title: "Edit profile",
+                formFields: [
+                  TextFormField(
+                    decoration: InputDecoration(labelText: "Name"),
+                  ),
+                  InkWell(
+                    onTap: () async {
+                      final XFile? pickedFile = await ImagePicker().pickImage(source: ImageSource.gallery);
+                      if (pickedFile != null) {
+                        // Handle the selected image file (e.g., save it, display it, etc.)
+                        // You can use pickedFile.path to get the file path.
+                      }
+                    },
+                    child: Container(
+                      padding: EdgeInsets.all(8.0),
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Colors.grey),
+                        borderRadius: BorderRadius.circular(4.0),
+                      ),
+                      child: Row(
+                        children: [
+                          Icon(Icons.image),
+                          SizedBox(width: 8.0),
+                          Text("Select new Profile Image"),
+                        ],
+                      ),
+                    ),
+                  ),
+                  CustomElevatedButton(
+                    onPressed: () {
+                      // Edit profile logic
+                    },
+                    text: "Save Changes",
+                    buttonStyle: CustomButtonStyles.outlinePrimaryBL4,
+                  ),
+                ],
+                index: 0,
               ),
-              SizedBox(height: MediaQuery.of(context).size.height * 0.019),
-              Padding(
-                padding: EdgeInsets.only(
-                  left: MediaQuery.of(context).size.width * 0.005,
-                  right: MediaQuery.of(context).size.width * 0.048,
-                ),
-                child: _buildThirty(
-                  context,
-                  changePassword: "Change password",
-                  onTap: () {
-                    // Navigate to sd_notification_screen.dart
-                    Navigator.of(context).pushNamed(AppRoutes.sdNotificationScreen);
-                  },
-                ),
+              _buildAccordionTile(
+                context,
+                title: "Change password",
+                formFields: [
+                  TextFormField(
+                    obscureText: true,
+                    decoration: InputDecoration(labelText: "Old Password"),
+                  ),
+                  TextFormField(
+                    obscureText: true,
+                    decoration: InputDecoration(labelText: "New Password"),
+                  ),
+                  CustomElevatedButton(
+                    onPressed: () {
+                      // Change password logic
+                    },
+                    text: "Save Changes",
+                    buttonStyle: CustomButtonStyles.outlinePrimaryBL4,
+                  ),
+                ],
+                index: 1,
               ),
-              SizedBox(height: MediaQuery.of(context).size.height * 0.019),
-              Padding(
-                padding: EdgeInsets.only(right: MediaQuery.of(context).size.width * 0.05),
-                child: _buildThirty(
-                  context,
-                  changePassword: "Delete account?",
-                  onTap: () {
-                    // Navigate to sd_settings_screen.dart
-                    Navigator.of(context).pushNamed(AppRoutes.sdSettingsScreen);
-                  },
-                ),
+              _buildAccordionTile(
+                context,
+                title: "Delete account?",
+                formFields: [
+                  CustomElevatedButton(
+                    onPressed: () {
+                      _showDeleteConfirmationDialog(context);
+                    },
+                    text: "Delete Account",
+                    buttonStyle: CustomButtonStyles.outlinePrimaryBL4,
+                  ),
+                ],
+                index: 2,
               ),
               Spacer(),
               CustomOutlinedButton(
                 text: "Logout",
                 margin: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width * 0.007),
                 onPressed: () {
-                  Navigator.of(context).pushNamed(AppRoutes.chooseARoleScreen);
+                  _showLogoutConfirmationDialog(context);
                 },
               ),
             ],
@@ -91,80 +215,61 @@ class SdSettingsScreen extends StatelessWidget {
       ),
     );
   }
+}
 
-  /// Section Widget
-  PreferredSizeWidget _buildAppBar(BuildContext context) {
-    return CustomAppBar(
-      leadingWidth: 64.h,
-      leading: AppbarLeadingCircleimage(
-        imagePath: ImageConstant.imgEllipse8,
-        margin: EdgeInsets.only(
-          left: 18.h,
-          top: 5.v,
-          bottom: 5.v,
-        ),
-      ),
-      title: AppbarSubtitle(
-        text: "Yennefer Doe",
-        margin: EdgeInsets.only(left: 10.h),
-      ),
-    );
-  }
-
-  /// Section Widget
-  Widget _buildBottomBar(BuildContext context) {
-    return CustomBottomBar(
-      onChanged: (BottomBarEnum type) {
-        switch (type) {
-          case BottomBarEnum.Attendance:
-            Navigator.of(context).pushNamed(AppRoutes.sdAttendanceOneScreen);
-            break;
-          case BottomBarEnum.Notification:
-            Navigator.of(context).pushNamed(AppRoutes.sdNotificationScreen);
-            break;
-          case BottomBarEnum.Settings:
-            Navigator.of(context).pushNamed(AppRoutes.sdSettingsScreen);
-            break;
-          case BottomBarEnum.Home:
-            Navigator.of(context)
-                .pushNamed(AppRoutes.studentDashboardHomeScreen);
-            break;
-        }
-      },
-      getCurrentPage: () {
-        // Replace with your logic to determine the current page
-        return BottomBarEnum.Settings;
-      },
-    );
-  }
-
-
-  Widget _buildThirty(
-      BuildContext context, {
-        required String changePassword,
-        required VoidCallback onTap,
-      }) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Padding(
-            padding: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.001),
-            child: Text(
-              changePassword,
-              style: CustomTextStyles.bodyMediumRegular15.copyWith(
-                color: appTheme.black90001,
-              ),
-            ),
+void _showDeleteConfirmationDialog(BuildContext context) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: Text("Confirm Delete"),
+        content: Text("Are you sure you want to delete your account? This action cannot be undone."),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop(); // Close the dialog
+            },
+            child: Text("Cancel"),
           ),
-          CustomImageView(
-            imagePath: ImageConstant.imgArrowRight,
-            height: MediaQuery.of(context).size.width * 0.03,
-            width: MediaQuery.of(context).size.width * 0.03,
+          TextButton(
+            onPressed: () {
+              // Perform delete account logic here
+              Navigator.of(context).pop(); // Close the dialog
+              Navigator.of(context).pushNamed(AppRoutes.signInAsStudentScreen);
+              // Implement the logic to delete the account
+            },
+            child: Text("Delete"),
           ),
         ],
-      ),
-    );
-  }
+      );
+    },
+  );
+}
+
+void _showLogoutConfirmationDialog(BuildContext context) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: Text("Confirm Logout"),
+        content: Text("Are you sure you want to log out?"),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop(); // Close the dialog
+            },
+            child: Text("Cancel"),
+          ),
+          TextButton(
+            onPressed: () {
+              // Perform logout logic here
+              Navigator.of(context).pop(); // Close the dialog
+              Navigator.of(context).pushNamed(AppRoutes.signInAsStudentScreen);
+            },
+            child: Text("Logout"),
+          ),
+        ],
+      );
+    },
+  );
 }
