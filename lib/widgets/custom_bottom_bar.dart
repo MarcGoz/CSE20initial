@@ -1,6 +1,7 @@
 // ignore_for_file: must_be_immutable
 import 'package:flutter/material.dart';
 import 'package:facetap/core/app_export.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class CustomBottomBar extends StatefulWidget {
   CustomBottomBar({required this.onChanged, required this.getCurrentPage});
@@ -33,28 +34,29 @@ class CustomBottomBarState extends State<CustomBottomBar> {
     }
   }
 
+
   List<BottomMenuModel> bottomMenuList = [
     BottomMenuModel(
-      icon: ImageConstant.imgNavHome,
-      activeIcon: ImageConstant.imgNavHome,
+      icon: FontAwesomeIcons.house,
+      activeIcon: FontAwesomeIcons.house,
       title: "Home",
       type: BottomBarEnum.Home,
     ),
     BottomMenuModel(
-      icon: ImageConstant.imgNavAttendance,
-      activeIcon: ImageConstant.imgNavAttendance,
+      icon: FontAwesomeIcons.calendarDays,
+      activeIcon: FontAwesomeIcons.calendarDays,
       title: "Attendance",
       type: BottomBarEnum.Attendance,
     ),
     BottomMenuModel(
-      icon: ImageConstant.imgNavNotification,
-      activeIcon: ImageConstant.imgNavNotification,
+      icon: FontAwesomeIcons.bell,
+      activeIcon: FontAwesomeIcons.bell,
       title: "Notification",
       type: BottomBarEnum.Notification,
     ),
     BottomMenuModel(
-      icon: ImageConstant.imgNavSettings,
-      activeIcon: ImageConstant.imgNavSettings,
+      icon: FontAwesomeIcons.gear,
+      activeIcon: FontAwesomeIcons.gear,
       title: "Settings",
       type: BottomBarEnum.Settings,
     )
@@ -105,10 +107,9 @@ class CustomBottomBarState extends State<CustomBottomBar> {
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                CustomImageView(
-                  imagePath: bottomMenuList[index].icon,
-                  height: 25.v,
-                  width: 29.h,
+                Icon(
+                  bottomMenuList[index].icon,
+                  size: 15.v,
                   color: appTheme.black90001,
                 ),
                 Text(
@@ -123,10 +124,9 @@ class CustomBottomBarState extends State<CustomBottomBar> {
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                CustomImageView(
-                  imagePath: bottomMenuList[index].activeIcon,
-                  height: 27.v,
-                  width: 20.h,
+                Icon(
+                  bottomMenuList[index].activeIcon,
+                  size: 18.v,
                   color: theme.colorScheme.primary,
                 ),
                 Text(
@@ -165,12 +165,9 @@ class BottomMenuModel {
     required this.type,
   });
 
-  String icon;
-
-  String activeIcon;
-
+  IconData icon; // Change the type to IconData
+  IconData activeIcon; // Change the type to IconData
   String? title;
-
   BottomBarEnum type;
 }
 

@@ -23,12 +23,12 @@ class SdHomeFacialRecognitionScreen extends StatelessWidget {
                 child: Container(
                     width: double.maxFinite,
                     padding:
-                        EdgeInsets.symmetric(horizontal: 20.h, vertical: 14.v),
+                    EdgeInsets.symmetric(horizontal: 20.h, vertical: 14.v),
                     child: Column(children: [
                       SizedBox(height: 37.v),
                       CustomImageView(
                           imagePath:
-                              ImageConstant.imgFaceTrackerOnprimarycontainer,
+                          ImageConstant.imgFaceTrackerOnprimarycontainer,
                           height: 408.v,
                           width: 320.h),
                       SizedBox(height: 15.v),
@@ -36,7 +36,7 @@ class SdHomeFacialRecognitionScreen extends StatelessWidget {
                           height: 30.adaptSize,
                           width: 30.adaptSize,
                           child:
-                              Stack(alignment: Alignment.topCenter, children: [
+                          Stack(alignment: Alignment.topCenter, children: [
                             CustomImageView(
                                 imagePath: ImageConstant.imgRoundedRectangle,
                                 height: 30.adaptSize,

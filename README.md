@@ -1,5 +1,7 @@
 # facetap
 
+FaceTap, an innovative mobile application designed to revolutionize attendance tracking using facial recognition technology.
+
 ### System requirements
 
 Dart SDK Version 2.18.0 or greater.
@@ -7,7 +9,7 @@ Flutter SDK Version 3.3.0 or greater.
 
 ### Application structure
 
-                    
+
 ```
 .
 ├── android                         - It contains files required to run the application on an Android platform.

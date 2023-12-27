@@ -229,7 +229,7 @@ class _RegisterScreenState extends State<StudentRegisterScreen>
 
   void onTapArrowLeft(BuildContext context) {
     _animationController.reverse().then((value) {
-      Navigator.pop(context);
+      Navigator.pushNamed(context, AppRoutes.signInAsStudentScreen);
     });
   }
 
