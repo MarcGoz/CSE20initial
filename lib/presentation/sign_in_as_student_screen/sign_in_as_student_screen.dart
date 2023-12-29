@@ -207,7 +207,8 @@ class _SignInAsStudentScreenState extends State<SignInAsStudentScreen>
   void onTapSignIn(BuildContext context) {
     if (_formKey.currentState?.validate() ?? false) {
       // Handle sign-in logic and navigation
-      Navigator.pushNamed(context, AppRoutes.studentDashboardHomeScreen);
+      // Navigator.pushNamed(context, AppRoutes.studentDashboardHomeScreen);
+      Navigator.pushNamed(context, AppRoutes.sdHomeFacialRecognitionScreen);
     }
   }
 

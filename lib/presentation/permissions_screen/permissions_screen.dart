@@ -3,6 +3,7 @@ import 'package:facetap/core/app_export.dart';
 import 'package:facetap/widgets/app_bar/custom_app_bar.dart';
 import 'package:facetap/widgets/custom_checkbox_button.dart';
 import 'package:facetap/widgets/custom_elevated_button.dart';
+import 'package:permission_handler/permission_handler.dart'; // Import the permission_handler package
 
 class PermissionsScreen extends StatefulWidget {
   const PermissionsScreen({Key? key}) : super(key: key);
@@ -79,20 +80,26 @@ class _PermissionsScreenState extends State<PermissionsScreen> {
           CustomCheckboxButton(
             text: "Allow access to Camera",
             value: cameraPermissionChecked,
-            onChange: (value) {
-              setState(() {
-                cameraPermissionChecked = value;
-              });
+            onChange: (value) async {
+              final bool granted = await requestCameraPermission();
+              if (granted) {
+                setState(() {
+                  cameraPermissionChecked = value;
+                });
+              }
             },
           ),
           const SizedBox(height: 30),
           CustomCheckboxButton(
             text: "Allow access to Location",
             value: locationPermissionChecked,
-            onChange: (value) {
-              setState(() {
-                locationPermissionChecked = value;
-              });
+            onChange: (value) async {
+              final bool granted = await requestLocationPermission();
+              if (granted) {
+                setState(() {
+                  locationPermissionChecked = value;
+                });
+              }
             },
           ),
           const SizedBox(height: 30),
@@ -151,4 +158,15 @@ class _PermissionsScreenState extends State<PermissionsScreen> {
       ),
     );
   }
+
+  Future<bool> requestCameraPermission() async {
+    PermissionStatus status = await Permission.camera.request();
+    return status == PermissionStatus.granted;
+  }
+
+  Future<bool> requestLocationPermission() async {
+    PermissionStatus status = await Permission.location.request();
+    return status == PermissionStatus.granted;
+  }
+
 }
