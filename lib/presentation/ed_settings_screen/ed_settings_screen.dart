@@ -44,17 +44,17 @@ class _EdSettingsScreenState extends State<EdSettingsScreen> {
       onChanged: (BottomBarEnum type) {
         switch (type) {
           case BottomBarEnum.Attendance:
-            Navigator.of(context).pushNamed(AppRoutes.edAttendanceOneScreen);
+            Navigator.of(context).pushReplacementNamed(AppRoutes.edAttendanceOneScreen);
             break;
           case BottomBarEnum.Notification:
-            Navigator.of(context).pushNamed(AppRoutes.edNotificationScreen);
+            Navigator.of(context).pushReplacementNamed(AppRoutes.edNotificationScreen);
             break;
           case BottomBarEnum.Settings:
-            Navigator.of(context).pushNamed(AppRoutes.edSettingsScreen);
+            Navigator.of(context).pushReplacementNamed(AppRoutes.edSettingsScreen);
             break;
           case BottomBarEnum.Home:
             Navigator.of(context)
-                .pushNamed(AppRoutes.teacherDashboardHomeScreen);
+                .pushReplacementNamed(AppRoutes.teacherDashboardHomeScreen);
             break;
         }
       },
@@ -239,7 +239,7 @@ void _showDeleteConfirmationDialog(BuildContext context) {
             onPressed: () {
               // Perform delete account logic here
               Navigator.of(context).pop(); // Close the dialog
-              Navigator.of(context).pushNamed(AppRoutes.signInAsEducatorScreen);
+              Navigator.of(context).pushReplacementNamed(AppRoutes.signInAsEducatorScreen);
               // Implement the logic to delete the account
             },
             child: const Text("Delete"),
@@ -268,7 +268,7 @@ void _showLogoutConfirmationDialog(BuildContext context) {
             onPressed: () {
               // Perform logout logic here
               Navigator.of(context).pop(); // Close the dialog
-              Navigator.of(context).pushNamed(AppRoutes.signInAsEducatorScreen);
+              Navigator.of(context).pushReplacementNamed(AppRoutes.signInAsEducatorScreen);
             },
             child: const Text("Logout"),
           ),

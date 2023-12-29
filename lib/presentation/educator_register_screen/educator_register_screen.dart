@@ -14,6 +14,7 @@ class EducatorRegisterScreen extends StatefulWidget {
 class _RegisterScreenState extends State<EducatorRegisterScreen>
     with SingleTickerProviderStateMixin {
   late AnimationController _animationController;
+  late Animation<double> _fadeAnimation;
 
   TextEditingController nameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
@@ -29,7 +30,8 @@ class _RegisterScreenState extends State<EducatorRegisterScreen>
       vsync: this,
       duration: const Duration(milliseconds: 400),
     );
-    _animationController.forward();
+    _fadeAnimation = Tween<double>(begin: 0, end: 1).animate(_animationController);
+    _animationController.forward(); // Start the animation immediately
   }
 
   @override
@@ -48,9 +50,8 @@ class _RegisterScreenState extends State<EducatorRegisterScreen>
                 const SizedBox(height: 52),
                 Hero(
                   tag: 'logo',
-                  child: AnimatedContainer(
-                    duration: const Duration(milliseconds: 500),
-                    height: _animationController.isCompleted ? 120 : 0,
+                  child: FadeTransition(
+                    opacity: _fadeAnimation,
                     child: CustomImageView(
                       imagePath: ImageConstant.imgVectorPrimary,
                       height: 72,
@@ -227,14 +228,14 @@ class _RegisterScreenState extends State<EducatorRegisterScreen>
 
   void onTapArrowLeft(BuildContext context) {
     _animationController.reverse().then((value) {
-      Navigator.pushNamed(context, AppRoutes.signInAsEducatorScreen);
+      Navigator.pushReplacementNamed(context, AppRoutes.signInAsEducatorScreen);
     });
   }
 
   void onTapSignUp(BuildContext context) {
     if (_formKey.currentState?.validate() ?? false) {
       // Handle sign-up logic and navigation
-      Navigator.pushNamed(context, AppRoutes.signInAsEducatorScreen);
+      Navigator.pushReplacementNamed(context, AppRoutes.signInAsEducatorScreen);
     }
   }
 

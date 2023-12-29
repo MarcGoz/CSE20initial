@@ -64,7 +64,7 @@ class SdAttendanceOneScreen extends StatelessWidget {
           child: AppbarTrailingCircleimage(
             onTap: () {
               // Navigate to sdSettingsScreen
-              Navigator.of(context).pushNamed(AppRoutes.sdSettingsScreen);
+              Navigator.of(context).pushReplacementNamed(AppRoutes.sdSettingsScreen);
             },
             imagePath: ImageConstant.imgEllipse8,
             margin: EdgeInsets.symmetric(
@@ -291,17 +291,17 @@ class SdAttendanceOneScreen extends StatelessWidget {
       onChanged: (BottomBarEnum type) {
         switch (type) {
           case BottomBarEnum.Attendance:
-            Navigator.of(context).pushNamed(AppRoutes.sdAttendanceOneScreen);
+            Navigator.of(context).pushReplacementNamed(AppRoutes.sdAttendanceOneScreen);
             break;
           case BottomBarEnum.Notification:
-            Navigator.of(context).pushNamed(AppRoutes.sdNotificationScreen);
+            Navigator.of(context).pushReplacementNamed(AppRoutes.sdNotificationScreen);
             break;
           case BottomBarEnum.Settings:
-            Navigator.of(context).pushNamed(AppRoutes.sdSettingsScreen);
+            Navigator.of(context).pushReplacementNamed(AppRoutes.sdSettingsScreen);
             break;
           case BottomBarEnum.Home:
             Navigator.of(context)
-                .pushNamed(AppRoutes.studentDashboardHomeScreen);
+                .pushReplacementNamed(AppRoutes.studentDashboardHomeScreen);
             break;
         }
       },
@@ -316,7 +316,7 @@ class SdAttendanceOneScreen extends StatelessWidget {
     print("Tapped on $subjectName");
     // Navigate to the corresponding screen for the selected subject
     if (subjectName == "CSE20") {
-      Navigator.of(context).pushNamed(AppRoutes.sdAttendanceScreen);
+      Navigator.of(context).pushReplacementNamed(AppRoutes.sdAttendanceScreen);
     }
   }
 

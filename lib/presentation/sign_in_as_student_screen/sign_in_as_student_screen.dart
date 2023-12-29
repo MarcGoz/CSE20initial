@@ -10,12 +10,12 @@ class SignInAsStudentScreen extends StatefulWidget {
 
   @override
   _SignInAsStudentScreenState createState() => _SignInAsStudentScreenState();
-
 }
 
 class _SignInAsStudentScreenState extends State<SignInAsStudentScreen>
     with SingleTickerProviderStateMixin {
   late AnimationController _animationController;
+  late Animation<double> _fadeAnimation;
 
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
@@ -29,6 +29,7 @@ class _SignInAsStudentScreenState extends State<SignInAsStudentScreen>
       vsync: this,
       duration: const Duration(milliseconds: 400),
     );
+    _fadeAnimation = Tween<double>(begin: 0, end: 1).animate(_animationController);
     _animationController.forward(); // Start the animation immediately
   }
 
@@ -48,13 +49,12 @@ class _SignInAsStudentScreenState extends State<SignInAsStudentScreen>
                 const SizedBox(height: 52),
                 Hero(
                   tag: 'logo',
-                  child: AnimatedContainer(
-                    duration: const Duration(milliseconds: 100),
-                    height: _animationController.isCompleted ? 120 : 0, // Increased logo size
+                  child: FadeTransition(
+                    opacity: _fadeAnimation,
                     child: CustomImageView(
                       imagePath: ImageConstant.imgVector,
-                      height:72, // Increased logo size
-                      width: 102, // Increased logo size
+                      height: 72,
+                      width: 102,
                     ),
                   ),
                 ),
@@ -200,15 +200,14 @@ class _SignInAsStudentScreenState extends State<SignInAsStudentScreen>
 
   void onTapArrowLeft(BuildContext context) {
     _animationController.reverse().then((value) {
-      Navigator.pushNamed(context, AppRoutes.chooseARoleScreen);
+      Navigator.pushReplacementNamed(context, AppRoutes.chooseARoleScreen);
     });
   }
 
   void onTapSignIn(BuildContext context) {
     if (_formKey.currentState?.validate() ?? false) {
       // Handle sign-in logic and navigation
-      // Navigator.pushNamed(context, AppRoutes.studentDashboardHomeScreen);
-      Navigator.pushNamed(context, AppRoutes.sdHomeFacialRecognitionScreen);
+      Navigator.pushReplacementNamed(context, AppRoutes.studentDashboardHomeScreen);
     }
   }
 

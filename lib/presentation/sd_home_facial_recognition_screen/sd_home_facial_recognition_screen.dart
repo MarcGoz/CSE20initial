@@ -60,7 +60,7 @@ class _SdHomeFacialRecognitionScreenState
               color: Colors.white,
             ),
             onPressed: () {
-              Navigator.pushNamed(context, AppRoutes.signInAsStudentScreen);
+              Navigator.pushReplacementNamed(context, AppRoutes.signInAsStudentScreen);
             },
           ),
         ),
@@ -153,6 +153,6 @@ class _SdHomeFacialRecognitionScreenState
 
   /// Navigates to the studentDashboardClockInScreen when the action is triggered.
   onTapRegisterFace(BuildContext context) {
-    Navigator.pushNamed(context, AppRoutes.studentDashboardHomeScreen);
+    Navigator.pushReplacementNamed(context, AppRoutes.studentDashboardHomeScreen);
   }
 }

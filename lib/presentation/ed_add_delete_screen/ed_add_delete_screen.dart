@@ -359,7 +359,7 @@ class EdAddDeleteScreen extends StatelessWidget {
           child: AppbarTrailingCircleimage(
             onTap: () {
               // Navigate to sdSettingsScreen
-              Navigator.of(context).pushNamed(AppRoutes.edSettingsScreen);
+              Navigator.of(context).pushReplacementNamed(AppRoutes.edSettingsScreen);
             },
             imagePath: ImageConstant.imgEllipse8,
             margin: EdgeInsets.symmetric(
@@ -473,17 +473,17 @@ class EdAddDeleteScreen extends StatelessWidget {
       onChanged: (BottomBarEnum type) {
         switch (type) {
           case BottomBarEnum.Attendance:
-            Navigator.of(context).pushNamed(AppRoutes.edAttendanceOneScreen);
+            Navigator.of(context).pushReplacementNamed(AppRoutes.edAttendanceOneScreen);
             break;
           case BottomBarEnum.Notification:
-            Navigator.of(context).pushNamed(AppRoutes.edNotificationScreen);
+            Navigator.of(context).pushReplacementNamed(AppRoutes.edNotificationScreen);
             break;
           case BottomBarEnum.Settings:
-            Navigator.of(context).pushNamed(AppRoutes.edSettingsScreen);
+            Navigator.of(context).pushReplacementNamed(AppRoutes.edSettingsScreen);
             break;
           case BottomBarEnum.Home:
             Navigator.of(context)
-                .pushNamed(AppRoutes.teacherDashboardHomeScreen);
+                .pushReplacementNamed(AppRoutes.teacherDashboardHomeScreen);
             break;
         }
       },

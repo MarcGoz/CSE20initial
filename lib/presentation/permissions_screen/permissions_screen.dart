@@ -145,7 +145,7 @@ class _PermissionsScreenState extends State<PermissionsScreen> {
 
   void onTapAllow(BuildContext context) {
     if (cameraPermissionChecked && locationPermissionChecked && readPolicyChecked && termsAndConditionsChecked) {
-      Navigator.pushNamed(context, AppRoutes.chooseARoleScreen);
+      Navigator.pushReplacementNamed(context, AppRoutes.chooseARoleScreen);
     } else {
       showSnackbar(context, "Please check all permissions before proceeding.");
     }

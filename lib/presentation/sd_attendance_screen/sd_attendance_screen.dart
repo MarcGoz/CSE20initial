@@ -38,7 +38,7 @@ class SdAttendanceScreen extends StatelessWidget {
                   GestureDetector(
                     onTap: () {
                       // Navigate to .sdAttendanceOneScreen
-                      Navigator.of(context).pushNamed(AppRoutes.sdAttendanceOneScreen);
+                      Navigator.of(context).pushReplacementNamed(AppRoutes.sdAttendanceOneScreen);
                     },
                     child: CustomImageView(
                       imagePath: ImageConstant.imgFrameBlack90001,
@@ -156,17 +156,17 @@ class SdAttendanceScreen extends StatelessWidget {
       onChanged: (BottomBarEnum type) {
         switch (type) {
           case BottomBarEnum.Attendance:
-            Navigator.of(context).pushNamed(AppRoutes.sdAttendanceOneScreen);
+            Navigator.of(context).pushReplacementNamed(AppRoutes.sdAttendanceOneScreen);
             break;
           case BottomBarEnum.Notification:
-            Navigator.of(context).pushNamed(AppRoutes.sdNotificationScreen);
+            Navigator.of(context).pushReplacementNamed(AppRoutes.sdNotificationScreen);
             break;
           case BottomBarEnum.Settings:
-            Navigator.of(context).pushNamed(AppRoutes.sdSettingsScreen);
+            Navigator.of(context).pushReplacementNamed(AppRoutes.sdSettingsScreen);
             break;
           case BottomBarEnum.Home:
             Navigator.of(context)
-                .pushNamed(AppRoutes.studentDashboardHomeScreen);
+                .pushReplacementNamed(AppRoutes.studentDashboardHomeScreen);
             break;
         }
       },

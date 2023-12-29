@@ -17,6 +17,8 @@ class StudentRegisterScreen extends StatefulWidget {
 class _RegisterScreenState extends State<StudentRegisterScreen>
     with SingleTickerProviderStateMixin {
   late AnimationController _animationController;
+  late Animation<double> _fadeAnimation;
+
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   // Define a global counter variable
@@ -35,7 +37,8 @@ class _RegisterScreenState extends State<StudentRegisterScreen>
       vsync: this,
       duration: const Duration(milliseconds: 400),
     );
-    _animationController.forward();
+    _fadeAnimation = Tween<double>(begin: 0, end: 1).animate(_animationController);
+    _animationController.forward(); // Start the animation immediately
   }
 
   @override
@@ -54,9 +57,8 @@ class _RegisterScreenState extends State<StudentRegisterScreen>
                 const SizedBox(height: 52),
                 Hero(
                   tag: 'logo',
-                  child: AnimatedContainer(
-                    duration: const Duration(milliseconds: 500),
-                    height: _animationController.isCompleted ? 120 : 0,
+                  child: FadeTransition(
+                    opacity: _fadeAnimation,
                     child: CustomImageView(
                       imagePath: ImageConstant.imgVector,
                       height: 72,
@@ -233,7 +235,7 @@ class _RegisterScreenState extends State<StudentRegisterScreen>
 
   void onTapArrowLeft(BuildContext context) {
     _animationController.reverse().then((value) {
-      Navigator.pushNamed(context, AppRoutes.signInAsStudentScreen);
+      Navigator.pushReplacementNamed(context, AppRoutes.signInAsStudentScreen);
     });
   }
 
@@ -279,7 +281,8 @@ class _RegisterScreenState extends State<StudentRegisterScreen>
           });
 
           // Navigate to the home screen on successful sign-up
-          Navigator.pushNamed(context, AppRoutes.signInAsStudentScreen);
+          Navigator.pushReplacementNamed(context, AppRoutes.signInAsStudentScreen);
+          
         }
       } catch (e) {
         // Handle registration error

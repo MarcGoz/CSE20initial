@@ -92,10 +92,10 @@ class ChooseARoleScreen extends StatelessWidget {
   }
 
   void onTapStudent(BuildContext context) {
-    Navigator.pushNamed(context, AppRoutes.signInAsStudentScreen);
+    Navigator.pushReplacementNamed(context, AppRoutes.signInAsStudentScreen);
   }
 
   void onTapEducator(BuildContext context) {
-    Navigator.pushNamed(context, AppRoutes.signInAsEducatorScreen);
+    Navigator.pushReplacementNamed(context, AppRoutes.signInAsEducatorScreen);
   }
 }

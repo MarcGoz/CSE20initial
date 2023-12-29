@@ -251,6 +251,6 @@ class AppNavigationScreen extends StatelessWidget {
     BuildContext context,
     String routeName,
   ) {
-    Navigator.pushNamed(context, routeName);
+    Navigator.pushReplacementNamed(context, routeName);
   }
 }

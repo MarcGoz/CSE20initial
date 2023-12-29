@@ -42,16 +42,16 @@ class _SdSettingsScreenState extends State<SdSettingsScreen> {
       onChanged: (BottomBarEnum type) {
         switch (type) {
           case BottomBarEnum.Attendance:
-            Navigator.of(context).pushNamed(AppRoutes.sdAttendanceOneScreen);
+            Navigator.of(context).pushReplacementNamed(AppRoutes.sdAttendanceOneScreen);
             break;
           case BottomBarEnum.Notification:
-            Navigator.of(context).pushNamed(AppRoutes.sdNotificationScreen);
+            Navigator.of(context).pushReplacementNamed(AppRoutes.sdNotificationScreen);
             break;
           case BottomBarEnum.Settings:
-            Navigator.of(context).pushNamed(AppRoutes.sdSettingsScreen);
+            Navigator.of(context).pushReplacementNamed(AppRoutes.sdSettingsScreen);
             break;
           case BottomBarEnum.Home:
-            Navigator.of(context).pushNamed(AppRoutes.studentDashboardHomeScreen);
+            Navigator.of(context).pushReplacementNamed(AppRoutes.studentDashboardHomeScreen);
             break;
         }
       },
@@ -235,7 +235,7 @@ void _showDeleteConfirmationDialog(BuildContext context) {
             onPressed: () {
               // Perform delete account logic here
               Navigator.of(context).pop(); // Close the dialog
-              Navigator.of(context).pushNamed(AppRoutes.signInAsStudentScreen);
+              Navigator.of(context).pushReplacementNamed(AppRoutes.signInAsStudentScreen);
               // Implement the logic to delete the account
             },
             child: const Text("Delete"),
@@ -264,7 +264,7 @@ void _showLogoutConfirmationDialog(BuildContext context) {
             onPressed: () {
               // Perform logout logic here
               Navigator.of(context).pop(); // Close the dialog
-              Navigator.of(context).pushNamed(AppRoutes.signInAsStudentScreen);
+              Navigator.of(context).pushReplacementNamed(AppRoutes.signInAsStudentScreen);
             },
             child: const Text("Logout"),
           ),

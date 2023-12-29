@@ -211,7 +211,7 @@ class StudentDashboardHomeScreen extends StatelessWidget {
           child: AppbarTrailingCircleimage(
             onTap: () {
               // Navigate to sdSettingsScreen
-              Navigator.of(context).pushNamed(AppRoutes.sdSettingsScreen);
+              Navigator.of(context).pushReplacementNamed(AppRoutes.sdSettingsScreen);
             },
             imagePath: ImageConstant.imgEllipse8,
             margin: EdgeInsets.symmetric(
@@ -229,17 +229,17 @@ class StudentDashboardHomeScreen extends StatelessWidget {
       onChanged: (BottomBarEnum type) {
         switch (type) {
           case BottomBarEnum.Attendance:
-            Navigator.of(context).pushNamed(AppRoutes.sdAttendanceOneScreen);
+            Navigator.of(context).pushReplacementNamed(AppRoutes.sdAttendanceOneScreen);
             break;
           case BottomBarEnum.Notification:
-            Navigator.of(context).pushNamed(AppRoutes.sdNotificationScreen);
+            Navigator.of(context).pushReplacementNamed(AppRoutes.sdNotificationScreen);
             break;
           case BottomBarEnum.Settings:
-            Navigator.of(context).pushNamed(AppRoutes.sdSettingsScreen);
+            Navigator.of(context).pushReplacementNamed(AppRoutes.sdSettingsScreen);
             break;
           case BottomBarEnum.Home:
             Navigator.of(context)
-                .pushNamed(AppRoutes.studentDashboardHomeScreen);
+                .pushReplacementNamed(AppRoutes.studentDashboardHomeScreen);
             break;
         }
       },

@@ -15,6 +15,7 @@ class SignInAsEducatorScreen extends StatefulWidget {
 class _SignInAsEducatorScreenState extends State<SignInAsEducatorScreen>
     with SingleTickerProviderStateMixin {
   late AnimationController _animationController;
+  late Animation<double> _fadeAnimation;
 
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
@@ -28,7 +29,8 @@ class _SignInAsEducatorScreenState extends State<SignInAsEducatorScreen>
       vsync: this,
       duration: const Duration(milliseconds: 400),
     );
-    _animationController.forward();
+    _fadeAnimation = Tween<double>(begin: 0, end: 1).animate(_animationController);
+    _animationController.forward(); // Start the animation immediately
   }
 
   @override
@@ -47,13 +49,12 @@ class _SignInAsEducatorScreenState extends State<SignInAsEducatorScreen>
                 const SizedBox(height: 52),
                 Hero(
                   tag: 'logo',
-                  child: AnimatedContainer(
-                    duration: const Duration(milliseconds: 500),
-                    height: _animationController.isCompleted ? 120 : 0, // Increased logo size
+                  child: FadeTransition(
+                    opacity: _fadeAnimation,
                     child: CustomImageView(
                       imagePath: ImageConstant.imgVectorPrimary,
-                      height:72, // Increased logo size
-                      width: 102, // Increased logo size
+                      height: 72,
+                      width: 102,
                     ),
                   ),
                 ),
@@ -199,14 +200,14 @@ class _SignInAsEducatorScreenState extends State<SignInAsEducatorScreen>
 
   void onTapArrowLeft(BuildContext context) {
     _animationController.reverse().then((value) {
-      Navigator.pushNamed(context, AppRoutes.chooseARoleScreen);
+      Navigator.pushReplacementNamed(context, AppRoutes.chooseARoleScreen);
     });
   }
 
   void onTapSignIn(BuildContext context) {
     if (_formKey.currentState?.validate() ?? false) {
       // Handle sign-in logic and navigation
-      Navigator.pushNamed(context, AppRoutes.teacherDashboardHomeScreen);
+      Navigator.pushReplacementNamed(context, AppRoutes.teacherDashboardHomeScreen);
     }
   }
 

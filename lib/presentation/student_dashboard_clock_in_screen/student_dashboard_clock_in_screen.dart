@@ -158,6 +158,6 @@ class StudentDashboardClockInScreen extends StatelessWidget {
 
   /// Navigates to the studentDashboardHomeScreen when the action is triggered.
   onTapCLOCKIN(BuildContext context) {
-    Navigator.pushNamed(context, AppRoutes.studentDashboardHomeScreen);
+    Navigator.pushReplacementNamed(context, AppRoutes.studentDashboardHomeScreen);
   }
 }
