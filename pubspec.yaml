@@ -13,7 +13,7 @@ dependencies:
   flutter:
     sdk: flutter
   cached_network_image: ^3.2.1
-  flutter_svg: ^1.1.6
+  flutter_svg: ^2.0.9
   flutter_svg_provider: ^1.0.3
   intl: ^0.18.0
   permission_handler: ^11.0.1
@@ -28,6 +28,8 @@ dependencies:
   cupertino_icons: ^1.0.2
   camera: ^0.10.5+7
   provider: ^6.1.1
+  flutter_datetime_picker: ^1.5.1
+  map_picker_free: ^0.0.1
 
 dev_dependencies:
   flutter_test:

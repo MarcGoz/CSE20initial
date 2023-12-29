@@ -1,34 +1,18 @@
-// ignore_for_file: must_be_immutable
-
 import 'package:flutter/material.dart';
 import 'package:facetap/core/app_export.dart';
 import 'package:facetap/widgets/app_bar/appbar_trailing_circleimage.dart';
 import 'package:facetap/widgets/app_bar/custom_app_bar.dart';
 import 'package:facetap/widgets/custom_bottom_bar.dart';
-import 'package:facetap/widgets/custom_elevated_button.dart';
-import 'package:facetap/widgets/custom_text_form_field.dart';
-
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:facetap/user_data.dart';
+import 'package:intl/intl.dart';
+import 'package:facetap/widgets/custom_elevated_button.dart';
 
 class EdAddDeleteScreen extends StatelessWidget {
-  EdAddDeleteScreen({Key? key})
-      : super(
-          key: key,
-        );
-
-  TextEditingController nameController = TextEditingController();
-
-  TextEditingController group411Controller = TextEditingController();
-
-  TextEditingController dateController = TextEditingController();
-
-  TextEditingController locationController = TextEditingController();
+  EdAddDeleteScreen({Key? key}) : super(key: key);
 
   GlobalKey<NavigatorState> navigatorKey = GlobalKey();
-
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -36,295 +20,62 @@ class EdAddDeleteScreen extends StatelessWidget {
 
     return SafeArea(
       child: Scaffold(
-        resizeToAvoidBottomInset: false,
         appBar: _buildAppBar(context),
-        body: Form(
-          key: _formKey,
-          child: Container(
-            width: double.maxFinite,
-            padding: EdgeInsets.symmetric(
-              horizontal: 14.h,
-              vertical: 17.v,
-            ),
-            child: Column(
-              children: [
-                SizedBox(height: 4.v),
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: Padding(
-                    padding: EdgeInsets.only(left: 11.h),
-                    child: Row(
-                      children: [
-                        CustomImageView(
+        body: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                  child: Row(
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          // Navigate to .sdAttendanceOneScreen
+                          Navigator.pop(context);
+                        },
+                        child: CustomImageView(
                           imagePath: ImageConstant.imgFrameBlack90001,
-                          height: 28.v,
-                          width: 18.h,
-                          margin: EdgeInsets.only(top: 1.v),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(left: 28.h),
-                          child: Text(
-                            "Add a Class",
-                            style: theme.textTheme.titleLarge,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                SizedBox(height: 9.v),
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: Padding(
-                    padding: EdgeInsets.only(left: 16.h),
-                    child: Text(
-                      "Class Name",
-                      style: CustomTextStyles.bodySmallGray500Regular,
-                    ),
-                  ),
-                ),
-                SizedBox(height: 4.v),
-                _buildName(context),
-                SizedBox(height: 6.v),
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: Padding(
-                    padding: EdgeInsets.only(left: 16.h),
-                    child: Text(
-                      "Class Code",
-                      style: CustomTextStyles.bodySmallGray500Regular,
-                    ),
-                  ),
-                ),
-                SizedBox(height: 2.v),
-                _buildGroup411(context),
-                SizedBox(height: 7.v),
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: Padding(
-                    padding: EdgeInsets.only(left: 16.h),
-                    child: Text(
-                      "Weekly Schedule",
-                      style: CustomTextStyles.bodySmallGray500Regular,
-                    ),
-                  ),
-                ),
-                SizedBox(height: 9.v),
-                Padding(
-                  padding: EdgeInsets.only(
-                    left: 43.h,
-                    right: 28.h,
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        "Monday",
-                        style: CustomTextStyles.bodySmallGray600,
-                      ),
-                      const Spacer(),
-                      Container(
-                        height: 12.v,
-                        width: 14.h,
-                        margin: EdgeInsets.only(bottom: 2.v),
-                        decoration: BoxDecoration(
-                          color: theme.colorScheme.onError,
-                          borderRadius: BorderRadius.circular(
-                            3.h,
-                          ),
+                          height: 30.0,
+                          width: 10.0,
+                          margin: const EdgeInsets.only(left: 10.0),
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsets.only(left: 9.h),
-                        child: _buildFiftyFive(
-                          context,
-                          labelTwo: "--:--:--",
+                        padding: const EdgeInsets.only(left: 29.0),
+                        child: Text(
+                          "Add a Class",
+                          style: theme.textTheme.titleLarge,
                         ),
                       ),
                     ],
                   ),
                 ),
-                SizedBox(height: 1.v),
-                Padding(
-                  padding: EdgeInsets.only(
-                    left: 43.h,
-                    right: 28.h,
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        "Tuesday",
-                        style: CustomTextStyles.bodySmallGray600,
-                      ),
-                      const Spacer(),
-                      Container(
-                        height: 12.v,
-                        width: 14.h,
-                        margin: EdgeInsets.only(bottom: 2.v),
-                        decoration: BoxDecoration(
-                          color: theme.colorScheme.onError,
-                          borderRadius: BorderRadius.circular(
-                            3.h,
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(left: 9.h),
-                        child: _buildFiftyFive(
-                          context,
-                          labelTwo: "--:--:--",
-                        ),
-                      ),
-                    ],
-                  ),
+              ),
+              const SizedBox(height: 18.0),
+              Expanded(
+                child: ListView(
+                  children: [
+                    _buildFormField(context: context, label: 'Class Name', icon: Icons.class_),
+                    _buildFormField(context: context, label: 'Class Code', icon: Icons.confirmation_number),
+                    _buildCard(label: 'Weekly Schedule', icon: Icons.schedule, child: _buildWeeklyScheduleField(context)),
+                    _buildDatePickerField(context),
+                    _buildFormField(context: context, label: 'Location', icon: Icons.location_on),
+                  ],
                 ),
-                SizedBox(height: 1.v),
-                Padding(
-                  padding: EdgeInsets.only(
-                    left: 43.h,
-                    right: 28.h,
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        "Wednesday",
-                        style: CustomTextStyles.bodySmallGray600,
-                      ),
-                      const Spacer(),
-                      Container(
-                        height: 12.v,
-                        width: 14.h,
-                        margin: EdgeInsets.only(bottom: 2.v),
-                        decoration: BoxDecoration(
-                          color: theme.colorScheme.onError,
-                          borderRadius: BorderRadius.circular(
-                            3.h,
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(left: 9.h),
-                        child: _buildFiftyFive(
-                          context,
-                          labelTwo: "--:--:--",
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                SizedBox(height: 1.v),
-                Padding(
-                  padding: EdgeInsets.only(
-                    left: 43.h,
-                    right: 28.h,
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        "Thursday",
-                        style: CustomTextStyles.bodySmallGray600,
-                      ),
-                      const Spacer(),
-                      Container(
-                        height: 12.v,
-                        width: 14.h,
-                        margin: EdgeInsets.only(bottom: 2.v),
-                        decoration: BoxDecoration(
-                          color: theme.colorScheme.onError,
-                          borderRadius: BorderRadius.circular(
-                            3.h,
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(left: 9.h),
-                        child: _buildFiftyFive(
-                          context,
-                          labelTwo: "--:--:--",
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                SizedBox(height: 1.v),
-                Padding(
-                  padding: EdgeInsets.only(
-                    left: 43.h,
-                    right: 28.h,
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        "Friday",
-                        style: CustomTextStyles.bodySmallGray600,
-                      ),
-                      const Spacer(),
-                      Container(
-                        height: 12.v,
-                        width: 14.h,
-                        margin: EdgeInsets.only(bottom: 2.v),
-                        decoration: BoxDecoration(
-                          color: theme.colorScheme.onError,
-                          borderRadius: BorderRadius.circular(
-                            3.h,
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(left: 9.h),
-                        child: _buildFiftyFive(
-                          context,
-                          labelTwo: "--:--:--",
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                SizedBox(height: 8.v),
-                Divider(
-                  indent: 16.h,
-                  endIndent: 1.h,
-                ),
-                SizedBox(height: 5.v),
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: Padding(
-                    padding: EdgeInsets.only(left: 15.h),
-                    child: Text(
-                      "Period",
-                      style: CustomTextStyles.bodySmallGray500Regular,
-                    ),
-                  ),
-                ),
-                SizedBox(height: 11.v),
-                _buildDate(context),
-                SizedBox(height: 9.v),
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: Padding(
-                    padding: EdgeInsets.only(left: 15.h),
-                    child: Text(
-                      "Location",
-                      style: CustomTextStyles.bodySmallGray500Regular,
-                    ),
-                  ),
-                ),
-                SizedBox(height: 11.v),
-                _buildLocation(context),
-                SizedBox(height: 6.v),
-                CustomImageView(
-                  imagePath: ImageConstant.imgImage1,
-                  height: 53.v,
-                  width: 317.h,
-                ),
-                SizedBox(height: 14.v),
-                _buildSAVE(context),
-              ],
-            ),
+              ),
+              const SizedBox(height: 10.0),
+              CustomElevatedButton(
+                height: 49,
+                text: "Add".toUpperCase(),
+                onPressed: () {
+                  print("Saved!");
+                },
+              ),
+            ],
           ),
         ),
         bottomNavigationBar: _buildBottomBar(context),
@@ -332,16 +83,200 @@ class EdAddDeleteScreen extends StatelessWidget {
     );
   }
 
-  /// Section Widget
-  PreferredSizeWidget _buildAppBar(BuildContext context) {
+  Widget _buildFormField({required BuildContext context, required String label, required IconData icon}) {
+    if (label == 'Weekly Schedule') {
+      // Exempt validation for Weekly Schedule Days
+      return _buildCard(
+        label: label,
+        icon: icon,
+        child: _buildWeeklyScheduleField(context),
+      );
+    } else if (label == 'Location') {
+      return Row(
+        children: [
+          Expanded(
+            child: TextFormField(
+              decoration: InputDecoration(
+                labelText: 'Latitude',
+                icon: Icon(icon),
+              ),
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'This field is required';
+                }
+                return null;
+              },
+            ),
+          ),
+          const SizedBox(width: 10.0),
+          Expanded(
+            child: TextFormField(
+              decoration: InputDecoration(
+                labelText: 'Longitude',
+                icon: Icon(icon),
+              ),
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'This field is required';
+                }
+                return null;
+              },
+            ),
+          ),
+        ],
+      );
+    } else {
+      // For other fields, make them required
+      return TextFormField(
+        decoration: InputDecoration(
+          labelText: label,
+          icon: Icon(icon),
+        ),
+        validator: (value) {
+          if (value == null || value.isEmpty) {
+            return 'This field is required';
+          }
+          return null;
+        },
+      );
+    }
+  }
 
+
+  Widget _buildCard({required String label, required IconData icon, required Widget child}) {
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              label,
+              style: const TextStyle(fontWeight: FontWeight.bold),
+            ),
+            child,
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildWeeklyScheduleField(BuildContext context) {
+    return Column(
+      children: [
+        _buildDayTimerField(context: context, day: 'Monday'),
+        _buildDayTimerField(context: context, day: 'Tuesday'),
+        _buildDayTimerField(context: context, day: 'Wednesday'),
+        _buildDayTimerField(context: context, day: 'Thursday'),
+        _buildDayTimerField(context: context, day: 'Friday'),
+        _buildDayTimerField(context: context, day: 'Saturday'),
+        _buildDayTimerField(context: context, day: 'Sunday'),
+      ],
+    );
+  }
+
+  Widget _buildDayTimerField({required BuildContext context, required String day}) {
+    TimeOfDay selectedTime = TimeOfDay.now();
+
+    return Row(
+      children: [
+        Expanded(
+          child: Row(
+            children: [
+              const Icon(Icons.access_time),
+              const SizedBox(width: 8.0),
+              Text(day),
+            ],
+          ),
+        ),
+        const SizedBox(width: 10.0),
+        Expanded(
+          child: InkWell(
+            onTap: null,
+            child: Container(
+              padding: const EdgeInsets.all(8.0),
+              decoration: BoxDecoration(
+                border: Border.all(color: Colors.grey),
+                borderRadius: BorderRadius.circular(4.0),
+              ),
+              child: const Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Select Time',
+                    style: TextStyle(fontSize: 16.0),
+                  ),
+                  Icon(Icons.access_time),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildDatePickerField(BuildContext context) {
+    DateTime selectedDate = DateTime.now();
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text(
+          'School Period Ends',
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
+        InkWell(
+          onTap: () async {
+            DateTime? pickedDate = await showDatePicker(
+              context: context,
+              initialDate: selectedDate,
+              firstDate: DateTime(2000),
+              lastDate: DateTime(2101),
+              builder: (BuildContext context, Widget? child) {
+                return Theme(
+                  data: ThemeData.light().copyWith(
+                    primaryColor: Colors.teal,
+                    colorScheme: const ColorScheme.light(primary: Colors.teal),
+                    buttonTheme: const ButtonThemeData(textTheme: ButtonTextTheme.primary),
+                  ),
+                  child: child!,
+                );
+              },
+            );
+
+            if (pickedDate != null && pickedDate != selectedDate) {
+              selectedDate = pickedDate;
+            }
+          },
+          child: Container(
+            padding: const EdgeInsets.all(8.0),
+            decoration: BoxDecoration(
+              border: Border.all(color: Colors.grey),
+              borderRadius: BorderRadius.circular(4.0),
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  DateFormat('yyyy-MM-dd').format(selectedDate),
+                  style: const TextStyle(fontSize: 16.0),
+                ),
+                const Icon(Icons.calendar_today),
+              ],
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  PreferredSizeWidget _buildAppBar(BuildContext context) {
     UserData userData = Provider.of<UserData>(context, listen: false);
-    String? uid = userData.uid;
-    String? accountType = userData.accountType;
 
     return CustomAppBar(
       title: Padding(
-        padding: EdgeInsets.only(left: 20.h),
+        padding: const EdgeInsets.only(left: 20.0),
         child: RichText(
           text: TextSpan(
             children: [
@@ -364,10 +299,9 @@ class EdAddDeleteScreen extends StatelessWidget {
       ),
       actions: [
         Padding(
-          padding: EdgeInsets.only(right: 20.h), // Add padding to the right
+          padding: const EdgeInsets.only(right: 20.0),
           child: GestureDetector(
             onTap: () {
-              // Handle onTap for the trailing image
               Navigator.of(context).pushReplacementNamed(AppRoutes.edSettingsScreen);
             },
             child: userData.image != null
@@ -376,118 +310,21 @@ class EdAddDeleteScreen extends StatelessWidget {
                 Navigator.of(context).pushReplacementNamed(AppRoutes.edSettingsScreen);
               },
               imagePath: userData.image!,
-              margin: EdgeInsets.symmetric(
-                horizontal: 20.h,
-                vertical: 5.v,
+              margin: const EdgeInsets.symmetric(
+                horizontal: 20.0,
+                vertical: 5.0,
               ),
             )
-                : FaIcon(
+                : const FaIcon(
               FontAwesomeIcons.circleUser,
-              size: 35, // Adjust the size as needed
+              size: 35,
             ),
           ),
         ),
       ],
     );
-
   }
 
-  /// Section Widget
-  Widget _buildName(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.only(
-        left: 16.h,
-        right: 1.h,
-      ),
-      child: CustomTextFormField(
-        controller: nameController,
-        hintText: "Mobile Application",
-        textInputType: TextInputType.phone,
-      ),
-    );
-  }
-
-  /// Section Widget
-  Widget _buildGroup411(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.only(
-        left: 16.h,
-        right: 1.h,
-      ),
-      child: CustomTextFormField(
-        controller: group411Controller,
-        hintText: "CSE10",
-        hintStyle: CustomTextStyles.bodyLargeBluegray90001,
-      ),
-    );
-  }
-
-  /// Section Widget
-  Widget _buildDate(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.only(left: 14.h),
-      child: CustomTextFormField(
-        controller: dateController,
-        hintText: "28 Feb 2020",
-        hintStyle: CustomTextStyles.bodyMediumPrimaryContainer,
-        suffix: Container(
-          margin: EdgeInsets.fromLTRB(30.h, 1.v, 3.h, 6.v),
-          child: CustomImageView(
-            imagePath: ImageConstant.imgIccalender,
-            height: 16.adaptSize,
-            width: 16.adaptSize,
-          ),
-        ),
-        suffixConstraints: BoxConstraints(
-          maxHeight: 23.v,
-        ),
-      ),
-    );
-  }
-
-  /// Section Widget
-  Widget _buildLocation(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.only(left: 15.h),
-      child: CustomTextFormField(
-        controller: locationController,
-        hintText: "Current Location",
-        hintStyle: CustomTextStyles.bodyMediumPrimaryContainer,
-        textInputAction: TextInputAction.done,
-        suffix: Container(
-          margin: EdgeInsets.fromLTRB(30.h, 1.v, 5.h, 1.v),
-          child: CustomImageView(
-            imagePath: ImageConstant.imgLocation,
-            height: 18.v,
-            width: 15.h,
-          ),
-        ),
-        suffixConstraints: BoxConstraints(
-          maxHeight: 23.v,
-        ),
-      ),
-    );
-  }
-
-  /// Section Widget
-  Widget _buildSAVE(BuildContext context) {
-    return CustomElevatedButton(
-      height: 26.v,
-      width: 127.h,
-      text: "SAVE".toUpperCase(),
-      rightIcon: Container(
-        margin: const EdgeInsets.only(),
-        child: CustomImageView(
-          imagePath: ImageConstant.imgRoundedRectangle1Copy9,
-          height: 26.v,
-          width: 127.h,
-        ),
-      ),
-      buttonStyle: CustomButtonStyles.outlinePrimary3,
-    );
-  }
-
-  /// Section Widget
   Widget _buildBottomBar(BuildContext context) {
     return CustomBottomBar(
       onChanged: (BottomBarEnum type) {
@@ -502,58 +339,13 @@ class EdAddDeleteScreen extends StatelessWidget {
             Navigator.of(context).pushReplacementNamed(AppRoutes.edSettingsScreen);
             break;
           case BottomBarEnum.Home:
-            Navigator.of(context)
-                .pushReplacementNamed(AppRoutes.teacherDashboardHomeScreen);
+            Navigator.of(context).pushReplacementNamed(AppRoutes.teacherDashboardHomeScreen);
             break;
         }
       },
       getCurrentPage: () {
-        // Replace with your logic to determine the current page
         return BottomBarEnum.Attendance;
       },
-    );
-  }
-
-  /// Common widget
-  Widget _buildFiftyFive(
-    BuildContext context, {
-    required String labelTwo,
-  }) {
-    return SizedBox(
-      height: 12.v,
-      width: 42.h,
-      child: Stack(
-        alignment: Alignment.centerLeft,
-        children: [
-          Align(
-            alignment: Alignment.topCenter,
-            child: Container(
-              height: 12.v,
-              width: 42.h,
-              padding: EdgeInsets.fromLTRB(3.h, 3.v, 3.h, 2.v),
-              decoration: AppDecoration.outlineOnError,
-              child: CustomImageView(
-                imagePath: ImageConstant.imgVectorOnerror,
-                height: 6.v,
-                width: 5.h,
-                alignment: Alignment.centerRight,
-              ),
-            ),
-          ),
-          Align(
-            alignment: Alignment.centerLeft,
-            child: Padding(
-              padding: EdgeInsets.only(left: 4.h),
-              child: Text(
-                labelTwo,
-                style: CustomTextStyles.bodySmallGray500.copyWith(
-                  color: appTheme.gray500,
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
     );
   }
 }

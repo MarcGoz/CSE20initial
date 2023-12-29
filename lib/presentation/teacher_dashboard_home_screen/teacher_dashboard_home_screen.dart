@@ -5,6 +5,7 @@ import 'package:facetap/core/app_export.dart';
 import 'package:facetap/widgets/app_bar/appbar_trailing_circleimage.dart';
 import 'package:facetap/widgets/app_bar/custom_app_bar.dart';
 import 'package:facetap/widgets/custom_bottom_bar.dart';
+import 'package:intl/intl.dart';
 
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
@@ -33,24 +34,28 @@ class TeacherDashboardHomeScreen extends StatelessWidget {
           ),
           child: Column(
             children: [
-              RichText(
-                text: TextSpan(
-                  children: [
-                    TextSpan(
-                      text: "09: 45 ".toUpperCase(),
-                      style: CustomTextStyles.montserratBlack90001Light,
-                    ),
-                    TextSpan(
-                      text: "am ".toUpperCase(),
-                      style: CustomTextStyles.headlineLargeBlack90001,
-                    ),
-                  ],
+              Center(
+                child: RichText(
+                  text: TextSpan(
+                    children: [
+                      TextSpan(
+                        text: "${DateFormat('h:mm').format(DateTime.now())} ",
+                        style: CustomTextStyles.montserratBlack90001Light,
+                      ),
+                      TextSpan(
+                        text: DateFormat('a').format(DateTime.now()).toLowerCase(),
+                        style: CustomTextStyles.headlineLargeBlack90001,
+                      ),
+                    ],
+                  ),
+                  textAlign: TextAlign.center,
                 ),
-                textAlign: TextAlign.left,
               ),
-              Text(
-                "Monday, November 12, 2023",
-                style: theme.textTheme.bodyMedium,
+              Center(
+                child: Text(
+                  DateFormat("EEEE, MMMM d, y").format(DateTime.now()),
+                  style: theme.textTheme.bodyMedium,
+                ),
               ),
               SizedBox(height: 7.v),
               _buildEightyFour(context),
