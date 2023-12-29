@@ -2,9 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:facetap/theme/theme_helper.dart';
 import 'package:facetap/routes/app_routes.dart';
+import 'package:facetap/firebase_options.dart';
+import 'package:firebase_core/firebase_core.dart';
+
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
+  Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
   ]);
@@ -26,3 +30,5 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+
+

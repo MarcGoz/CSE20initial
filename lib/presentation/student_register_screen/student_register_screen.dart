@@ -3,6 +3,9 @@ import 'package:facetap/core/app_export.dart';
 import 'package:facetap/widgets/app_bar/custom_app_bar.dart';
 import 'package:facetap/widgets/custom_elevated_button.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 
 class StudentRegisterScreen extends StatefulWidget {
   const StudentRegisterScreen({Key? key}) : super(key: key);
@@ -14,7 +17,10 @@ class StudentRegisterScreen extends StatefulWidget {
 class _RegisterScreenState extends State<StudentRegisterScreen>
     with SingleTickerProviderStateMixin {
   late AnimationController _animationController;
-
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  // Define a global counter variable
+  int _globalCounter = 0;
   TextEditingController nameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
@@ -231,12 +237,58 @@ class _RegisterScreenState extends State<StudentRegisterScreen>
     });
   }
 
-  void onTapSignUp(BuildContext context) {
+  void onTapSignUp(BuildContext context) async {
     if (_formKey.currentState?.validate() ?? false) {
-      // Handle sign-up logic and navigation
-      Navigator.pushNamed(context, AppRoutes.signInAsStudentScreen);
+      try {
+        // Sign up with email and password
+        UserCredential userCredential = await _auth.createUserWithEmailAndPassword(
+          email: emailController.text,
+          password: passwordController.text,
+        );
+
+        // Retrieve the signed-in user
+        User? user = userCredential.user;
+
+        if (user != null) {
+          // Fetch the current counter value from Firestore
+          DocumentSnapshot counterSnapshot =
+          await _firestore.collection('stud_counter')
+              .doc('studentCounter')
+              .get();
+
+          int currentCounter = counterSnapshot.exists
+              ? counterSnapshot['count']
+              : 0;
+
+          // Generate studId using the current counter
+          String studId = 's${currentCounter + 1}';
+
+          // Update the counter in Firestore
+          await _firestore.collection('stud_counter')
+              .doc('studentCounter')
+              .update({
+            'count': currentCounter + 1,
+          });
+
+          // Create a document in the "students" collection with the user's UID
+          await _firestore.collection('students').doc(user.uid).set({
+            'studId': studId,
+            'name': nameController.text,
+            'email': emailController.text,
+            // Add other fields as needed
+          });
+
+          // Navigate to the home screen on successful sign-up
+          Navigator.pushNamed(context, AppRoutes.signInAsStudentScreen);
+        }
+      } catch (e) {
+        // Handle registration error
+        print("Error during registration: $e");
+        // You can show an error message to the user
+      }
     }
   }
+
 
   @override
   void dispose() {
