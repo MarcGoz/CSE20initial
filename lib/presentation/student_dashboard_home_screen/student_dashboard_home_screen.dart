@@ -7,10 +7,21 @@ import 'package:facetap/widgets/custom_bottom_bar.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 
-class StudentDashboardHomeScreen extends StatelessWidget {
+class StudentDashboardHomeScreen extends StatefulWidget {
   StudentDashboardHomeScreen({Key? key}) : super(key: key);
 
   GlobalKey<NavigatorState> navigatorKey = GlobalKey();
+
+  @override
+  _StudentDashboardHomeScreenState createState() =>
+      _StudentDashboardHomeScreenState();
+}
+
+class _StudentDashboardHomeScreenState
+    extends State<StudentDashboardHomeScreen> {
+  String timeIn = "--:--"; // Placeholder for time in
+  String timeOut = "--:--"; // Placeholder for time out
+  bool isClockedOut = false;
 
   @override
   Widget build(BuildContext context) {
@@ -57,15 +68,30 @@ class StudentDashboardHomeScreen extends StatelessWidget {
                 SizedBox(height: 20.v),
                 Center(
                   child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.pushNamed(
-                        context,
-                        AppRoutes.studentDashboardClockInScreen,
-                      );
-                      },
+                    onPressed: () async {
+                      if (!isClockedOut) {
+                        final currentTime = await Navigator.pushNamed(
+                          context,
+                          AppRoutes.studentDashboardClockInScreen,
+                        ) as DateTime?;
+                        if (currentTime != null) {
+                          setState(() {
+                            timeIn = DateFormat('h:mm a').format(currentTime);
+                            isClockedOut = true;
+                          });
+                        }
+                      } else {
+                        // Record current time for clock out
+                        final currentTime = DateTime.now();
+                        setState(() {
+                          timeOut = DateFormat('h:mm a').format(currentTime);
+                          isClockedOut = false;
+                        });
+                      }
+                    },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.transparent, // Set the background color to transparent
-                      elevation: 0, // Remove the elevation
+                      backgroundColor: Colors.transparent,
+                      elevation: 0,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadiusStyle.roundedBorder41,
                       ),
@@ -89,7 +115,7 @@ class StudentDashboardHomeScreen extends StatelessWidget {
                           ),
                           SizedBox(height: 4.v),
                           Text(
-                            "Clock In",
+                            isClockedOut ? "Clock Out" : "Clock In",
                             style: CustomTextStyles.titleMediumMontserrat,
                           ),
                         ],
@@ -111,7 +137,7 @@ class StudentDashboardHomeScreen extends StatelessWidget {
                           ),
                           SizedBox(height: 2.v),
                           Text(
-                            "--:--",
+                            timeIn,
                             style: theme.textTheme.bodyMedium,
                           ),
                           Text(
@@ -141,7 +167,7 @@ class StudentDashboardHomeScreen extends StatelessWidget {
                               ),
                               SizedBox(height: 2.v),
                               Text(
-                                "--:--",
+                                timeOut,
                                 style: theme.textTheme.bodyMedium,
                               ),
                               Text(
@@ -163,7 +189,7 @@ class StudentDashboardHomeScreen extends StatelessWidget {
                           ),
                           SizedBox(height: 2.v),
                           Text(
-                            "--:--",
+                            "--:--", // Placeholder for class time
                             style: theme.textTheme.bodyMedium,
                           ),
                           Text(
@@ -184,7 +210,6 @@ class StudentDashboardHomeScreen extends StatelessWidget {
     );
   }
 
-  /// Section Widget
   PreferredSizeWidget _buildAppBar(BuildContext context) {
     return CustomAppBar(
       title: Padding(
@@ -229,29 +254,46 @@ class StudentDashboardHomeScreen extends StatelessWidget {
 
   Widget _buildBottomBar(BuildContext context) {
     return CustomBottomBar(
-      onChanged: (BottomBarEnum type) {
+      onChanged: (BottomBarEnum type) async {
         switch (type) {
           case BottomBarEnum.Attendance:
-            Navigator.of(context).pushReplacementNamed(AppRoutes.sdAttendanceOneScreen);
+            Navigator.of(context)
+                .pushReplacementNamed(AppRoutes.sdAttendanceOneScreen);
             break;
           case BottomBarEnum.Notification:
-            Navigator.of(context).pushReplacementNamed(AppRoutes.sdNotificationScreen);
+            Navigator.of(context)
+                .pushReplacementNamed(AppRoutes.sdNotificationScreen);
             break;
           case BottomBarEnum.Settings:
             Navigator.of(context).pushReplacementNamed(AppRoutes.sdSettingsScreen);
             break;
           case BottomBarEnum.Home:
-            Navigator.of(context)
-                .pushReplacementNamed(AppRoutes.studentDashboardHomeScreen);
+          // Handle Home button behavior
+            if (!isClockedOut) {
+              final currentTime = await Navigator.pushNamed(
+                context,
+                AppRoutes.studentDashboardClockInScreen,
+              ) as DateTime?;
+              if (currentTime != null) {
+                setState(() {
+                  timeIn = DateFormat('h:mm a').format(currentTime);
+                  isClockedOut = true;
+                });
+              }
+            } else {
+              // Record current time for clock out
+              final currentTime = DateTime.now();
+              setState(() {
+                timeOut = DateFormat('h:mm a').format(currentTime);
+                isClockedOut = false;
+              });
+            }
             break;
         }
       },
       getCurrentPage: () {
-        // Replace with your logic to determine the current page
         return BottomBarEnum.Home;
       },
     );
   }
-
-
 }
