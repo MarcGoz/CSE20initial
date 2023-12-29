@@ -38,7 +38,7 @@ class SdAttendanceScreen extends StatelessWidget {
                   GestureDetector(
                     onTap: () {
                       // Navigate to .sdAttendanceOneScreen
-                      Navigator.of(context).pushReplacementNamed(AppRoutes.sdAttendanceOneScreen);
+                      Navigator.pop(context);
                     },
                     child: CustomImageView(
                       imagePath: ImageConstant.imgFrameBlack90001,

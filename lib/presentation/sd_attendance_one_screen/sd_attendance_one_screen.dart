@@ -316,7 +316,7 @@ class SdAttendanceOneScreen extends StatelessWidget {
     print("Tapped on $subjectName");
     // Navigate to the corresponding screen for the selected subject
     if (subjectName == "CSE20") {
-      Navigator.of(context).pushReplacementNamed(AppRoutes.sdAttendanceScreen);
+      Navigator.of(context).pushNamed(AppRoutes.sdAttendanceScreen);
     }
   }
 

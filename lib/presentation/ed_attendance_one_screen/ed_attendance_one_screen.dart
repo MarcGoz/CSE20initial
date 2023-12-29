@@ -1,4 +1,3 @@
-import '../sd_attendance_one_screen/widgets/sdattendanceone_item_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:facetap/core/app_export.dart';
 import 'package:facetap/widgets/app_bar/appbar_trailing_circleimage.dart';
@@ -82,12 +81,12 @@ class EdAttendanceOneScreen extends StatelessWidget {
       children: [
         Text("Attendance", style: CustomTextStyles.titleLargeBold),
         Expanded(child: Container()), // Use Expanded widget
-        _buildAddClassButton(), // Adjusted spacing between "Attendance" and text field
+        _buildAddClassButton(context), // Adjusted spacing between "Attendance" and text field
       ],
     );
   }
 
-  Widget _buildAddClassButton() {
+  Widget _buildAddClassButton(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(16.0), // Adjust the padding as needed
       child: SizedBox(
@@ -95,7 +94,10 @@ class EdAttendanceOneScreen extends StatelessWidget {
         width: 140, // Set the desired width
         child: ElevatedButton.icon(
           onPressed: () {
-            // Add your logic for the button click here
+            Navigator.pushNamed(
+              context,
+              AppRoutes.edAddDeleteScreen,
+            );
           },
           style: CustomButtonStyles.outlinePrimaryBL4, // Use the outlined style here
           icon: const Icon(
@@ -284,7 +286,7 @@ class EdAttendanceOneScreen extends StatelessWidget {
     print("Tapped on $subjectName");
     // Navigate to the corresponding screen for the selected subject
     if (subjectName == "CSE20") {
-      Navigator.of(context).pushReplacementNamed(AppRoutes.sdAttendanceScreen);
+      Navigator.of(context).pushNamed(AppRoutes.edAttendanceScreen);
     }
   }
 

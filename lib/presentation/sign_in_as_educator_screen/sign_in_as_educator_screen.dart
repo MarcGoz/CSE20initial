@@ -4,6 +4,8 @@ import 'package:facetap/widgets/app_bar/custom_app_bar.dart';
 import 'package:facetap/widgets/custom_checkbox_button.dart';
 import 'package:facetap/widgets/custom_elevated_button.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class SignInAsEducatorScreen extends StatefulWidget {
   const SignInAsEducatorScreen({Key? key}) : super(key: key);
@@ -21,6 +23,9 @@ class _SignInAsEducatorScreenState extends State<SignInAsEducatorScreen>
   TextEditingController passwordController = TextEditingController();
   bool rememberMe = false;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   @override
   void initState() {
@@ -204,10 +209,41 @@ class _SignInAsEducatorScreenState extends State<SignInAsEducatorScreen>
     });
   }
 
-  void onTapSignIn(BuildContext context) {
+  void onTapSignIn(BuildContext context) async {
     if (_formKey.currentState?.validate() ?? false) {
-      // Handle sign-in logic and navigation
-      Navigator.pushReplacementNamed(context, AppRoutes.teacherDashboardHomeScreen);
+      try {
+        UserCredential userCredential = await _auth.signInWithEmailAndPassword(
+          email: emailController.text,
+          password: passwordController.text,
+        );
+
+        // Check if the user's UID exists in the "Students" collection
+        DocumentSnapshot educatorsSnapshot = await _firestore.collection('Educators').doc(userCredential.user!.uid).get();
+
+        if (educatorsSnapshot.exists) {
+          // User is a student, navigate to the dashboard
+          Navigator.pushReplacementNamed(context, AppRoutes.teacherDashboardHomeScreen);
+        } else {
+          // User is not a student, show an error message
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('Authentication failed. User not found in Educators Accounts.'),
+              duration: Duration(seconds: 3),
+            ),
+          );
+        }
+      } catch (e) {
+        // Handle authentication errors
+        print('Error signing in: $e');
+
+        // Show a SnackBar for authentication failure
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Authentication failed. Check your email and password.'),
+            duration: Duration(seconds: 3),
+          ),
+        );
+      }
     }
   }
 

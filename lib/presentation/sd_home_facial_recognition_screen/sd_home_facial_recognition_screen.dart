@@ -61,7 +61,8 @@ class _SdHomeFacialRecognitionScreenState
             ),
             onPressed: () {
               Navigator.pop(context);
-            },
+              Navigator.pushNamed(context, AppRoutes.signInAsStudentScreen);
+              },
           ),
         ),
         body: Stack(

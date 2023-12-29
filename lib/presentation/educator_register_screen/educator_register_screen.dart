@@ -3,6 +3,8 @@ import 'package:facetap/core/app_export.dart';
 import 'package:facetap/widgets/app_bar/custom_app_bar.dart';
 import 'package:facetap/widgets/custom_elevated_button.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class EducatorRegisterScreen extends StatefulWidget {
   const EducatorRegisterScreen({Key? key}) : super(key: key);
@@ -15,6 +17,9 @@ class _RegisterScreenState extends State<EducatorRegisterScreen>
     with SingleTickerProviderStateMixin {
   late AnimationController _animationController;
   late Animation<double> _fadeAnimation;
+
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   TextEditingController nameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
@@ -232,10 +237,38 @@ class _RegisterScreenState extends State<EducatorRegisterScreen>
     });
   }
 
-  void onTapSignUp(BuildContext context) {
+  void onTapSignUp(BuildContext context) async {
     if (_formKey.currentState?.validate() ?? false) {
-      // Handle sign-up logic and navigation
-      Navigator.pushReplacementNamed(context, AppRoutes.signInAsEducatorScreen);
+      try {
+        UserCredential userCredential = await _auth.createUserWithEmailAndPassword(
+          email: emailController.text,
+          password: passwordController.text,
+        );
+
+        // Once the user is created, add the user's name to Firestore
+        await _firestore.collection('Educators').doc(userCredential.user!.uid).set({
+          'Name': nameController.text,
+          'Email': emailController.text,
+          // Add other fields if needed
+        });
+
+        // Show a SnackBar for successful registration
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Registration successful!'),
+            duration: Duration(seconds: 2), // You can adjust the duration
+          ),
+        );
+
+        Navigator.pushReplacementNamed(context, AppRoutes.signInAsStudentScreen);
+      } catch (e) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Error signing up: $e'),
+            duration: const Duration(seconds: 3),
+          ),
+        );
+      }
     }
   }
 

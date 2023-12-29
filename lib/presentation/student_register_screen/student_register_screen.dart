@@ -6,7 +6,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-
 class StudentRegisterScreen extends StatefulWidget {
   const StudentRegisterScreen({Key? key}) : super(key: key);
 
@@ -242,52 +241,34 @@ class _RegisterScreenState extends State<StudentRegisterScreen>
   void onTapSignUp(BuildContext context) async {
     if (_formKey.currentState?.validate() ?? false) {
       try {
-        // Sign up with email and password
         UserCredential userCredential = await _auth.createUserWithEmailAndPassword(
           email: emailController.text,
           password: passwordController.text,
         );
 
-        // Retrieve the signed-in user
-        User? user = userCredential.user;
+        // Once the user is created, add the user's name to Firestore
+        await _firestore.collection('Students').doc(userCredential.user!.uid).set({
+          'Name': nameController.text,
+          'Email': emailController.text,
+          // Add other fields if needed
+        });
 
-        if (user != null) {
-          // Fetch the current counter value from Firestore
-          DocumentSnapshot counterSnapshot =
-          await _firestore.collection('stud_counter')
-              .doc('studentCounter')
-              .get();
+        // Show a SnackBar for successful registration
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Registration successful!'),
+            duration: Duration(seconds: 2), // You can adjust the duration
+          ),
+        );
 
-          int currentCounter = counterSnapshot.exists
-              ? counterSnapshot['count']
-              : 0;
-
-          // Generate studId using the current counter
-          String studId = 's${currentCounter + 1}';
-
-          // Update the counter in Firestore
-          await _firestore.collection('stud_counter')
-              .doc('studentCounter')
-              .update({
-            'count': currentCounter + 1,
-          });
-
-          // Create a document in the "students" collection with the user's UID
-          await _firestore.collection('students').doc(user.uid).set({
-            'studId': studId,
-            'name': nameController.text,
-            'email': emailController.text,
-            // Add other fields as needed
-          });
-
-          // Navigate to the home screen on successful sign-up
-          Navigator.pushReplacementNamed(context, AppRoutes.signInAsStudentScreen);
-          
-        }
+        Navigator.pushReplacementNamed(context, AppRoutes.signInAsStudentScreen);
       } catch (e) {
-        // Handle registration error
-        print("Error during registration: $e");
-        // You can show an error message to the user
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Error signing up: $e'),
+            duration: const Duration(seconds: 3),
+          ),
+        );
       }
     }
   }

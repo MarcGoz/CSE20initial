@@ -5,7 +5,6 @@ import 'package:facetap/routes/app_routes.dart';
 import 'package:facetap/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 
-
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
@@ -30,5 +29,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
-

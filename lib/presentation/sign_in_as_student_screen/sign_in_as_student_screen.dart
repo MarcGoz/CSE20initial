@@ -4,6 +4,8 @@ import 'package:facetap/widgets/app_bar/custom_app_bar.dart';
 import 'package:facetap/widgets/custom_checkbox_button.dart';
 import 'package:facetap/widgets/custom_elevated_button.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class SignInAsStudentScreen extends StatefulWidget {
   const SignInAsStudentScreen({Key? key}) : super(key: key);
@@ -21,6 +23,9 @@ class _SignInAsStudentScreenState extends State<SignInAsStudentScreen>
   TextEditingController passwordController = TextEditingController();
   bool rememberMe = false;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   @override
   void initState() {
@@ -194,7 +199,7 @@ class _SignInAsStudentScreenState extends State<SignInAsStudentScreen>
   }
 
   void onTapRegister(BuildContext context) {
-    // Handle sign-in logic and navigation
+    // Handle navigation to registration screen
     Navigator.pushReplacementNamed(context, AppRoutes.registerStudentScreen);
   }
 
@@ -204,11 +209,42 @@ class _SignInAsStudentScreenState extends State<SignInAsStudentScreen>
     });
   }
 
-  void onTapSignIn(BuildContext context) {
+  void onTapSignIn(BuildContext context) async {
     if (_formKey.currentState?.validate() ?? false) {
-      // Handle sign-in logic and navigation
-      Navigator.pushReplacementNamed(context, AppRoutes.studentDashboardHomeScreen);
-      Navigator.pushNamed(context, AppRoutes.sdHomeFacialRecognitionScreen);
+      try {
+        UserCredential userCredential = await _auth.signInWithEmailAndPassword(
+          email: emailController.text,
+          password: passwordController.text,
+        );
+
+        // Check if the user's UID exists in the "Students" collection
+        DocumentSnapshot studentSnapshot = await _firestore.collection('Students').doc(userCredential.user!.uid).get();
+
+        if (studentSnapshot.exists) {
+          // User is a student, navigate to the dashboard
+          Navigator.pushReplacementNamed(context, AppRoutes.studentDashboardHomeScreen);
+          Navigator.pushNamed(context, AppRoutes.sdHomeFacialRecognitionScreen);
+        } else {
+          // User is not a student, show an error message
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('Authentication failed. User not found in Students Accounts.'),
+              duration: Duration(seconds: 3),
+            ),
+          );
+        }
+      } catch (e) {
+        // Handle authentication errors
+        print('Error signing in: $e');
+
+        // Show a SnackBar for authentication failure
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Authentication failed. Check your email and password.'),
+            duration: Duration(seconds: 3),
+          ),
+        );
+      }
     }
   }
 
