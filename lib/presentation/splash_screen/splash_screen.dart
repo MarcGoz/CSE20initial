@@ -81,5 +81,6 @@ class SplashScreen extends StatelessWidget {
   /// Navigates to the permissionsScreen when the action is triggered.
   void onTapGetStarted(BuildContext context) {
     Navigator.pushReplacementNamed(context, AppRoutes.permissionsScreen);
+
   }
 }

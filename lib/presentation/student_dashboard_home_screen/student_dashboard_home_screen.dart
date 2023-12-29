@@ -58,8 +58,11 @@ class StudentDashboardHomeScreen extends StatelessWidget {
                 Center(
                   child: ElevatedButton(
                     onPressed: () {
-                      // Add your onPressed logic here
-                    },
+                      Navigator.pushNamed(
+                        context,
+                        AppRoutes.studentDashboardClockInScreen,
+                      );
+                      },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.transparent, // Set the background color to transparent
                       elevation: 0, // Remove the elevation

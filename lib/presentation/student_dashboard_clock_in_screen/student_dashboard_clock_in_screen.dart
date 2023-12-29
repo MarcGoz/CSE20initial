@@ -1,163 +1,158 @@
 import 'package:flutter/material.dart';
+import 'package:camera/camera.dart';
 import 'package:facetap/core/app_export.dart';
 import 'package:facetap/widgets/custom_elevated_button.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-class StudentDashboardClockInScreen extends StatelessWidget {
+class StudentDashboardClockInScreen extends StatefulWidget {
   const StudentDashboardClockInScreen({Key? key}) : super(key: key);
+
+  @override
+  _SdHomeFacialRecognitionScreenState createState() =>
+      _SdHomeFacialRecognitionScreenState();
+}
+
+class _SdHomeFacialRecognitionScreenState
+    extends State<StudentDashboardClockInScreen> {
+  late CameraController _controller;
+  late Future<void> _initializeControllerFuture;
+
+  @override
+  void initState() {
+    super.initState();
+    _initializeCamera();
+  }
+
+  Future<void> _initializeCamera() async {
+    final cameras = await availableCameras();
+    final firstCamera = cameras.first;
+
+    _controller = CameraController(
+      firstCamera,
+      ResolutionPreset.medium,
+    );
+
+    _initializeControllerFuture = _controller.initialize();
+    if (mounted) {
+      setState(() {}); // Trigger a rebuild when the camera has been initialized
+    }
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose(); // Dispose of the controller when the widget is disposed
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     mediaQueryData = MediaQuery.of(context);
     return SafeArea(
-        child: Scaffold(
-            body: SizedBox(
-                height: mediaQueryData.size.height,
+      child: Scaffold(
+        extendBody: true,
+        extendBodyBehindAppBar: true,
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          leading: IconButton(
+            icon: Icon(
+              FontAwesomeIcons.arrowLeft, // Back button icon
+              color: Colors.white,
+            ),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
+        ),
+        body: Stack(
+          children: [
+            Container(
+              width: mediaQueryData.size.width,
+              height: mediaQueryData.size.height,
+              child: FutureBuilder<void>(
+                future: _initializeControllerFuture,
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.done) {
+                    // If the Future is complete, display the camera preview
+                    return CameraPreview(_controller);
+                  } else {
+                    // Otherwise, display a loading indicator
+                    return Center(child: CircularProgressIndicator());
+                  }
+                },
+              ),
+            ),
+            Positioned.fill(
+              child: Container(
                 width: double.maxFinite,
-                child: Stack(alignment: Alignment.center, children: [
-                  _buildThirtyFive(context),
-                  Align(
-                      alignment: Alignment.center,
-                      child: SizedBox(
-                          height: mediaQueryData.size.height,
-                          width: 357.h,
-                          child:
-                              Stack(alignment: Alignment.centerLeft, children: [
-                            CustomImageView(
-                                imagePath: ImageConstant.imgPexelsCottonbr,
-                                height: 640.v,
-                                width: 357.h,
-                                alignment: Alignment.center),
-                            Align(
-                                alignment: Alignment.centerLeft,
-                                child: Padding(
-                                    padding: EdgeInsets.only(left: 21.h),
-                                    child: Column(
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: [
-                                          CustomImageView(
-                                              imagePath: ImageConstant
-                                                  .imgFrameOnprimarycontainer,
-                                              height: 28.v,
-                                              width: 18.h,
-                                              alignment: Alignment.centerLeft),
-                                          SizedBox(height: 33.v),
-                                          CustomImageView(
-                                              imagePath:
-                                                  ImageConstant.imgFaceTracker,
-                                              height: 374.v,
-                                              width: 292.h),
-                                          SizedBox(height: 24.v),
-                                          SizedBox(
-                                              height: 30.adaptSize,
-                                              width: 30.adaptSize,
-                                              child: Stack(
-                                                  alignment:
-                                                      Alignment.topCenter,
-                                                  children: [
-                                                    CustomImageView(
-                                                        imagePath: ImageConstant
-                                                            .imgRoundedRectangle,
-                                                        height: 30.adaptSize,
-                                                        width: 30.adaptSize,
-                                                        alignment:
-                                                            Alignment.center),
-                                                    CustomImageView(
-                                                        imagePath: ImageConstant
-                                                            .imgFrameOnprimarycontainer18x14,
-                                                        height: 18.v,
-                                                        width: 14.h,
-                                                        alignment:
-                                                            Alignment.topCenter,
-                                                        margin: EdgeInsets.only(
-                                                            top: 6.v))
-                                                  ])),
-                                          SizedBox(height: 5.v),
-                                          SizedBox(
-                                              width: 157.h,
-                                              child: RichText(
-                                                  text: TextSpan(children: [
-                                                    TextSpan(
-                                                        text: "Your Location\n",
-                                                        style: CustomTextStyles
-                                                            .bodySmallOnPrimaryContainer),
-                                                    TextSpan(
-                                                        text:
-                                                            "Angeles University Foundation, Angeles City, Pampanga, Philippines",
-                                                        style: CustomTextStyles
-                                                            .bodySmallOnPrimaryContainer_1)
-                                                  ]),
-                                                  textAlign: TextAlign.center)),
-                                          SizedBox(height: 12.v),
-                                          CustomElevatedButton(
-                                              width: 227.h,
-                                              text: "CLOCK IN".toUpperCase(),
-                                              margin:
-                                                  EdgeInsets.only(right: 26.h),
-                                              onPressed: () {
-                                                onTapCLOCKIN(context);
-                                              },
-                                              alignment: Alignment.centerRight)
-                                        ])))
-                          ])))
-                ]))));
+                padding: EdgeInsets.symmetric(horizontal: 20.h, vertical: 14.v),
+                child: Column(
+                  children: [
+                    SizedBox(height: 37.v),
+                    CustomImageView(
+                      imagePath: ImageConstant.imgFaceTrackerOnprimarycontainer,
+                      height: 408.v,
+                      width: 320.h,
+                    ),
+                    SizedBox(height: 15.v),
+                    SizedBox(
+                      height: 30.adaptSize,
+                      width: 30.adaptSize,
+                      child: Stack(
+                        alignment: Alignment.topCenter,
+                        children: [
+                          CustomImageView(
+                            imagePath: ImageConstant.imgRoundedRectangle,
+                            height: 30.adaptSize,
+                            width: 30.adaptSize,
+                            alignment: Alignment.center,
+                          ),
+                          CustomImageView(
+                            imagePath: ImageConstant.imgInfo,
+                            height: 15.v,
+                            width: 18.h,
+                            alignment: Alignment.topCenter,
+                            margin: EdgeInsets.only(top: 6.v),
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(height: 11.v),
+                    SizedBox(
+                      width: 157.h,
+                      child: Text(
+                        "Location: Angeles City",
+                        maxLines: 3,
+                        overflow: TextOverflow.ellipsis,
+                        textAlign: TextAlign.center,
+                        style: CustomTextStyles.bodySmallOnPrimaryContainer10,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+        bottomNavigationBar: _buildRegisterFace(context),
+      ),
+    );
   }
 
   /// Section Widget
-  Widget _buildThirtyFive(BuildContext context) {
-    return Align(
-        alignment: Alignment.bottomCenter,
-        child: Container(
-            width: double.maxFinite,
-            margin: EdgeInsets.only(top: 581.v),
-            padding: EdgeInsets.fromLTRB(17.h, 6.v, 17.h, 7.v),
-            decoration: AppDecoration.outlineBlack,
-            child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  Padding(
-                      padding: EdgeInsets.only(top: 5.v),
-                      child: Column(children: [
-                        CustomImageView(
-                            imagePath: ImageConstant.imgHome,
-                            height: 25.v,
-                            width: 29.h),
-                        Text("Home", style: CustomTextStyles.bodySmallPrimary)
-                      ])),
-                  Padding(
-                      padding: EdgeInsets.only(top: 4.v),
-                      child: Column(children: [
-                        CustomImageView(
-                            imagePath: ImageConstant.imgFrame,
-                            height: 27.v,
-                            width: 20.h),
-                        Text("Attendance", style: theme.textTheme.bodySmall)
-                      ])),
-                  Padding(
-                      padding: EdgeInsets.only(top: 5.v),
-                      child: Column(children: [
-                        CustomImageView(
-                            imagePath: ImageConstant.imgNavNotification,
-                            height: 25.v,
-                            width: 21.h),
-                        SizedBox(height: 1.v),
-                        Text("Notification", style: theme.textTheme.bodySmall)
-                      ])),
-                  Padding(
-                      padding: EdgeInsets.only(top: 5.v),
-                      child: Column(children: [
-                        CustomImageView(
-                            imagePath: ImageConstant.imgNavSettings,
-                            height: 25.adaptSize,
-                            width: 25.adaptSize),
-                        SizedBox(height: 2.v),
-                        Text("Settings", style: theme.textTheme.bodySmall)
-                      ]))
-                ])));
+  Widget _buildRegisterFace(BuildContext context) {
+    return CustomElevatedButton(
+      width: 227.h,
+      text: "Clock In",
+      margin: EdgeInsets.only(left: 66.h, right: 66.h, bottom: 27.v),
+      onPressed: () {
+        onTapRegisterFace(context);
+      },
+    );
   }
 
-  /// Navigates to the studentDashboardHomeScreen when the action is triggered.
-  onTapCLOCKIN(BuildContext context) {
-    Navigator.pushReplacementNamed(context, AppRoutes.studentDashboardHomeScreen);
+  /// Navigates to the studentDashboardClockInScreen when the action is triggered.
+  onTapRegisterFace(BuildContext context) {
+    Navigator.pop(context);
   }
 }
