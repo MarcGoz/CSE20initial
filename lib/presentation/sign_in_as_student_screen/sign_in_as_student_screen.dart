@@ -4,8 +4,12 @@ import 'package:facetap/widgets/app_bar/custom_app_bar.dart';
 import 'package:facetap/widgets/custom_checkbox_button.dart';
 import 'package:facetap/widgets/custom_elevated_button.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+
+import 'package:provider/provider.dart';
+import 'package:facetap/user_data.dart';
 
 class SignInAsStudentScreen extends StatefulWidget {
   const SignInAsStudentScreen({Key? key}) : super(key: key);
@@ -217,11 +221,16 @@ class _SignInAsStudentScreenState extends State<SignInAsStudentScreen>
           password: passwordController.text,
         );
 
-        // Check if the user's UID exists in the "Students" collection
+        // Access the UserData class from the Provider
+        UserData userData = Provider.of<UserData>(context, listen: false);
+
+        // Check the account type by querying the database
         DocumentSnapshot studentSnapshot = await _firestore.collection('Students').doc(userCredential.user!.uid).get();
 
         if (studentSnapshot.exists) {
           // User is a student, navigate to the dashboard
+          userData.setUserData(userCredential.user!.uid, 'Students');
+
           Navigator.pushReplacementNamed(context, AppRoutes.studentDashboardHomeScreen);
           Navigator.pushNamed(context, AppRoutes.sdHomeFacialRecognitionScreen);
         } else {

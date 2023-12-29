@@ -7,6 +7,9 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+import 'package:provider/provider.dart';
+import 'package:facetap/user_data.dart';
+
 class SignInAsEducatorScreen extends StatefulWidget {
   const SignInAsEducatorScreen({Key? key}) : super(key: key);
 
@@ -217,16 +220,21 @@ class _SignInAsEducatorScreenState extends State<SignInAsEducatorScreen>
           password: passwordController.text,
         );
 
+        // Access the UserData class from the Provider
+        UserData userData = Provider.of<UserData>(context, listen: false);
+
         // Check if the user's UID exists in the "Students" collection
         DocumentSnapshot educatorsSnapshot = await _firestore.collection('Educators').doc(userCredential.user!.uid).get();
 
         if (educatorsSnapshot.exists) {
           // User is a student, navigate to the dashboard
+          userData.setUserData(userCredential.user!.uid, 'Educators');
+
           Navigator.pushReplacementNamed(context, AppRoutes.teacherDashboardHomeScreen);
         } else {
           // User is not a student, show an error message
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
+            const SnackBar(
               content: Text('Authentication failed. User not found in Educators Accounts.'),
               duration: Duration(seconds: 3),
             ),
@@ -238,7 +246,7 @@ class _SignInAsEducatorScreenState extends State<SignInAsEducatorScreen>
 
         // Show a SnackBar for authentication failure
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
+          const SnackBar(
             content: Text('Authentication failed. Check your email and password.'),
             duration: Duration(seconds: 3),
           ),

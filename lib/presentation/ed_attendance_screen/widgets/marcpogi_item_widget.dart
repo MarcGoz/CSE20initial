@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:facetap/core/app_export.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-// ignore: must_be_immutable
-class MarcpogiItemWidget extends StatelessWidget {
-  const MarcpogiItemWidget({Key? key})
-      : super(
-          key: key,
-        );
+class MarcpogiItemWidget extends StatefulWidget {
+  const MarcpogiItemWidget({Key? key}) : super(key: key);
+
+  @override
+  _MarcpogiItemWidgetState createState() => _MarcpogiItemWidgetState();
+}
+
+class _MarcpogiItemWidgetState extends State<MarcpogiItemWidget> {
+  bool isAttendanceChecked = false;
 
   @override
   Widget build(BuildContext context) {
@@ -16,12 +20,6 @@ class MarcpogiItemWidget extends StatelessWidget {
       child: Stack(
         alignment: Alignment.center,
         children: [
-          CustomImageView(
-            imagePath: ImageConstant.imgAccess1,
-            height: 49.v,
-            width: 330.h,
-            alignment: Alignment.center,
-          ),
           Align(
             alignment: Alignment.center,
             child: SizedBox(
@@ -30,11 +28,15 @@ class MarcpogiItemWidget extends StatelessWidget {
               child: Stack(
                 alignment: Alignment.centerLeft,
                 children: [
-                  CustomImageView(
-                    imagePath: ImageConstant.imgAccess2,
+                  Container(
                     height: 49.v,
                     width: 330.h,
-                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: AssetImage(ImageConstant.imgAccess2),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
                   ),
                   Align(
                     alignment: Alignment.centerLeft,
@@ -58,9 +60,8 @@ class MarcpogiItemWidget extends StatelessWidget {
                               top: 2.v,
                             ),
                             child: Text(
-                              "Marc Pogi",
-                              style: CustomTextStyles
-                                  .titleMediumMontserratBlack900,
+                              "Name of Student",
+                              style: CustomTextStyles.titleMediumMontserratBlack900,
                             ),
                           ),
                         ],
@@ -71,8 +72,64 @@ class MarcpogiItemWidget extends StatelessWidget {
               ),
             ),
           ),
+          Positioned(
+            right: 10.0,
+            top: 10.0,
+            child: Row(
+              children: [
+                IconButton(
+                  onPressed: () {
+                    setState(() {
+                      isAttendanceChecked = !isAttendanceChecked;
+                    });
+                  },
+                  icon: Icon(
+                    isAttendanceChecked
+                        ? FontAwesomeIcons.check
+                        : FontAwesomeIcons.xmark,
+                    color: isAttendanceChecked
+                        ? Colors.green
+                        : Colors.red,
+                  ),
+                ),
+                SizedBox(width: 10.0),
+                IconButton(
+                  onPressed: () {
+                    // Show confirmation dialog before removing the person
+                    showDialog(
+                      context: context,
+                      builder: (context) => AlertDialog(
+                        title: Text("Confirm Removal"),
+                        content: Text("Are you sure you want to remove this person from the course?"),
+                        actions: [
+                          TextButton(
+                            onPressed: () {
+                              Navigator.of(context).pop(); // Close the dialog
+                            },
+                            child: Text("Cancel"),
+                          ),
+                          TextButton(
+                            onPressed: () {
+                              // Implement the logic to remove the person from the course
+                              Navigator.of(context).pop(); // Close the dialog
+                            },
+                            child: Text("Confirm"),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                  icon: Icon(
+                    FontAwesomeIcons.userMinus,
+                    color: Colors.redAccent,
+                  ),
+                ),
+              ],
+            ),
+          ),
         ],
       ),
     );
   }
 }
+

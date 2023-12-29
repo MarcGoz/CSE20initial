@@ -8,11 +8,11 @@ class StudentDashboardClockInScreen extends StatefulWidget {
   const StudentDashboardClockInScreen({Key? key}) : super(key: key);
 
   @override
-  _StudentDashboardClockInScreenState createState() =>
-      _StudentDashboardClockInScreenState();
+  _SdHomeFacialRecognitionScreenState createState() =>
+      _SdHomeFacialRecognitionScreenState();
 }
 
-class _StudentDashboardClockInScreenState
+class _SdHomeFacialRecognitionScreenState
     extends State<StudentDashboardClockInScreen> {
   late CameraController _controller;
   late Future<void> _initializeControllerFuture;
@@ -139,6 +139,7 @@ class _StudentDashboardClockInScreenState
     );
   }
 
+  /// Section Widget
   Widget _buildRegisterFace(BuildContext context) {
     return CustomElevatedButton(
       width: 227.h,
@@ -150,8 +151,8 @@ class _StudentDashboardClockInScreenState
     );
   }
 
-  onTapRegisterFace(BuildContext context) async {
-    final currentTime = DateTime.now();
-    Navigator.pop(context, currentTime);
+  /// Navigates to the studentDashboardClockInScreen when the action is triggered.
+  onTapRegisterFace(BuildContext context) {
+    Navigator.pop(context);
   }
 }

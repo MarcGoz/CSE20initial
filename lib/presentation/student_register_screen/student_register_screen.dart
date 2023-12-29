@@ -250,7 +250,6 @@ class _RegisterScreenState extends State<StudentRegisterScreen>
         await _firestore.collection('Students').doc(userCredential.user!.uid).set({
           'Name': nameController.text,
           'Email': emailController.text,
-          // Add other fields if needed
         });
 
         // Show a SnackBar for successful registration

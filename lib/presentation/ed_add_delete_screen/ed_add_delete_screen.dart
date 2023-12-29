@@ -8,6 +8,10 @@ import 'package:facetap/widgets/custom_bottom_bar.dart';
 import 'package:facetap/widgets/custom_elevated_button.dart';
 import 'package:facetap/widgets/custom_text_form_field.dart';
 
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
+import 'package:facetap/user_data.dart';
+
 class EdAddDeleteScreen extends StatelessWidget {
   EdAddDeleteScreen({Key? key})
       : super(
@@ -329,8 +333,12 @@ class EdAddDeleteScreen extends StatelessWidget {
   }
 
   /// Section Widget
-  /// Section Widget
   PreferredSizeWidget _buildAppBar(BuildContext context) {
+
+    UserData userData = Provider.of<UserData>(context, listen: false);
+    String? uid = userData.uid;
+    String? accountType = userData.accountType;
+
     return CustomAppBar(
       title: Padding(
         padding: EdgeInsets.only(left: 20.h),
@@ -355,21 +363,33 @@ class EdAddDeleteScreen extends StatelessWidget {
         ),
       ),
       actions: [
-        GestureDetector(
-          child: AppbarTrailingCircleimage(
+        Padding(
+          padding: EdgeInsets.only(right: 20.h), // Add padding to the right
+          child: GestureDetector(
             onTap: () {
-              // Navigate to sdSettingsScreen
+              // Handle onTap for the trailing image
               Navigator.of(context).pushReplacementNamed(AppRoutes.edSettingsScreen);
             },
-            imagePath: ImageConstant.imgEllipse8,
-            margin: EdgeInsets.symmetric(
-              horizontal: 20.h,
-              vertical: 5.v,
+            child: userData.image != null
+                ? AppbarTrailingCircleimage(
+              onTap: () {
+                Navigator.of(context).pushReplacementNamed(AppRoutes.edSettingsScreen);
+              },
+              imagePath: userData.image!,
+              margin: EdgeInsets.symmetric(
+                horizontal: 20.h,
+                vertical: 5.v,
+              ),
+            )
+                : FaIcon(
+              FontAwesomeIcons.circleUser,
+              size: 35, // Adjust the size as needed
             ),
           ),
         ),
       ],
     );
+
   }
 
   /// Section Widget

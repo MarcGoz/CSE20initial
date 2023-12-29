@@ -8,6 +8,10 @@ import 'package:facetap/core/app_export.dart';
 import 'package:facetap/widgets/app_bar/appbar_trailing_circleimage.dart';
 import 'package:facetap/widgets/app_bar/custom_app_bar.dart';
 import 'package:facetap/widgets/custom_bottom_bar.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
+import 'package:provider/provider.dart';
+import 'package:facetap/user_data.dart';
 
 class SdAttendanceScreen extends StatelessWidget {
   SdAttendanceScreen({Key? key})
@@ -42,8 +46,8 @@ class SdAttendanceScreen extends StatelessWidget {
                     },
                     child: CustomImageView(
                       imagePath: ImageConstant.imgFrameBlack90001,
-                      height: 28.v,
-                      width: 18.h,
+                      height: 30.v,
+                      width: 10.h,
                       margin: EdgeInsets.only(left: 10.h),
                     ),
                   ),
@@ -70,6 +74,11 @@ class SdAttendanceScreen extends StatelessWidget {
 
   /// Section Widget
   PreferredSizeWidget _buildAppBar(BuildContext context) {
+
+    UserData userData = Provider.of<UserData>(context, listen: false);
+    String? uid = userData.uid;
+    String? accountType = userData.accountType;
+
     return CustomAppBar(
       title: Padding(
         padding: EdgeInsets.only(left: 20.h),
@@ -94,11 +103,28 @@ class SdAttendanceScreen extends StatelessWidget {
         ),
       ),
       actions: [
-        AppbarTrailingCircleimage(
-          imagePath: ImageConstant.imgEllipse8,
-          margin: EdgeInsets.symmetric(
-            horizontal: 20.h,
-            vertical: 5.v,
+        Padding(
+          padding: EdgeInsets.only(right: 20.h), // Add padding to the right
+          child: GestureDetector(
+            onTap: () {
+              // Handle onTap for the trailing image
+              Navigator.of(context).pushReplacementNamed(AppRoutes.sdSettingsScreen);
+            },
+            child: userData.image != null
+                ? AppbarTrailingCircleimage(
+              onTap: () {
+                Navigator.of(context).pushReplacementNamed(AppRoutes.sdSettingsScreen);
+              },
+              imagePath: userData.image!,
+              margin: EdgeInsets.symmetric(
+                horizontal: 20.h,
+                vertical: 5.v,
+              ),
+            )
+                : FaIcon(
+              FontAwesomeIcons.circleUser,
+              size: 35, // Adjust the size as needed
+            ),
           ),
         ),
       ],
