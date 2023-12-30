@@ -260,7 +260,7 @@ class _RegisterScreenState extends State<EducatorRegisterScreen>
           ),
         );
 
-        Navigator.pushReplacementNamed(context, AppRoutes.signInAsStudentScreen);
+        Navigator.pushReplacementNamed(context, AppRoutes.signInAsEducatorScreen);
       } catch (e) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
