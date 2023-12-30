@@ -1,30 +1,77 @@
-# facetap
+# FaceTap
 
 FaceTap, an innovative mobile application designed to revolutionize attendance tracking using facial recognition technology.
 
-### System requirements
+### System Requirements
 
 Dart SDK Version 2.18.0 or greater.
 Flutter SDK Version 3.3.0 or greater.
 
-### Application structure
+### Project Structure
 
 
 ```
 .
-├── android                         - It contains files required to run the application on an Android platform.
-├── assets                          - It contains all images and fonts of your application.
-├── ios                             - It contains files required to run the application on an iOS platform.
-├── lib                             - Most important folder in the application, used to write most of the Dart code..
-    ├── main.dart                   - Starting point of the application
-    ├── core
-    │   ├── app_export.dart         - It contains commonly used file imports
-    │   ├── constants               - It contains static constant class file
-    │   └── utils                   - It contains common files and utilities of the application
-    ├── presentation                - It contains widgets of the screens
-    ├── routes                      - It contains all the routes of the application
-    └── theme                       - It contains app theme and decoration classes
-    └── widgets                     - It contains all custom widget classes
+├── android                         - Contains files required to run the application on an Android platform.
+├── assets                          - Contains all images and fonts of your application.
+├── ios                             - Contains files required to run the application on an iOS platform.
+├── lib                             - Most important folder in the application, used to write most of the Dart code.
+│   ├── main.dart                   - Starting point of the application
+│   ├── core
+│   │   ├── app_export.dart         - Contains commonly used file imports
+│   │   ├── constants               - Contains static constant class file
+│   │   └── utils                   - Contains common files and utilities of the application
+│   ├── presentation                - Contains widgets of the screens
+│   │   ├── app_navigation_screen
+│   │   ├── choose_a_role_screen
+│   │   ├── ed_add_delete_screen
+│   │   ├── ed_attendance_one_screen
+│   │   ├── ed_attendance_screen
+│   │   ├── ed_notification_screen
+│   │   ├── ed_settings_screen
+│   │   ├── educator_register_screen
+│   │   ├── permissions_screen
+│   │   ├── sd_attendance_one_screen
+│   │   ├── sd_attendance_screen
+│   │   ├── sd_home_facial_recognition_screen
+│   │   ├── sd_notification_screen
+│   │   ├── sd_settings_screen
+│   │   ├── sign_in_as_educator_screen
+│   │   ├── sign_in_as_student_screen
+│   │   ├── splash_screen
+│   │   ├── student_dashboard_clock_in_screen
+│   │   ├── student_dashboard_home_screen
+│   │   ├── student_register_screen
+│   │   └── teacher_dashboard_home_screen
+│   ├── routes                      - Contains all the routes of the application
+│   │   └── app_routes.dart 
+│   ├── theme                       - Contains app theme and decoration classes
+│   │   ├── app_decoration.dart
+│   │   ├── custom_button_style.dart
+│   │   ├── custom_text_style.dart
+│   │   └── theme_helper.dart
+│   └── widgets                     - Contains all custom widget classes
+│       ├── app_bar
+│       │   ├── appbar_leading_circleimage.dart
+│       │   ├── appbar_leading_image.dart
+│       │   ├── appbar_subtitle.dart
+│       │   ├── appbar_subtitle_one.dart
+│       │   ├── appbar_trailing_circleimage.dart
+│       │   └── custom_app_bar.dart
+│       ├── base_button.dart
+│       ├── custom_bottom_bar.dart
+│       ├── custom_checkbox_button.dart
+│       ├── custom_elevated_button.dart
+│       ├── custom_image_view.dart
+│       ├── custom_outlined_button.dart
+│       └── custom_text_form_field.dart
+├── test                            - Contains test files
+│   └── widget_test.dart
+├── .gitignore                      - Configuration file for Git to specify which files and directories to ignore.
+├── .metadata
+├── README.md                       - Documentation file providing information about the project.
+├── analysis_options.yaml           - Configuration file for Dart analysis tools.
+└── pubspec.yaml                    - Configuration file for dependencies and other metadata related to the Dart package.
 ```
 ### Key Features:
 Facial Recognition: Capture attendance by scanning individuals' faces for quick and efficient tracking.
