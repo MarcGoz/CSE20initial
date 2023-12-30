@@ -132,30 +132,14 @@ class SdAttendanceOneScreen extends StatelessWidget {
                     },
                   ),
                 ),
-                GestureDetector(
-                  onTap: () {
+                IconButton(
+                  icon: FaIcon(
+                    FontAwesomeIcons.arrowRight, // Replace with the appropriate FontAwesome enter icon
+                    size: 18, // Adjust the size as needed
+                  ),
+                  onPressed: () {
                     // Add your search logic here
                   },
-                  child: Container(
-                    padding: const EdgeInsets.all(8.0),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(20.0),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.2),
-                          blurRadius: 6.0,
-                          spreadRadius: 0.0,
-                          offset: const Offset(0, 2),
-                        ),
-                      ],
-                    ),
-                    child: CustomImageView(
-                      imagePath: ImageConstant.imgVectorPrimary15x18,
-                      height: 15.v,
-                      width: 18.h,
-                    ),
-                  ),
                 ),
               ],
             ),
