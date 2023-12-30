@@ -10,48 +10,40 @@ import 'package:intl/intl.dart';
 import 'package:facetap/widgets/custom_elevated_button.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class Course {
-  late String className;
-  late String classCode;
-  late Map<String, Map<String, String>> weeklySchedule;
-  late DateTime schoolPeriodEnds;
-  late double latitude;
-  late double longitude;
+class DayTimeModel {
+  String day;
+  TimeOfDay? startTime;
+  TimeOfDay? endTime;
 
-  Course({
-    required this.className,
-    required this.classCode,
-    required this.weeklySchedule,
-    required this.schoolPeriodEnds,
-    required this.latitude,
-    required this.longitude,
-  });
+  DayTimeModel({required this.day, this.startTime, this.endTime});
 }
+
 class EdAddDeleteScreen extends StatefulWidget {
-  EdAddDeleteScreen({Key? key}) : super(key: key);
+  const EdAddDeleteScreen({Key? key}) : super(key: key);
 
   @override
-  EdAddDeleteScreenState createState() => EdAddDeleteScreenState();
+  _EdAddDeleteScreenState createState() => _EdAddDeleteScreenState();
 }
 
+class _EdAddDeleteScreenState extends State<EdAddDeleteScreen> {
+  List<DayTimeModel> dayTimes = [
+    DayTimeModel(day: 'Monday', startTime: null, endTime: null),
+    DayTimeModel(day: 'Tuesday', startTime: null, endTime: null),
+    DayTimeModel(day: 'Wednesday', startTime: null, endTime: null),
+    DayTimeModel(day: 'Thursday', startTime: null, endTime: null),
+    DayTimeModel(day: 'Friday', startTime: null, endTime: null),
+    DayTimeModel(day: 'Saturday', startTime: null, endTime: null),
+    DayTimeModel(day: 'Sunday', startTime: null, endTime: null),
+  ];
 
-
-class EdAddDeleteScreenState extends State<EdAddDeleteScreen> {
-
-  GlobalKey<NavigatorState> navigatorKey = GlobalKey();
-  final TextEditingController _classNameController = TextEditingController();
-  final TextEditingController _classCodeController = TextEditingController();
-  final TextEditingController _latitudeController = TextEditingController();
-  final TextEditingController _longitudeController = TextEditingController();
-  DateTime _selectedDate = DateTime.now();
-  Map<String, TimeOfDay> _startTime = {};
-  Map<String, TimeOfDay> _endTime = {};
-  Map<String, Map<String, String>> _selectedDays = {};
-
+  final TextEditingController classNameController = TextEditingController();
+  final TextEditingController classCodeController = TextEditingController();
+  DateTime selectedDate = DateTime.now();
 
   @override
   Widget build(BuildContext context) {
-    mediaQueryData = MediaQuery.of(context);
+    UserData userData = Provider.of<UserData>(context, listen: false);
+    String? uid = userData.uid;
 
     return SafeArea(
       child: Scaffold(
@@ -69,7 +61,6 @@ class EdAddDeleteScreenState extends State<EdAddDeleteScreen> {
                     children: [
                       GestureDetector(
                         onTap: () {
-                          // Navigate to .sdAttendanceOneScreen
                           Navigator.pop(context);
                         },
                         child: CustomImageView(
@@ -94,11 +85,10 @@ class EdAddDeleteScreenState extends State<EdAddDeleteScreen> {
               Expanded(
                 child: ListView(
                   children: [
-                    _buildFormField(context: context, label: 'Class Name', icon: Icons.class_, controller: _classNameController),
-                    _buildFormField(context: context, label: 'Class Code', icon: Icons.confirmation_number, controller: _classCodeController),
+                    _buildFormField(context: context, label: 'Class Name', icon: Icons.class_, controller: classNameController),
+                    _buildFormField(context: context, label: 'Class Code', icon: Icons.confirmation_number, controller: classCodeController),
                     _buildCard(label: 'Weekly Schedule', icon: Icons.schedule, child: _buildWeeklyScheduleField(context)),
                     _buildDatePickerField(context),
-                    _buildLocationFormField(context: context, label: 'Location', icon: Icons.location_on, latitudeController: _latitudeController, longitudeController: _longitudeController),
                   ],
                 ),
               ),
@@ -107,17 +97,7 @@ class EdAddDeleteScreenState extends State<EdAddDeleteScreen> {
                 height: 49,
                 text: "Add".toUpperCase(),
                 onPressed: () {
-                  Course course = Course(
-                    className: _classNameController.text,
-                    classCode: _classCodeController.text,
-                    weeklySchedule: _selectedDays,
-                    schoolPeriodEnds: _selectedDate,
-                    latitude: double.parse(_latitudeController.text),
-                    longitude: double.parse(_longitudeController.text),
-                  );
-
-                  // Call a function to save the course to Firestore
-                  _saveCourseToFirestore(course);
+                  _addCourseToFirestore(uid);
                 },
               ),
             ],
@@ -128,64 +108,14 @@ class EdAddDeleteScreenState extends State<EdAddDeleteScreen> {
     );
   }
 
-  Widget _buildLocationFormField({
-    required BuildContext context,
-    required IconData icon,
-    required String label,
-    required TextEditingController latitudeController,
-    required TextEditingController longitudeController,
-  }) {
-    return Row(
-      children: [
-        Expanded(
-          child: TextFormField(
-            controller: latitudeController,
-            decoration: InputDecoration(
-              labelText: 'Latitude',
-              icon: Icon(icon),
-            ),
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return 'This field is required';
-              }
-              return null;
-            },
-          ),
-        ),
-        const SizedBox(width: 10.0),
-        Expanded(
-          child: TextFormField(
-            controller: longitudeController,
-            decoration: InputDecoration(
-              labelText: 'Longitude',
-              icon: Icon(icon),
-            ),
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return 'This field is required';
-              }
-              return null;
-            },
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildFormField({
-    required BuildContext context,
-    required String label,
-    required IconData icon,
-    required TextEditingController controller}) {
+  Widget _buildFormField({required BuildContext context, required String label, required IconData icon, required TextEditingController controller}) {
     if (label == 'Weekly Schedule') {
-      // Exempt validation for Weekly Schedule Days
       return _buildCard(
         label: label,
         icon: icon,
         child: _buildWeeklyScheduleField(context),
       );
     } else {
-      // For other fields, make them required
       return TextFormField(
         controller: controller,
         decoration: InputDecoration(
@@ -202,153 +132,122 @@ class EdAddDeleteScreenState extends State<EdAddDeleteScreen> {
     }
   }
 
-
   Widget _buildCard({required String label, required IconData icon, required Widget child}) {
     return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              label,
-              style: const TextStyle(fontWeight: FontWeight.bold),
-            ),
-            child,
-          ],
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(8.0),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                label,
+                style: const TextStyle(fontWeight: FontWeight.bold),
+              ),
+              child,
+            ],
+          ),
         ),
       ),
     );
   }
 
   Widget _buildWeeklyScheduleField(BuildContext context) {
-    List<String> days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
-
     return Column(
-      children: days.map((day) {
-        return _buildDayTimerField(
-          context: context,
-          day: day,
-          startTime: _startTime[day] ?? TimeOfDay.now(),
-          endTime: _endTime[day] ?? TimeOfDay.now(),
-          onStartTimeChanged: (newTime) {
-            setState(() {
-              _startTime[day] = newTime;
-              _updateSelectedDays(day);
-            });
-          },
-          onEndTimeChanged: (newTime) {
-            setState(() {
-              _endTime[day] = newTime;
-              _updateSelectedDays(day);
-            });
-          },
-        );
-      }).toList(),
+      children: dayTimes.map((dayTime) => _buildDayTimerField(context: context, dayTime: dayTime)).toList(),
     );
   }
-  void _updateSelectedDays(String day) {
-    String startTime = _startTime[day]?.format(context) ?? '';
-    String endTime = _endTime[day]?.format(context) ?? '';
 
-    if (startTime.isNotEmpty && endTime.isNotEmpty) {
-      setState(() {
-        _selectedDays[day] = {'start': startTime, 'end': endTime};
-      });
-    } else {
-      setState(() {
-        _selectedDays.remove(day);
-      });
+  Widget _buildDayTimerField({required BuildContext context, required DayTimeModel dayTime}) {
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          children: [
+            Row(
+              children: [
+                const Icon(Icons.access_time),
+                const SizedBox(width: 8.0),
+                Text(dayTime.day),
+              ],
+            ),
+            const SizedBox(height: 8.0),
+            InkWell(
+              onTap: () => _selectTime(context, dayTime.startTime, (newTime) {
+                setState(() {
+                  dayTime.startTime = newTime;
+                });
+              }),
+              child: Container(
+                padding: const EdgeInsets.all(8.0),
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.grey),
+                  borderRadius: BorderRadius.circular(4.0),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      dayTime.startTime != null
+                          ? dayTime.startTime!.format(context)
+                          : 'Start Time',
+                      style: const TextStyle(fontSize: 14.0),
+                    ),
+                    const Icon(Icons.access_time),
+                  ],
+                ),
+              ),
+            ),
+            const SizedBox(height: 8.0),
+            InkWell(
+              onTap: () => _selectTime(context, dayTime.endTime, (newTime) {
+                setState(() {
+                  dayTime.endTime = newTime;
+                });
+              }),
+              child: Container(
+                padding: const EdgeInsets.all(8.0),
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.grey),
+                  borderRadius: BorderRadius.circular(4.0),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      dayTime.endTime != null
+                          ? dayTime.endTime!.format(context)
+                          : 'End Time',
+                      style: const TextStyle(fontSize: 14.0),
+                    ),
+                    const Icon(Icons.access_time),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Future<void> _selectTime(
+      BuildContext context,
+      TimeOfDay? selectedTime,
+      Function(TimeOfDay) onTimeChanged,
+      ) async {
+    TimeOfDay? pickedTime = await showTimePicker(
+      context: context,
+      initialTime: selectedTime ?? TimeOfDay.now(),
+    );
+
+    if (pickedTime != null && pickedTime != selectedTime) {
+      onTimeChanged(pickedTime);
     }
-  }
-
-  Widget _buildDayTimerField({
-    required BuildContext context,
-    required String day,
-    required TimeOfDay startTime,
-    required TimeOfDay endTime,
-    required Function(TimeOfDay) onStartTimeChanged,
-    required Function(TimeOfDay) onEndTimeChanged,
-  }) {
-    return Row(
-      children: [
-        Expanded(
-          child: Row(
-            children: [
-              const Icon(Icons.access_time),
-              const SizedBox(width: 8.0),
-              Text(day),
-            ],
-          ),
-        ),
-        const SizedBox(width: 10.0),
-        Expanded(
-          child: InkWell(
-            onTap: () async {
-              TimeOfDay? pickedStartTime = await showTimePicker(
-                context: context,
-                initialTime: startTime,
-              );
-
-              if (pickedStartTime != null) {
-                // Call the callback function to update the state
-                onStartTimeChanged(pickedStartTime);
-              }
-            },
-            child: Container(
-              padding: const EdgeInsets.all(8.0),
-              decoration: BoxDecoration(
-                border: Border.all(color: Colors.grey),
-                borderRadius: BorderRadius.circular(4.0),
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    '${startTime.format(context)}',
-                    style: const TextStyle(fontSize: 16.0),
-                  ),
-                  const Icon(Icons.access_time),
-                ],
-              ),
-            ),
-          ),
-        ),
-        const SizedBox(width: 10.0),
-        Expanded(
-          child: InkWell(
-            onTap: () async {
-              TimeOfDay? pickedEndTime = await showTimePicker(
-                context: context,
-                initialTime: endTime,
-              );
-
-              if (pickedEndTime != null) {
-                // Call the callback function to update the state
-                onEndTimeChanged(pickedEndTime);
-              }
-            },
-            child: Container(
-              padding: const EdgeInsets.all(8.0),
-              decoration: BoxDecoration(
-                border: Border.all(color: Colors.grey),
-                borderRadius: BorderRadius.circular(4.0),
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    '${endTime.format(context)}',
-                    style: const TextStyle(fontSize: 16.0),
-                  ),
-                  const Icon(Icons.access_time),
-                ],
-              ),
-            ),
-          ),
-        ),
-      ],
-    );
   }
 
   Widget _buildDatePickerField(BuildContext context) {
@@ -363,7 +262,7 @@ class EdAddDeleteScreenState extends State<EdAddDeleteScreen> {
           onTap: () async {
             DateTime? pickedDate = await showDatePicker(
               context: context,
-              initialDate: _selectedDate,
+              initialDate: selectedDate,
               firstDate: DateTime(2000),
               lastDate: DateTime(2101),
               builder: (BuildContext context, Widget? child) {
@@ -378,9 +277,9 @@ class EdAddDeleteScreenState extends State<EdAddDeleteScreen> {
               },
             );
 
-            if (pickedDate != null && pickedDate != _selectedDate) {
+            if (pickedDate != null && pickedDate != selectedDate) {
               setState(() {
-                _selectedDate = pickedDate;
+                selectedDate = pickedDate;
               });
             }
           },
@@ -394,7 +293,7 @@ class EdAddDeleteScreenState extends State<EdAddDeleteScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  DateFormat('yyyy-MM-dd').format(_selectedDate),
+                  DateFormat('yyyy-MM-dd').format(selectedDate),
                   style: const TextStyle(fontSize: 16.0),
                 ),
                 const Icon(Icons.calendar_today),
@@ -483,29 +382,61 @@ class EdAddDeleteScreenState extends State<EdAddDeleteScreen> {
       },
     );
   }
-  Future<void> _saveCourseToFirestore(Course course) async {
+
+  void _addCourseToFirestore(String? uid) {
+    String className = classNameController.text;
+    String classCode = classCodeController.text;
+
+    // Check if all required fields are filled
+    if (className.isEmpty || classCode.isEmpty) {
+      // Show an error message
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Please fill in all required fields.'),
+          duration: Duration(seconds: 2),
+        ),
+      );
+      return;
+    }
+
     try {
-      // Get a reference to the 'Course' collection
-      CollectionReference courseCollection = FirebaseFirestore.instance.collection('Courses');
+      // Create a map with the data to be stored in Firestore, including schedules
+      Map<String, dynamic> courseData = {
+        'Educator ID': uid,
+        'Name': className,
+        'Period Date': selectedDate,
+        'Date Added': DateTime.now(),
+        'Schedules': dayTimes
+            .where((dayTime) => dayTime.startTime != null && dayTime.endTime != null)
+            .map((dayTime) => {
+          'Day': dayTime.day,
+          'StartTime': dayTime.startTime!.format(context),
+          'EndTime': dayTime.endTime!.format(context),
+        })
+            .toList(),
+      };
 
-      // Add the course data to Firestore
-      await courseCollection.add({
-        'className': course.className,
-        'classCode': course.classCode,
-        'weeklySchedule': course.weeklySchedule,
-        'schoolPeriodEnds': course.schoolPeriodEnds,
-        'latitude': course.latitude,
-        'longitude': course.longitude,
-      });
+      // Add the course data to the 'Courses' collection
+      FirebaseFirestore.instance.collection('Courses').doc(classCode).set(courseData);
 
-      // Show a success message or navigate to another screen if needed
-      print('Course added to Firestore successfully!');
-
-      // Navigate back to the dashboard
-      Navigator.of(context).pushReplacementNamed(AppRoutes.teacherDashboardHomeScreen);
-    } catch (e) {
-      // Handle any errors that occur during the process
-      print('Error adding course to Firestore: $e');
+      // Show a SnackBar for successful addition
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Course added!'),
+          duration: Duration(seconds: 2),
+        ),
+      );
+      Navigator.pop(context);
+    } catch (error) {
+      // Show a SnackBar for errors
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Error adding course. Please try again.'),
+          duration: Duration(seconds: 2),
+        ),
+      );
+      print('Error: $error');
     }
   }
+
 }
